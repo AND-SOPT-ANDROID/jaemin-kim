@@ -3,6 +3,7 @@ package org.sopt.and
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -36,12 +37,17 @@ class SignInActivity : ComponentActivity(){
 
 @Composable
 fun SignIn(modifier: Modifier = Modifier) {
+    Column(
+        modifier = modifier.fillMaxSize()
+    ) {
 
+    }
 }
 
 @Preview(
     showBackground = true,
-    showSystemUi = true)
+    showSystemUi = true
+)
 @Composable
 fun SignInPreview() {
     ANDANDROIDTheme {

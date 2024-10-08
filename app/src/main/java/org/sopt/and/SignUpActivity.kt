@@ -1,6 +1,7 @@
 package org.sopt.and
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -36,7 +37,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -45,8 +45,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.util.PatternsCompat
-import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsControllerCompat
 import org.sopt.and.ui.theme.ANDANDROIDTheme
 
 
@@ -56,9 +54,6 @@ import org.sopt.and.ui.theme.ANDANDROIDTheme
 class SignUpActivity : ComponentActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        WindowCompat.setDecorFitsSystemWindows(window, false)   // 상태표시줄 색상을 바꾸기 위해 WindowInsets 설정
-        WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightStatusBars = false // 상태바 텍스트를 밝게(화이트) 설정
-        window.statusBarColor = Color(0xFF161616).toArgb() // 상태바 배경을 0xFF161616 으로 설정
         setContent {
             ANDANDROIDTheme {
                 Scaffold(
@@ -78,11 +73,10 @@ fun SignUp(modifier: Modifier = Modifier) {
     var eMail by remember {mutableStateOf("")}
     var password by remember {mutableStateOf("")}
     var passwordVisibility by remember { mutableStateOf(false) }
-    val context = LocalContext.current
-
+    val context = LocalContext.current  // 이게 정확히 멀까
 
     Column(
-        modifier = modifier
+        modifier = modifier // 이 Column은 systemui와 겹치지 않게 padding을 가짐
             .fillMaxSize()
             .background(color = Color(0xFF1B1B1B))
     ) {
@@ -93,14 +87,20 @@ fun SignUp(modifier: Modifier = Modifier) {
                 .padding(16.dp)
         ){
             SignUpTop()
+
             Spacer(modifier = Modifier.height(30.dp))
+
             Greeting(24)
+
             Spacer(modifier = Modifier.height(20.dp))
+
             EMailField(
                 eMail = eMail,
                 onEmailChange = { newEmail -> eMail = newEmail }
             )
+
             Spacer(modifier = Modifier.height(20.dp))
+
             PasswordField(
                 password = password,
                 onPasswordChange = { newPassword -> password = newPassword },
@@ -122,9 +122,7 @@ fun EMailField(
     eMail: String,
     onEmailChange: (String) -> Unit
 ){
-    Column(
-        modifier = Modifier.background(color = Color(0xFF1B1B1B))
-    ) {
+    Column{
         TextField(
             value = eMail,
             onValueChange = onEmailChange,
@@ -132,7 +130,6 @@ fun EMailField(
             colors = TextFieldDefaults.colors(
                 unfocusedContainerColor = Color(0xFF2f2f2f),
                 focusedContainerColor = Color(0xFF2f2f2f)
-
             ),
             shape = RoundedCornerShape(10.dp),
             placeholder = {
@@ -279,10 +276,11 @@ fun SignUpBtn(
             val isPasswordValid = validatePassword(password)
 
             if (isEmailValid && isPasswordValid) {
-                // 성공시
+                // intent를 이용한 화면 이동
+                val intent = Intent(context, SignInActivity::class.java)
+                context.startActivity(intent)
                 Toast.makeText(context, "회원가입에 성공했습니다~", Toast.LENGTH_SHORT).show()
             } else if(!isEmailValid) {
-                // 실패시
                 Toast.makeText(context, "이메일 양식에 맞게 입력해주세요!", Toast.LENGTH_SHORT).show()
             } else{
                 Toast.makeText(context, "비밀번호 양식에 맞게 입력해주세요!", Toast.LENGTH_SHORT).show()

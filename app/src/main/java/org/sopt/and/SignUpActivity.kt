@@ -56,10 +56,8 @@ import org.sopt.and.ui.theme.ANDANDROIDTheme
 class SignUpActivity : ComponentActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // 상태표시줄 색상을 바꾸기 위해 WindowInsets 설정
-        WindowCompat.setDecorFitsSystemWindows(window, false)
+        WindowCompat.setDecorFitsSystemWindows(window, false)   // 상태표시줄 색상을 바꾸기 위해 WindowInsets 설정
         WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightStatusBars = false // 상태바 텍스트를 밝게(화이트) 설정
-
         window.statusBarColor = Color(0xFF161616).toArgb() // 상태바 배경을 0xFF161616 으로 설정
         setContent {
             ANDANDROIDTheme {
@@ -67,7 +65,7 @@ class SignUpActivity : ComponentActivity(){
                     modifier = Modifier.fillMaxSize()
                 ) { innerPadding ->
                     SignUp(
-                        modifier = Modifier.padding(innerPadding)
+                        modifier = Modifier.padding(innerPadding)   // 이 modifier는 상태표시줄과 하단 바에 안겹치게 padding을 가지게 된다.
                     )
                 }
             }
@@ -86,8 +84,7 @@ fun SignUp(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .fillMaxSize()
-            .background(color = Color(0xFF1B1B1B)),
-        verticalArrangement = Arrangement.Bottom
+            .background(color = Color(0xFF1B1B1B))
     ) {
         Column(
             modifier = Modifier
@@ -111,37 +108,11 @@ fun SignUp(modifier: Modifier = Modifier) {
                 onVisibilityChange = {passwordVisibility = !passwordVisibility}
             )
         }
-        Button(
-            onClick = {
-                // Validate email and password
-                val isEmailValid = validateEmail(eMail)
-                val isPasswordValid = validatePassword(password)
-
-                if (isEmailValid && isPasswordValid) {
-                    // 성공시
-                    Toast.makeText(context, "회원가입에 성공했습니다~", Toast.LENGTH_SHORT).show()
-                } else if(!isEmailValid) {
-                    // 실패시
-                    Toast.makeText(context, "이메일 양식에 맞게 입력해주세요!", Toast.LENGTH_SHORT).show()
-                } else{
-                    Toast.makeText(context, "비밀번호 양식에 맞게 입력해주세요!", Toast.LENGTH_SHORT).show()
-                }
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(60.dp)
-            ,
-            shape = RoundedCornerShape(0.dp),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFF717171),
-                contentColor = Color(0xFFfcfbfc)
-            )
-        ) {
-            Text(
-                text = "Wavve 회원가입",
-                style = TextStyle(fontSize = 18.sp)
-            )
-        }
+        SignUpBtn(
+            eMail = eMail,
+            password = password,
+            context = context
+        )
     }
 
 }
@@ -292,6 +263,44 @@ fun SignUpTop(){
             contentDescription = "닫기버튼",
             tint = Color(0xFFfbfbfb),
             modifier = Modifier.size(36.dp)
+        )
+    }
+}
+@Composable
+fun SignUpBtn(
+    eMail : String,
+    password : String,
+    context: Context
+){
+    Button(
+        onClick = {
+            // Validate email and password
+            val isEmailValid = validateEmail(eMail)
+            val isPasswordValid = validatePassword(password)
+
+            if (isEmailValid && isPasswordValid) {
+                // 성공시
+                Toast.makeText(context, "회원가입에 성공했습니다~", Toast.LENGTH_SHORT).show()
+            } else if(!isEmailValid) {
+                // 실패시
+                Toast.makeText(context, "이메일 양식에 맞게 입력해주세요!", Toast.LENGTH_SHORT).show()
+            } else{
+                Toast.makeText(context, "비밀번호 양식에 맞게 입력해주세요!", Toast.LENGTH_SHORT).show()
+            }
+        },
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(60.dp)
+        ,
+        shape = RoundedCornerShape(0.dp),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = Color(0xFF717171),
+            contentColor = Color(0xFFfcfbfc)
+        )
+    ) {
+        Text(
+            text = "Wavve 회원가입",
+            style = TextStyle(fontSize = 18.sp)
         )
     }
 }

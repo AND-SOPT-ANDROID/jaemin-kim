@@ -6,7 +6,6 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -26,8 +25,7 @@ class SignInActivity : ComponentActivity(){
         setContent {
             ANDANDROIDTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
+                    SignIn(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -37,11 +35,8 @@ class SignInActivity : ComponentActivity(){
 }
 
 @Composable
-fun SignIn(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
+fun SignIn(modifier: Modifier = Modifier) {
+
 }
 
 @Preview(
@@ -50,6 +45,10 @@ fun SignIn(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun SignInPreview() {
     ANDANDROIDTheme {
-        SignIn("Android")
+        Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+            SignIn(
+                modifier = Modifier.padding(innerPadding)
+            )
+        }
     }
 }

@@ -1,6 +1,5 @@
 package org.sopt.and
 
-import android.R
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -17,13 +16,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.Notifications
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.filled.Warning
-import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.Settings
-import androidx.compose.material.icons.outlined.Warning
 import androidx.compose.material.icons.sharp.Warning
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
@@ -39,19 +33,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.sopt.and.ui.theme.ANDANDROIDTheme
 
-//
-//𝟏. MyActivity를 만들고 레이아웃을 구현해주세요. (하단의 바텀네비는 구현하지 않아도 괜찮습니다.)
-//
-//𝟐. 닉네임 부분에는 회원가입 시 작성한 이메일이 뜨도록 구현해 주세요.
 
-class MyActivity : ComponentActivity(){
+class MyActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val myEmail = intent.getStringExtra("myEmail") ?: "이메일 오류"
         setContent {
             ANDANDROIDTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     My(
-                        modifier = Modifier.padding(innerPadding)
+                        modifier = Modifier.padding(innerPadding),
+                        myEmail
                     )
                 }
             }
@@ -60,24 +52,27 @@ class MyActivity : ComponentActivity(){
 }
 
 @Composable
-fun My(modifier: Modifier = Modifier) {
+fun My(
+    modifier: Modifier = Modifier,
+    myEmail: String
+) {
     Column(
         modifier = modifier
             .fillMaxSize()
             .background(color = Color(0xFF1B1B1B))
-    ){
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(0.27f)
                 .background(color = Color(0xFF252525))
                 .padding(16.dp)
-        ){
+        ) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
-            ){
+            ) {
                 Icon(
                     imageVector = Icons.Default.AccountCircle,
                     contentDescription = "프로필",
@@ -86,7 +81,7 @@ fun My(modifier: Modifier = Modifier) {
                 )
                 Spacer(modifier = Modifier.width(5.dp))
                 Text(
-                    text = "프로필1님",
+                    text = myEmail,
                     color = Color(0xFFF2F2F2)
                 )
                 Spacer(modifier = Modifier.weight(1f))
@@ -124,7 +119,7 @@ fun My(modifier: Modifier = Modifier) {
                 .background(color = Color(0xFF252525))
                 .padding(16.dp)
 
-        ){
+        ) {
             Text(
                 text = "첫 결제 시 첫 달 100원!",
                 color = Color(0xFF9A9A9A)
@@ -141,7 +136,7 @@ fun My(modifier: Modifier = Modifier) {
                 .weight(0.3f)
                 .padding(16.dp)
 
-        ){
+        ) {
             Text(
                 text = "전체 시청내역",
                 color = Color(0xFFF2F2F2),
@@ -153,12 +148,12 @@ fun My(modifier: Modifier = Modifier) {
             Row(
                 modifier = Modifier.fillMaxSize(),
                 horizontalArrangement = Arrangement.Center
-            ){
+            ) {
                 Column(
                     modifier = Modifier.fillMaxSize(),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
-                ){
+                ) {
                     Icon(
                         imageVector = Icons.Sharp.Warning,
                         contentDescription = "시청내역 없음",
@@ -179,7 +174,7 @@ fun My(modifier: Modifier = Modifier) {
                 .weight(0.3f)
                 .padding(16.dp)
 
-        ){
+        ) {
             Text(
                 text = "관심 프로그램",
                 color = Color(0xFFF2F2F2),
@@ -191,12 +186,12 @@ fun My(modifier: Modifier = Modifier) {
             Row(
                 modifier = Modifier.fillMaxSize(),
                 horizontalArrangement = Arrangement.Center
-            ){
+            ) {
                 Column(
                     modifier = Modifier.fillMaxSize(),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
-                ){
+                ) {
                     Icon(
                         imageVector = Icons.Sharp.Warning,
                         contentDescription = "관심 프로그램 없음",
@@ -223,7 +218,8 @@ fun MyPreview() {
     ANDANDROIDTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             My(
-                modifier = Modifier.padding(innerPadding)
+                modifier = Modifier.padding(innerPadding),
+                myEmail = "내 이메일"
             )
         }
     }

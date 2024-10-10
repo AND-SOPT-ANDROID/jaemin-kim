@@ -1,14 +1,11 @@
 package org.sopt.and
 
-import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.result.ActivityResult
-import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -21,11 +18,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
-import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -36,15 +31,14 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -60,16 +54,17 @@ import org.sopt.and.ui.theme.ANDANDROIDTheme
 //
 //𝟒. 비밀번호는 기본적으로는 안 보이게 설정해주시고, show 버튼을 누를 경우에만 나타나도록 구현해주세요.
 
-class SignInActivity : ComponentActivity(){
+class SignInActivity : ComponentActivity() {
 
     lateinit var eMail: String
-    lateinit var password : String
-    private val signUpLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-        if (result.resultCode == RESULT_OK) {
-            eMail = result.data?.getStringExtra("email") ?: ""
-            password = result.data?.getStringExtra("password") ?: ""
+    lateinit var password: String
+    private val signUpLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+            if (result.resultCode == RESULT_OK) {
+                eMail = result.data?.getStringExtra("email") ?: ""
+                password = result.data?.getStringExtra("password") ?: ""
+            }
         }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -92,14 +87,16 @@ class SignInActivity : ComponentActivity(){
                         },
                         onLoginClick = { enteredEmail, enteredPassword -> // Add this
                             if (enteredEmail == eMail && enteredPassword == password) {
-                                Log.d("jaemin","로그인성공!")
-                                scope.launch{
+                                Log.d("jaemin", "로그인성공!")
+                                scope.launch {
                                     snackbarHostState.showSnackbar("로그인 성공. 환영합니다~")
                                 }
-                                val intent = Intent(this, MyActivity::class.java)
+                                val intent = Intent(this, MyActivity::class.java).apply {
+                                    putExtra("myEmail", enteredEmail)
+                                }
                                 startActivity(intent)
                             } else {
-                                scope.launch{
+                                scope.launch {
                                     snackbarHostState.showSnackbar("로그인 실패. 다시 시도해 주세요")
                                 }
                             }
@@ -118,8 +115,8 @@ fun SignIn(
     onLoginClick: (String, String) -> Unit
 ) {
     var eMail by remember { mutableStateOf("") }
-    var password by remember{mutableStateOf("")}
-    var passwordVisibility by remember{mutableStateOf(false)}
+    var password by remember { mutableStateOf("") }
+    var passwordVisibility by remember { mutableStateOf(false) }
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -165,7 +162,7 @@ fun SignIn(
                 password = password,
                 onPasswordChange = { newPassword -> password = newPassword },
                 isVisible = passwordVisibility,
-                onVisibilityChange = {passwordVisibility = !passwordVisibility}
+                onVisibilityChange = { passwordVisibility = !passwordVisibility }
             )
 
             Spacer(modifier = Modifier.height(30.dp))
@@ -173,17 +170,16 @@ fun SignIn(
             Button(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(50.dp)
-                ,
+                    .height(50.dp),
                 onClick = {
-                    onLoginClick(eMail,password)
-                          },
+                    onLoginClick(eMail, password)
+                },
                 shape = RoundedCornerShape(50.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFF4557F0),
                     contentColor = Color(0xFFFDFDFD)
                 )
-            ){
+            ) {
                 Text(
                     text = "로그인"
                 )
@@ -239,8 +235,8 @@ fun SignIn(
 fun SignInEMailField(
     eMail: String,
     onEmailChange: (String) -> Unit
-){
-    Column{
+) {
+    Column {
         TextField(
             value = eMail,
             onValueChange = onEmailChange,
@@ -260,14 +256,15 @@ fun SignInEMailField(
         )
     }
 }
+
 @Composable // Password를 입력받는 TextField
 fun SignInPasswordField(
-    password : String,
+    password: String,
     onPasswordChange: (String) -> Unit,
-    isVisible : Boolean,
-    onVisibilityChange : () -> Unit
-){
-    Column{
+    isVisible: Boolean,
+    onVisibilityChange: () -> Unit
+) {
+    Column {
         TextField(
             value = password,
             onValueChange = onPasswordChange,
@@ -311,7 +308,7 @@ fun SignInPreview() {
             SignIn(
                 modifier = Modifier.padding(innerPadding),
                 onSignUpClick = {},
-                onLoginClick = {email, password -> true}
+                onLoginClick = { email, password -> }
             )
         }
     }

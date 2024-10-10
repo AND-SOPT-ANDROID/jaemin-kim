@@ -94,14 +94,14 @@ fun SignUp(modifier: Modifier = Modifier) {
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            EMailField(
+            SignUpEMailField(
                 eMail = eMail,
                 onEmailChange = { newEmail -> eMail = newEmail }
             )
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            PasswordField(
+            SignUpPasswordField(
                 password = password,
                 onPasswordChange = { newPassword -> password = newPassword },
                 isVisible = passwordVisibility,
@@ -118,7 +118,7 @@ fun SignUp(modifier: Modifier = Modifier) {
 }
 
 @Composable // Email을 입력받는 TextField
-fun EMailField(
+fun SignUpEMailField(
     eMail: String,
     onEmailChange: (String) -> Unit
 ){
@@ -158,15 +158,13 @@ fun EMailField(
     }
 }
 @Composable // Password를 입력받는 TextField
-fun PasswordField(
+fun SignUpPasswordField(
     password : String,
     onPasswordChange: (String) -> Unit,
     isVisible : Boolean,
     onVisibilityChange : () -> Unit
 ){
-    Column(
-        modifier = Modifier.background(color = Color(0xFF1B1B1B))
-    ) {
+    Column{
         TextField(
             value = password,
             onValueChange = onPasswordChange,

@@ -1,10 +1,8 @@
 package org.sopt.and
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -50,9 +48,7 @@ import androidx.core.util.PatternsCompat
 import org.sopt.and.ui.theme.ANDANDROIDTheme
 
 
-
-
-class SignUpActivity : ComponentActivity(){
+class SignUpActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -62,7 +58,7 @@ class SignUpActivity : ComponentActivity(){
                 ) { innerPadding ->
                     SignUp(
                         modifier = Modifier.padding(innerPadding)   // 이 modifier는 상태표시줄과 하단 바에 안겹치게 padding을 가지게 된다.
-                    ) {email, password ->
+                    ) { email, password ->
                         val intent = Intent(this@SignUpActivity, SignInActivity::class.java).apply {
                             putExtra("email", email)
                             putExtra("password", password)
@@ -70,7 +66,7 @@ class SignUpActivity : ComponentActivity(){
                         setResult(RESULT_OK, intent)
 //                        startActivity(intent)   // 요녀석 수상하다
                         finish()
-                  }
+                    }
                 }
             }
         }
@@ -82,13 +78,13 @@ fun SignUp(
     modifier: Modifier = Modifier,
     onSignUpComplete: (String, String) -> Unit
 ) {
-    var eMail by remember {mutableStateOf("")}
-    var password by remember {mutableStateOf("")}
+    var eMail by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
     var passwordVisibility by remember { mutableStateOf(false) }
     val context = LocalContext.current  // 이게 정확히 멀까
 
     Column(
-        modifier = modifier // 이 Column은 systemui와 겹치지 않게 padding을 가짐
+        modifier = modifier
             .fillMaxSize()
             .background(color = Color(0xFF1B1B1B))
     ) {
@@ -97,7 +93,7 @@ fun SignUp(
                 .fillMaxSize()
                 .weight(1f)
                 .padding(16.dp)
-        ){
+        ) {
             SignUpTop()
 
             Spacer(modifier = Modifier.height(30.dp))
@@ -117,7 +113,7 @@ fun SignUp(
                 password = password,
                 onPasswordChange = { newPassword -> password = newPassword },
                 isVisible = passwordVisibility,
-                onVisibilityChange = {passwordVisibility = !passwordVisibility}
+                onVisibilityChange = { passwordVisibility = !passwordVisibility }
             )
         }
         SignUpBtn(
@@ -130,12 +126,12 @@ fun SignUp(
 
 }
 
-@Composable // Email을 입력받는 TextField
+@Composable
 fun SignUpEMailField(
     eMail: String,
     onEmailChange: (String) -> Unit
-){
-    Column{
+) {
+    Column {
         TextField(
             value = eMail,
             onValueChange = onEmailChange,
@@ -155,7 +151,7 @@ fun SignUpEMailField(
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        Row(){
+        Row{
             Icon(
                 imageVector = Icons.Outlined.Info,
                 contentDescription = "이메일 입력 주의사항",
@@ -170,14 +166,15 @@ fun SignUpEMailField(
         }
     }
 }
-@Composable // Password를 입력받는 TextField
+
+@Composable
 fun SignUpPasswordField(
-    password : String,
+    password: String,
     onPasswordChange: (String) -> Unit,
-    isVisible : Boolean,
-    onVisibilityChange : () -> Unit
-){
-    Column{
+    isVisible: Boolean,
+    onVisibilityChange: () -> Unit
+) {
+    Column {
         TextField(
             value = password,
             onValueChange = onPasswordChange,
@@ -185,7 +182,6 @@ fun SignUpPasswordField(
             colors = TextFieldDefaults.colors(
                 unfocusedContainerColor = Color(0xFF2f2f2f),
                 focusedContainerColor = Color(0xFF2f2f2f)
-
             ),
             shape = RoundedCornerShape(10.dp),
             placeholder = {
@@ -208,7 +204,7 @@ fun SignUpPasswordField(
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        Row(){
+        Row {
             Icon(
                 imageVector = Icons.Outlined.Info,
                 contentDescription = "비밀번호 입력 주의사항",
@@ -223,8 +219,9 @@ fun SignUpPasswordField(
         }
     }
 }
-@Composable // 환영 인사의 Text
-fun Greeting(fontSize : Int){
+
+@Composable
+fun Greeting(fontSize: Int) {
     Row {
         Text(
             text = "이메일과 비밀번호",
@@ -251,13 +248,14 @@ fun Greeting(fontSize : Int){
         )
     }
 }
-@Composable // 상단에 회원가입 창임을 알릴 바
-fun SignUpTop(){
+
+@Composable
+fun SignUpTop() {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
-    ){
+    ) {
         Spacer(
             modifier = Modifier.width(36.dp)
         )
@@ -274,33 +272,31 @@ fun SignUpTop(){
         )
     }
 }
+
 @Composable
 fun SignUpBtn(
-    eMail : String,
-    password : String,
+    eMail: String,
+    password: String,
     context: Context,
     onSignUpComplete: (String, String) -> Unit
-){
+) {
     Button(
         onClick = {
-            // Validate email and password
             val isEmailValid = validateEmail(eMail)
             val isPasswordValid = validatePassword(password)
 
             if (isEmailValid && isPasswordValid) {
-                // intent를 이용한 화면 이동
-                onSignUpComplete(eMail,password)
+                onSignUpComplete(eMail, password)
                 Toast.makeText(context, "회원가입에 성공했습니다~", Toast.LENGTH_SHORT).show()
-            } else if(!isEmailValid) {
+            } else if (!isEmailValid) {
                 Toast.makeText(context, "이메일 양식에 맞게 입력해주세요!", Toast.LENGTH_SHORT).show()
-            } else{
+            } else {
                 Toast.makeText(context, "비밀번호 양식에 맞게 입력해주세요!", Toast.LENGTH_SHORT).show()
             }
         },
         modifier = Modifier
             .fillMaxWidth()
-            .height(60.dp)
-        ,
+            .height(60.dp),
         shape = RoundedCornerShape(0.dp),
         colors = ButtonDefaults.buttonColors(
             containerColor = Color(0xFF717171),
@@ -324,11 +320,11 @@ fun SignUpPreview() {
         Scaffold(
             modifier = Modifier
                 .fillMaxSize()
-        ) {innerPadding ->
+        ) { innerPadding ->
             SignUp(
                 modifier = Modifier
                     .padding(innerPadding),
-                onSignUpComplete = {email, password -> }
+                onSignUpComplete = { email, password -> }
             )
         }
     }
@@ -339,7 +335,7 @@ fun validateEmail(email: String): Boolean {
     return PatternsCompat.EMAIL_ADDRESS.matcher(email).matches()
 }
 
-// 일단 3가지를 만족시키는 정규식 3개를 다 만들고 이중 하나라도 만족하면 통과
+// 일단 3가지를 만족시키는 정규식 4개를 다 만들고 이중 하나라도 만족하면 통과
 fun validatePassword(password: String): Boolean {
     val passwordPatternExceptLower =
         """^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$""".toRegex()

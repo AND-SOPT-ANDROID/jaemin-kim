@@ -22,7 +22,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SignInActivity"/>
+        <activity android:name=".SignInActivity" android:exported="true"/>
         <activity android:name=".MyActivity"/>
     </application>
 

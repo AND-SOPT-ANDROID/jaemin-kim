@@ -3,12 +3,15 @@ package org.sopt.and
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import org.sopt.and.ui.theme.ANDANDROIDTheme
 
@@ -23,8 +26,7 @@ class MyActivity : ComponentActivity(){
         setContent {
             ANDANDROIDTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
+                    My(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -34,19 +36,32 @@ class MyActivity : ComponentActivity(){
 }
 
 @Composable
-fun My(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
+fun My(modifier: Modifier = Modifier) {
+    Column(modifier = modifier.fillMaxSize()){
+        Column(
+            modifier = Modifier
+                .weight(0.3f)
+                .background(color = Color(0xFF252525))
+        ){
+
+        }
+        Column(modifier = Modifier.weight(0.1f)){}
+        Column(modifier = Modifier.weight(0.3f)){}
+        Column(modifier = Modifier.weight(0.3f)){}
+    }
 }
 
 @Preview(
     showBackground = true,
-    showSystemUi = true)
+    showSystemUi = true
+)
 @Composable
 fun MyPreview() {
     ANDANDROIDTheme {
-        My("Android")
+        Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+            My(
+                modifier = Modifier.padding(innerPadding)
+            )
+        }
     }
 }

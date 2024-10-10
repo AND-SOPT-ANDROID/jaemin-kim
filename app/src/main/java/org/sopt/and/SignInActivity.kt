@@ -1,8 +1,15 @@
 package org.sopt.and
 
+import android.app.Activity.RESULT_OK
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -23,6 +30,8 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -30,10 +39,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -41,24 +52,58 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.launch
 import org.sopt.and.ui.theme.ANDANDROIDTheme
 
-//𝟏. SignInActivity를 만들고 레이아웃을 구현해주세요. (하단 또는 다른 서비스 계정으로 가입 부분은 구현하지 않으셔도 괜찮습니다.)
-//
-//𝟐. 회원가입 버튼을 누르면 회원가입 화면에서 회원 정보를 저장해서 로그인 화면으로 돌아오게 해주세요. (registerForActivityResult와 putExtra를 사용해보세요!)
-//
+
 //𝟑. 로그인이 성공했을 때와 실패했을 때 모두 상황에 맞는 Snackbar가 뜨도록 구현해주세요! (로그인 성공 조건 =  회원가입에서 받아온 ID, Password가 동일할 때)
 //
 //𝟒. 비밀번호는 기본적으로는 안 보이게 설정해주시고, show 버튼을 누를 경우에만 나타나도록 구현해주세요.
 
 class SignInActivity : ComponentActivity(){
+
+    lateinit var eMail: String
+    lateinit var password : String
+    private val signUpLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+        if (result.resultCode == RESULT_OK) {
+            eMail = result.data?.getStringExtra("email") ?: ""
+            password = result.data?.getStringExtra("password") ?: ""
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
+
+
         setContent {
             ANDANDROIDTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                val snackbarHostState = remember { SnackbarHostState() }
+                val scope = rememberCoroutineScope()
+                Scaffold(
+                    modifier = Modifier.fillMaxSize(),
+                    snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
+                ) { innerPadding ->
                     SignIn(
-                        modifier = Modifier.padding(innerPadding)
+                        modifier = Modifier.padding(innerPadding),
+                        onSignUpClick = {
+                            val intent = Intent(this, SignUpActivity::class.java)
+                            signUpLauncher.launch(intent)
+                        },
+                        onLoginClick = { enteredEmail, enteredPassword -> // Add this
+                            if (enteredEmail == eMail && enteredPassword == password) {
+                                Log.d("jaemin","로그인성공!")
+                                scope.launch{
+                                    snackbarHostState.showSnackbar("로그인 성공. 환영합니다~")
+                                }
+                                val intent = Intent(this, MyActivity::class.java)
+                                startActivity(intent)
+                            } else {
+                                scope.launch{
+                                    snackbarHostState.showSnackbar("로그인 실패. 다시 시도해 주세요")
+                                }
+                            }
+                        }
                     )
                 }
             }
@@ -67,11 +112,14 @@ class SignInActivity : ComponentActivity(){
 }
 
 @Composable
-fun SignIn(modifier: Modifier = Modifier) {
+fun SignIn(
+    modifier: Modifier = Modifier,
+    onSignUpClick: () -> Unit,
+    onLoginClick: (String, String) -> Unit
+) {
     var eMail by remember { mutableStateOf("") }
     var password by remember{mutableStateOf("")}
     var passwordVisibility by remember{mutableStateOf(false)}
-
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -127,7 +175,9 @@ fun SignIn(modifier: Modifier = Modifier) {
                     .fillMaxWidth()
                     .height(50.dp)
                 ,
-                onClick = {},
+                onClick = {
+                    onLoginClick(eMail,password)
+                          },
                 shape = RoundedCornerShape(50.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFF4557F0),
@@ -174,6 +224,7 @@ fun SignIn(modifier: Modifier = Modifier) {
                 Text(
                     text = "회원가입",
                     color = Color(0xFFa8a8a8),
+                    modifier = Modifier.clickable { onSignUpClick() },
                     style = TextStyle(
                         fontSize = 11.sp
                     )
@@ -258,7 +309,9 @@ fun SignInPreview() {
     ANDANDROIDTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             SignIn(
-                modifier = Modifier.padding(innerPadding)
+                modifier = Modifier.padding(innerPadding),
+                onSignUpClick = {},
+                onLoginClick = {email, password -> true}
             )
         }
     }

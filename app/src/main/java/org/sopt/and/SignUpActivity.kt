@@ -1,8 +1,10 @@
 package org.sopt.and
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -48,7 +50,6 @@ import androidx.core.util.PatternsCompat
 import org.sopt.and.ui.theme.ANDANDROIDTheme
 
 
-//𝟑. 회원가입이 성공했을 시에는 LoginActivity로 화면을 전환해 주세요. (이 때, 회원가입 정보도 같이 넘겨주어야 합니다.)
 
 
 class SignUpActivity : ComponentActivity(){
@@ -61,7 +62,15 @@ class SignUpActivity : ComponentActivity(){
                 ) { innerPadding ->
                     SignUp(
                         modifier = Modifier.padding(innerPadding)   // 이 modifier는 상태표시줄과 하단 바에 안겹치게 padding을 가지게 된다.
-                    )
+                    ) {email, password ->
+                        val intent = Intent(this@SignUpActivity, SignInActivity::class.java).apply {
+                            putExtra("email", email)
+                            putExtra("password", password)
+                        }
+                        setResult(RESULT_OK, intent)
+//                        startActivity(intent)   // 요녀석 수상하다
+                        finish()
+                  }
                 }
             }
         }
@@ -69,7 +78,10 @@ class SignUpActivity : ComponentActivity(){
 }
 
 @Composable
-fun SignUp(modifier: Modifier = Modifier) {
+fun SignUp(
+    modifier: Modifier = Modifier,
+    onSignUpComplete: (String, String) -> Unit
+) {
     var eMail by remember {mutableStateOf("")}
     var password by remember {mutableStateOf("")}
     var passwordVisibility by remember { mutableStateOf(false) }
@@ -111,7 +123,8 @@ fun SignUp(modifier: Modifier = Modifier) {
         SignUpBtn(
             eMail = eMail,
             password = password,
-            context = context
+            context = context,
+            onSignUpComplete = onSignUpComplete
         )
     }
 
@@ -265,7 +278,8 @@ fun SignUpTop(){
 fun SignUpBtn(
     eMail : String,
     password : String,
-    context: Context
+    context: Context,
+    onSignUpComplete: (String, String) -> Unit
 ){
     Button(
         onClick = {
@@ -275,8 +289,7 @@ fun SignUpBtn(
 
             if (isEmailValid && isPasswordValid) {
                 // intent를 이용한 화면 이동
-                val intent = Intent(context, SignInActivity::class.java)
-                context.startActivity(intent)
+                onSignUpComplete(eMail,password)
                 Toast.makeText(context, "회원가입에 성공했습니다~", Toast.LENGTH_SHORT).show()
             } else if(!isEmailValid) {
                 Toast.makeText(context, "이메일 양식에 맞게 입력해주세요!", Toast.LENGTH_SHORT).show()
@@ -314,7 +327,8 @@ fun SignUpPreview() {
         ) {innerPadding ->
             SignUp(
                 modifier = Modifier
-                    .padding(innerPadding)
+                    .padding(innerPadding),
+                onSignUpComplete = {email, password -> }
             )
         }
     }

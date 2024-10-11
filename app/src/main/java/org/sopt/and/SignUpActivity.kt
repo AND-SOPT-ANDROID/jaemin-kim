@@ -38,6 +38,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -57,7 +58,7 @@ class SignUpActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize()
                 ) { innerPadding ->
                     SignUp(
-                        modifier = Modifier.padding(innerPadding)   // 이 modifier는 상태표시줄과 하단 바에 안겹치게 padding을 가지게 된다.
+                        modifier = Modifier.padding(innerPadding)
                     ) { email, password ->
                         val intent = Intent(this@SignUpActivity, SignInActivity::class.java).apply {
                             putExtra("email", email)
@@ -143,7 +144,7 @@ fun SignUpEMailField(
             shape = RoundedCornerShape(10.dp),
             placeholder = {
                 Text(
-                    text = "wavve@example.com",
+                    text = stringResource(id = R.string.sign_up_email_placeholder),
                     color = Color(0xFFa8a8a8)
                 )
             }
@@ -154,12 +155,12 @@ fun SignUpEMailField(
         Row{
             Icon(
                 imageVector = Icons.Outlined.Info,
-                contentDescription = "이메일 입력 주의사항",
+                contentDescription = stringResource(id=R.string.sign_up_password_description),
                 tint = Color(0xFFb6b6b6)
             )
             Spacer(modifier = Modifier.width(5.dp))
             Text(
-                text = "로그인, 비밀번호 찾기, 알림에 사용되니 정확한 이메일을 입력해 \n주세요",
+                text = stringResource(id = R.string.sign_up_email_caution),
                 color = Color(0xFFb6b6b6),
                 style = TextStyle(fontSize = 11.sp)
             )
@@ -186,14 +187,14 @@ fun SignUpPasswordField(
             shape = RoundedCornerShape(10.dp),
             placeholder = {
                 Text(
-                    text = "Wavve 비밀번호 설정",
+                    text = stringResource(id = R.string.sign_up_password_placeholder),
                     color = Color(0xFFa8a8a8)
                 )
             },
             visualTransformation = if (isVisible) VisualTransformation.None else PasswordVisualTransformation(),
             trailingIcon = {
                 Text(
-                    text = if (isVisible) "hide" else "show",
+                    text = stringResource(id = if (isVisible) R.string.hide_password_button else R.string.show_password_button),
                     color = Color(0xFFfbfbfb),
                     modifier = Modifier
                         .padding(end = 12.dp)
@@ -207,12 +208,12 @@ fun SignUpPasswordField(
         Row {
             Icon(
                 imageVector = Icons.Outlined.Info,
-                contentDescription = "비밀번호 입력 주의사항",
+                contentDescription = stringResource(id=R.string.sign_up_password_description),
                 tint = Color(0xFFb6b6b6)
             )
             Spacer(modifier = Modifier.width(5.dp))
             Text(
-                text = "비밀번호는 8~20자 이내로 영문 대소문자, 숫자, 특수문자 중 \n3가지 이상 혼용하여 입력해 주세요.",
+                text = stringResource(id = R.string.sign_up_password_caution),
                 color = Color(0xFFb6b6b6),
                 style = TextStyle(fontSize = 11.sp)
             )
@@ -224,12 +225,12 @@ fun SignUpPasswordField(
 fun Greeting(fontSize: Int) {
     Row {
         Text(
-            text = "이메일과 비밀번호",
+            text = stringResource(id = R.string.focused_welcome_text_first_line),
             color = Color(0xFFfbfbfb),
             style = TextStyle(fontSize = fontSize.sp)
         )
         Text(
-            text = "만으로",
+            text = stringResource(id = R.string.remainder_welcome_text_first_line),
             color = Color(0xFF9f9f9f),
             style = TextStyle(fontSize = fontSize.sp)
         )
@@ -237,12 +238,12 @@ fun Greeting(fontSize: Int) {
     Spacer(modifier = Modifier.height(4.dp))
     Row {
         Text(
-            text = "Wavve를 즐길 수 ",
+            text = stringResource(id = R.string.focused_welcome_text_second_line),
             color = Color(0xFFfbfbfb),
             style = TextStyle(fontSize = fontSize.sp)
         )
         Text(
-            text = "있어요!",
+            text = stringResource(id = R.string.remainder_welcome_text_second_line),
             color = Color(0xFF9f9f9f),
             style = TextStyle(fontSize = fontSize.sp)
         )
@@ -260,13 +261,13 @@ fun SignUpTop() {
             modifier = Modifier.width(36.dp)
         )
         Text(
-            text = "회원가입",
+            text = stringResource(id = R.string.sign_up_screen_title),
             color = Color(0xFFfbfbfb),
             style = TextStyle(fontSize = 18.sp)
         )
         Icon(
             imageVector = Icons.Default.Close,
-            contentDescription = "닫기버튼",
+            contentDescription = stringResource(id=R.string.close_sign_up_description),
             tint = Color(0xFFfbfbfb),
             modifier = Modifier.size(36.dp)
         )
@@ -287,11 +288,11 @@ fun SignUpBtn(
 
             if (isEmailValid && isPasswordValid) {
                 onSignUpComplete(eMail, password)
-                Toast.makeText(context, "회원가입에 성공했습니다~", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, context.getString(R.string.sign_up_success), Toast.LENGTH_SHORT).show()
             } else if (!isEmailValid) {
-                Toast.makeText(context, "이메일 양식에 맞게 입력해주세요!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, context.getString(R.string.sign_up_failed_email), Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(context, "비밀번호 양식에 맞게 입력해주세요!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, context.getString(R.string.sign_up_failed_password), Toast.LENGTH_SHORT).show()
             }
         },
         modifier = Modifier
@@ -304,7 +305,7 @@ fun SignUpBtn(
         )
     ) {
         Text(
-            text = "Wavve 회원가입",
+            text = stringResource(id = R.string.sign_up_button),
             style = TextStyle(fontSize = 18.sp)
         )
     }

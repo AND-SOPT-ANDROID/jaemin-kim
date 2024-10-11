@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -39,6 +40,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -48,11 +50,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
 import org.sopt.and.ui.theme.ANDANDROIDTheme
-
-
-//𝟑. 로그인이 성공했을 때와 실패했을 때 모두 상황에 맞는 Snackbar가 뜨도록 구현해주세요! (로그인 성공 조건 =  회원가입에서 받아온 ID, Password가 동일할 때)
-//
-//𝟒. 비밀번호는 기본적으로는 안 보이게 설정해주시고, show 버튼을 누를 경우에만 나타나도록 구현해주세요.
 
 class SignInActivity : ComponentActivity() {
 
@@ -85,11 +82,10 @@ class SignInActivity : ComponentActivity() {
                             val intent = Intent(this, SignUpActivity::class.java)
                             signUpLauncher.launch(intent)
                         },
-                        onLoginClick = { enteredEmail, enteredPassword -> // Add this
+                        onLoginClick = { enteredEmail, enteredPassword ->
                             if (enteredEmail == eMail && enteredPassword == password) {
-                                Log.d("jaemin", "로그인성공!")
                                 scope.launch {
-                                    snackbarHostState.showSnackbar("로그인 성공. 환영합니다~")
+                                    snackbarHostState.showSnackbar(message = getString(R.string.login_success_message))
                                 }
                                 val intent = Intent(this, MyActivity::class.java).apply {
                                     putExtra("myEmail", enteredEmail)
@@ -97,7 +93,7 @@ class SignInActivity : ComponentActivity() {
                                 startActivity(intent)
                             } else {
                                 scope.launch {
-                                    snackbarHostState.showSnackbar("로그인 실패. 다시 시도해 주세요")
+                                    snackbarHostState.showSnackbar(message = getString(R.string.login_failed_message))
                                 }
                             }
                         }
@@ -134,14 +130,14 @@ fun SignIn(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
-                    imageVector = Icons.Default.KeyboardArrowLeft,
-                    contentDescription = "뒤로가기",
+                    imageVector = Icons.AutoMirrored.Default.KeyboardArrowLeft,
+                    contentDescription = stringResource(id=R.string.sign_in_screen_back_icon_description),
                     modifier = Modifier
                         .size(48.dp),
                     tint = Color(0xFFFDFDFD)
                 )
                 Text(
-                    text = "wavve",
+                    text = stringResource(id = R.string.app_name),
                     color = Color(0xFFFDFDFD),
                     style = TextStyle(
                         fontSize = 30.sp,
@@ -181,7 +177,7 @@ fun SignIn(
                 )
             ) {
                 Text(
-                    text = "로그인"
+                    text = stringResource(id = R.string.sign_in_button)
                 )
             }
             Spacer(modifier = Modifier.height(20.dp))
@@ -190,35 +186,35 @@ fun SignIn(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = "아이디 찾기",
+                    text = stringResource(id = R.string.to_find_id_button),
                     color = Color(0xFFa8a8a8),
                     style = TextStyle(
                         fontSize = 11.sp
                     )
                 )
                 Text(
-                    text = "|",
+                    text = stringResource(id = R.string.seperator),
                     color = Color(0xFFa8a8a8),
                     style = TextStyle(
                         fontSize = 11.sp
                     )
                 )
                 Text(
-                    text = "비밀번호 재설정",
+                    text = stringResource(id = R.string.to_reset_password_button),
                     color = Color(0xFFa8a8a8),
                     style = TextStyle(
                         fontSize = 11.sp
                     )
                 )
                 Text(
-                    text = "|",
+                    text = stringResource(id = R.string.seperator),
                     color = Color(0xFFa8a8a8),
                     style = TextStyle(
                         fontSize = 11.sp
                     )
                 )
                 Text(
-                    text = "회원가입",
+                    text = stringResource(id = R.string.to_sign_up_button),
                     color = Color(0xFFa8a8a8),
                     modifier = Modifier.clickable { onSignUpClick() },
                     style = TextStyle(
@@ -231,7 +227,7 @@ fun SignIn(
     }
 }
 
-@Composable // Email을 입력받는 TextField
+@Composable
 fun SignInEMailField(
     eMail: String,
     onEmailChange: (String) -> Unit
@@ -248,7 +244,7 @@ fun SignInEMailField(
             shape = RoundedCornerShape(10.dp),
             placeholder = {
                 Text(
-                    text = "이메일 주소 또는 아이디",
+                    text = stringResource(id = R.string.sign_in_email_placeholder),
                     color = Color(0xFFa8a8a8),
                     style = TextStyle(fontSize = 12.sp)
                 )
@@ -257,7 +253,7 @@ fun SignInEMailField(
     }
 }
 
-@Composable // Password를 입력받는 TextField
+@Composable
 fun SignInPasswordField(
     password: String,
     onPasswordChange: (String) -> Unit,
@@ -277,7 +273,7 @@ fun SignInPasswordField(
             shape = RoundedCornerShape(10.dp),
             placeholder = {
                 Text(
-                    text = "비밀번호",
+                    text = stringResource(id = R.string.sign_in_password_placeholder),
                     color = Color(0xFFa8a8a8),
                     style = TextStyle(fontSize = 12.sp)
                 )
@@ -285,7 +281,7 @@ fun SignInPasswordField(
             visualTransformation = if (isVisible) VisualTransformation.None else PasswordVisualTransformation(),
             trailingIcon = {
                 Text(
-                    text = if (isVisible) "hide" else "show",
+                    text = stringResource(id = if (isVisible) R.string.hide_password_button else R.string.show_password_button),
                     color = Color(0xFFfbfbfb),
                     modifier = Modifier
                         .padding(end = 12.dp)

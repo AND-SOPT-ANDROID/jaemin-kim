@@ -1,3 +1,47 @@
 <resources>
-    <string name="app_name">AND-ANDROID</string>
+    <string name="app_name">wavve</string>
+    <string name="sign_up_screen_title">회원가입</string>
+    <string name="sign_in_button">로그인</string>
+    <string name="sign_up_button">Wavve 회원가입</string>
+    <string name="seperator">|</string>
+    <string name="to_find_id_button">아이디 찾기</string>
+    <string name="to_reset_password_button">비밀번호 재설정</string>
+    <string name="to_sign_up_button">회원가입</string>
+    <string name="sign_in_email_placeholder">이메일 주소 또는 아이디</string>
+    <string name="sign_in_password_placeholder">비밀번호</string>
+    <string name="sign_up_email_placeholder">wavve@example.com</string>
+    <string name="sign_up_password_placeholder">wavve 비밀번호 설정</string>
+    <string name="hide_password_button">hide</string>
+    <string name="show_password_button">show</string>
+    <string name="login_success_message">로그인 성공. 환영합니다~</string>
+    <string name="login_failed_message">로그인 실패. 다시 시도해 주세요</string>
+    <string name="focused_welcome_text_first_line">이메일과 비밀번호</string>
+    <string name="remainder_welcome_text_first_line">만으로</string>
+    <string name="focused_welcome_text_second_line">Wavve를 즐길 수 </string>
+    <string name="remainder_welcome_text_second_line">있어요!</string>
+    <string name="sign_up_success">회원가입에 성공했습니다~</string>
+    <string name="sign_up_failed_email">이메일 양식에 맞게 입력해주세요!</string>
+    <string name="sign_up_failed_password">비밀번호 양식에 맞게 입력해주세요!</string>
+    <string name="sign_up_password_caution">비밀번호는 8~20자 이내로 영문 대소문자, 숫자, 특수문자 중\n3가지 이상 혼용하여 입력해 주세요.</string>
+    <string name="sign_up_email_caution">로그인, 비밀번호 찾기, 알림에 사용되니 정확한 이메일을 입력해\n주세요</string>
+    <string name="sign_up_email_description">이메일 입력시 주의사항</string>
+    <string name="sign_up_password_description">비밀번호 입력시 주의사항</string>
+    <string name="close_sign_up_description">회원가입 화면 닫기</string>
+    <string name="sign_in_screen_back_icon_description">이전 화면으로 가기</string>
+    <string name="my_screen_account_icon_description">내 프로필</string>
+    <string name="my_screen_notification_icon_description">알림</string>
+    <string name="my_screen_setting_icon_description">설정</string>
+    <string name="to_payment_button">구매하기 ></string>
+    <string name="no_ticket_text">현재 보유하신 이용권이 없습니다.</string>
+    <string name="first_payment_text">첫 결제 시 첫 달 100원!</string>
+    <string name="viewing_history_box_title">전체 시청내역</string>
+    <string name="viewing_history_box_empty_text">시청내역이 없어요.</string>
+    <string name="program_of_interest_box_title">관심 프로그램</string>
+    <string name="program_of_interest_empty_text">관심 프로그램이 없어요.</string>
+
+
+
+
+
+
 </resources>

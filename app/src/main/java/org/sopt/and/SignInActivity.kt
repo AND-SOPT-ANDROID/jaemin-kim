@@ -2,7 +2,6 @@ package org.sopt.and
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.ActivityResult
@@ -21,7 +20,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
-import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -131,7 +129,7 @@ fun SignIn(
             ) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Default.KeyboardArrowLeft,
-                    contentDescription = stringResource(id=R.string.sign_in_screen_back_icon_description),
+                    contentDescription = stringResource(id = R.string.sign_in_screen_back_icon_description),
                     modifier = Modifier
                         .size(48.dp),
                     tint = Color(0xFFFDFDFD)
@@ -232,25 +230,23 @@ fun SignInEMailField(
     eMail: String,
     onEmailChange: (String) -> Unit
 ) {
-    Column {
-        TextField(
-            value = eMail,
-            onValueChange = onEmailChange,
-            modifier = Modifier.fillMaxWidth(),
-            colors = TextFieldDefaults.colors(
-                unfocusedContainerColor = Color(0xFF2f2f2f),
-                focusedContainerColor = Color(0xFF2f2f2f)
-            ),
-            shape = RoundedCornerShape(10.dp),
-            placeholder = {
-                Text(
-                    text = stringResource(id = R.string.sign_in_email_placeholder),
-                    color = Color(0xFFa8a8a8),
-                    style = TextStyle(fontSize = 12.sp)
-                )
-            }
-        )
-    }
+    TextField(
+        value = eMail,
+        onValueChange = onEmailChange,
+        modifier = Modifier.fillMaxWidth(),
+        colors = TextFieldDefaults.colors(
+            unfocusedContainerColor = Color(0xFF2f2f2f),
+            focusedContainerColor = Color(0xFF2f2f2f)
+        ),
+        shape = RoundedCornerShape(10.dp),
+        placeholder = {
+            Text(
+                text = stringResource(id = R.string.sign_in_email_placeholder),
+                color = Color(0xFFa8a8a8),
+                style = TextStyle(fontSize = 12.sp)
+            )
+        }
+    )
 }
 
 @Composable
@@ -260,37 +256,34 @@ fun SignInPasswordField(
     isVisible: Boolean,
     onVisibilityChange: () -> Unit
 ) {
-    Column {
-        TextField(
-            value = password,
-            onValueChange = onPasswordChange,
-            modifier = Modifier.fillMaxWidth(),
-            colors = TextFieldDefaults.colors(
-                unfocusedContainerColor = Color(0xFF2f2f2f),
-                focusedContainerColor = Color(0xFF2f2f2f)
-
-            ),
-            shape = RoundedCornerShape(10.dp),
-            placeholder = {
-                Text(
-                    text = stringResource(id = R.string.sign_in_password_placeholder),
-                    color = Color(0xFFa8a8a8),
-                    style = TextStyle(fontSize = 12.sp)
-                )
-            },
-            visualTransformation = if (isVisible) VisualTransformation.None else PasswordVisualTransformation(),
-            trailingIcon = {
-                Text(
-                    text = stringResource(id = if (isVisible) R.string.hide_password_button else R.string.show_password_button),
-                    color = Color(0xFFfbfbfb),
-                    modifier = Modifier
-                        .padding(end = 12.dp)
-                        .clickable(onClick = onVisibilityChange),
-                    style = TextStyle(fontSize = 12.sp)
-                )
-            }
-        )
-    }
+    TextField(
+        value = password,
+        onValueChange = onPasswordChange,
+        modifier = Modifier.fillMaxWidth(),
+        colors = TextFieldDefaults.colors(
+            unfocusedContainerColor = Color(0xFF2f2f2f),
+            focusedContainerColor = Color(0xFF2f2f2f)
+        ),
+        shape = RoundedCornerShape(10.dp),
+        placeholder = {
+            Text(
+                text = stringResource(id = R.string.sign_in_password_placeholder),
+                color = Color(0xFFa8a8a8),
+                style = TextStyle(fontSize = 12.sp)
+            )
+        },
+        visualTransformation = if (isVisible) VisualTransformation.None else PasswordVisualTransformation(),
+        trailingIcon = {
+            Text(
+                text = stringResource(id = if (isVisible) R.string.hide_password_button else R.string.show_password_button),
+                color = Color(0xFFfbfbfb),
+                modifier = Modifier
+                    .padding(end = 12.dp)
+                    .clickable(onClick = onVisibilityChange),
+                style = TextStyle(fontSize = 12.sp)
+            )
+        }
+    )
 }
 
 @Preview(

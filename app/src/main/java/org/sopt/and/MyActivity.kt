@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -120,7 +119,6 @@ fun My(
                 .weight(0.13f)
                 .background(color = Color(0xFF252525))
                 .padding(16.dp)
-
         ) {
             Text(
                 text = stringResource(id = R.string.no_ticket_text),
@@ -154,7 +152,6 @@ fun EmptyBox(
         modifier = modifier
             .fillMaxWidth()
             .padding(16.dp)
-
     ) {
         Text(
             text = title,

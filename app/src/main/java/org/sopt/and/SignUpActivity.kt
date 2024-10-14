@@ -152,10 +152,10 @@ fun SignUpEMailField(
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        Row{
+        Row {
             Icon(
                 imageVector = Icons.Outlined.Info,
-                contentDescription = stringResource(id=R.string.sign_up_password_description),
+                contentDescription = stringResource(id = R.string.sign_up_password_description),
                 tint = Color(0xFFb6b6b6)
             )
             Spacer(modifier = Modifier.width(5.dp))
@@ -208,7 +208,7 @@ fun SignUpPasswordField(
         Row {
             Icon(
                 imageVector = Icons.Outlined.Info,
-                contentDescription = stringResource(id=R.string.sign_up_password_description),
+                contentDescription = stringResource(id = R.string.sign_up_password_description),
                 tint = Color(0xFFb6b6b6)
             )
             Spacer(modifier = Modifier.width(5.dp))
@@ -267,7 +267,7 @@ fun SignUpTop() {
         )
         Icon(
             imageVector = Icons.Default.Close,
-            contentDescription = stringResource(id=R.string.close_sign_up_description),
+            contentDescription = stringResource(id = R.string.close_sign_up_description),
             tint = Color(0xFFfbfbfb),
             modifier = Modifier.size(36.dp)
         )
@@ -288,11 +288,23 @@ fun SignUpBtn(
 
             if (isEmailValid && isPasswordValid) {
                 onSignUpComplete(eMail, password)
-                Toast.makeText(context, context.getString(R.string.sign_up_success), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    context,
+                    context.getString(R.string.sign_up_success),
+                    Toast.LENGTH_SHORT
+                ).show()
             } else if (!isEmailValid) {
-                Toast.makeText(context, context.getString(R.string.sign_up_failed_email), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    context,
+                    context.getString(R.string.sign_up_failed_email),
+                    Toast.LENGTH_SHORT
+                ).show()
             } else {
-                Toast.makeText(context, context.getString(R.string.sign_up_failed_password), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    context,
+                    context.getString(R.string.sign_up_failed_password),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         },
         modifier = Modifier

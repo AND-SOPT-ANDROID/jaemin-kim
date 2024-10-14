@@ -103,7 +103,7 @@ fun My(
             Spacer(modifier = Modifier.height(25.dp))
 
             Text(
-                text = stringResource(id=R.string.first_payment_text),
+                text = stringResource(id = R.string.first_payment_text),
                 color = Color(0xFF9A9A9A)
             )
             Spacer(modifier = Modifier.height(4.dp))
@@ -135,19 +135,22 @@ fun My(
             stringResource(R.string.viewing_history_box_empty_text),
             modifier = Modifier.weight(0.3f)
         )
-        EmptyBox(stringResource(
-            R.string.program_of_interest_box_title),
+        EmptyBox(
+            stringResource(
+                R.string.program_of_interest_box_title
+            ),
             stringResource(R.string.program_of_interest_empty_text),
-            modifier = Modifier.weight(0.3f))
+            modifier = Modifier.weight(0.3f)
+        )
     }
 }
 
 @Composable
 fun EmptyBox(
-    title : String,
-    description : String,
+    title: String,
+    description: String,
     modifier: Modifier = Modifier
-){
+) {
     Column(
         modifier = modifier
             .fillMaxWidth()

@@ -37,7 +37,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -47,6 +46,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
+import org.sopt.and.ui.theme.*
 import org.sopt.and.ui.theme.ANDANDROIDTheme
 
 class SignInActivity : ComponentActivity() {
@@ -113,7 +113,7 @@ fun SignIn(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .background(color = Color(0xFF1B1B1B))
+            .background(color = Black100)
     ) {
         Column(
             modifier = Modifier
@@ -131,11 +131,11 @@ fun SignIn(
                     contentDescription = stringResource(id = R.string.sign_in_to_back_screen_description),
                     modifier = Modifier
                         .size(48.dp),
-                    tint = Color(0xFFFDFDFD)
+                    tint = White100
                 )
                 Text(
                     text = stringResource(id = R.string.app_name),
-                    color = Color(0xFFFDFDFD),
+                    color = White100,
                     style = TextStyle(
                         fontSize = 30.sp,
                         fontWeight = FontWeight(800)
@@ -169,8 +169,8 @@ fun SignIn(
                 },
                 shape = RoundedCornerShape(50.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFF4557F0),
-                    contentColor = Color(0xFFFDFDFD)
+                    containerColor = Blue100,
+                    contentColor = White100
                 )
             ) {
                 Text(
@@ -184,35 +184,35 @@ fun SignIn(
             ) {
                 Text(
                     text = stringResource(id = R.string.sign_in_to_find_id_button),
-                    color = Color(0xFFa8a8a8),
+                    color = Grey200,
                     style = TextStyle(
                         fontSize = 11.sp
                     )
                 )
                 Text(
                     text = stringResource(id = R.string.seperator),
-                    color = Color(0xFFa8a8a8),
+                    color = Grey200,
                     style = TextStyle(
                         fontSize = 11.sp
                     )
                 )
                 Text(
                     text = stringResource(id = R.string.sign_in_to_reset_password_button),
-                    color = Color(0xFFa8a8a8),
+                    color = Grey200,
                     style = TextStyle(
                         fontSize = 11.sp
                     )
                 )
                 Text(
                     text = stringResource(id = R.string.seperator),
-                    color = Color(0xFFa8a8a8),
+                    color = Grey200,
                     style = TextStyle(
                         fontSize = 11.sp
                     )
                 )
                 Text(
                     text = stringResource(id = R.string.sign_in_to_sign_up_button),
-                    color = Color(0xFFa8a8a8),
+                    color = Grey200,
                     modifier = Modifier.clickable { onSignUpClick() },
                     style = TextStyle(
                         fontSize = 11.sp
@@ -233,14 +233,14 @@ fun SignInEMailField(
         onValueChange = onEmailChange,
         modifier = Modifier.fillMaxWidth(),
         colors = TextFieldDefaults.colors(
-            unfocusedContainerColor = Color(0xFF2f2f2f),
-            focusedContainerColor = Color(0xFF2f2f2f)
+            unfocusedContainerColor = Grey100,
+            focusedContainerColor = Grey100
         ),
         shape = RoundedCornerShape(10.dp),
         placeholder = {
             Text(
                 text = stringResource(id = R.string.sign_in_email_placeholder),
-                color = Color(0xFFa8a8a8),
+                color = Grey200,
                 style = TextStyle(fontSize = 12.sp)
             )
         }
@@ -259,14 +259,14 @@ fun SignInPasswordField(
         onValueChange = onPasswordChange,
         modifier = Modifier.fillMaxWidth(),
         colors = TextFieldDefaults.colors(
-            unfocusedContainerColor = Color(0xFF2f2f2f),
-            focusedContainerColor = Color(0xFF2f2f2f)
+            unfocusedContainerColor = Grey100,
+            focusedContainerColor = Grey100
         ),
         shape = RoundedCornerShape(10.dp),
         placeholder = {
             Text(
                 text = stringResource(id = R.string.sign_in_password_placeholder),
-                color = Color(0xFFa8a8a8),
+                color = Grey200,
                 style = TextStyle(fontSize = 12.sp)
             )
         },
@@ -274,7 +274,7 @@ fun SignInPasswordField(
         trailingIcon = {
             Text(
                 text = stringResource(id = if (isVisible) R.string.hide_password_button else R.string.show_password_button),
-                color = Color(0xFFfbfbfb),
+                color = White100,
                 modifier = Modifier
                     .padding(end = 12.dp)
                     .clickable(onClick = onVisibilityChange),

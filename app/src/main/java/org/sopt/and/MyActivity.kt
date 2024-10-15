@@ -25,7 +25,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -33,6 +32,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.sopt.and.ui.theme.ANDANDROIDTheme
+import org.sopt.and.ui.theme.Black100
+import org.sopt.and.ui.theme.Grey100
+import org.sopt.and.ui.theme.White100
 
 
 class MyActivity : ComponentActivity() {
@@ -60,13 +62,13 @@ fun My(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .background(color = Color(0xFF1B1B1B))
+            .background(color = Black100)
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(0.27f)
-                .background(color = Color(0xFF252525))
+                .background(color = Grey100)
                 .padding(16.dp)
         ) {
             Row(
@@ -78,38 +80,38 @@ fun My(
                     imageVector = Icons.Default.AccountCircle,
                     contentDescription = stringResource(id = R.string.my_account_icon_description),
                     modifier = Modifier.size(80.dp),
-                    tint = Color(0xFFF2F2F2)
+                    tint = White100
                 )
                 Spacer(modifier = Modifier.width(5.dp))
                 Text(
                     text = myEmail,
-                    color = Color(0xFFF2F2F2)
+                    color = White100
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 Icon(
                     imageVector = Icons.Outlined.Notifications,
                     contentDescription = stringResource(id = R.string.my_notification_icon_description),
                     modifier = Modifier.size(30.dp),
-                    tint = Color(0xFFF2F2F2)
+                    tint = White100
                 )
                 Spacer(modifier = Modifier.width(24.dp))
                 Icon(
                     imageVector = Icons.Outlined.Settings,
                     contentDescription = stringResource(id = R.string.my_setting_icon_description),
                     modifier = Modifier.size(30.dp),
-                    tint = Color(0xFFF2F2F2)
+                    tint = White100
                 )
             }
             Spacer(modifier = Modifier.height(25.dp))
 
             Text(
                 text = stringResource(id = R.string.my_first_payment_text),
-                color = Color(0xFF9A9A9A)
+                color = White100
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
                 text = stringResource(id = R.string.my_to_payment_button),
-                color = Color(0xFFF2F2F2)
+                color = White100
             )
         }
         Spacer(modifier = Modifier.height(2.dp))
@@ -117,17 +119,17 @@ fun My(
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(0.13f)
-                .background(color = Color(0xFF252525))
+                .background(color = Grey100)
                 .padding(16.dp)
         ) {
             Text(
                 text = stringResource(id = R.string.my_no_ticket_text),
-                color = Color(0xFF9A9A9A)
+                color = White100
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
                 text = stringResource(id = R.string.my_to_payment_button),
-                color = Color(0xFFF2F2F2)
+                color = White100
             )
         }
         EmptyBox(
@@ -158,7 +160,7 @@ fun EmptyBox(
     ) {
         Text(
             text = title,
-            color = Color(0xFFF2F2F2),
+            color = White100,
             style = TextStyle(
                 fontSize = 20.sp,
                 fontWeight = FontWeight(1000)
@@ -177,12 +179,12 @@ fun EmptyBox(
                     imageVector = Icons.Sharp.Warning,
                     contentDescription = description,
                     modifier = Modifier.size(40.dp),
-                    tint = Color(0xFF9A9A9A)
+                    tint = White100
                 )
                 Spacer(modifier = Modifier.height(10.dp))
                 Text(
                     text = description,
-                    color = Color(0xFF9A9A9A)
+                    color = White100
                 )
             }
         }

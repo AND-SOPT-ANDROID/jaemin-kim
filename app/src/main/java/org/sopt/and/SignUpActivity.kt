@@ -36,7 +36,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -46,6 +45,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.util.PatternsCompat
+import org.sopt.and.ui.theme.*
 import org.sopt.and.ui.theme.ANDANDROIDTheme
 
 
@@ -87,7 +87,7 @@ fun SignUp(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .background(color = Color(0xFF1B1B1B))
+            .background(color = Black100)
     ) {
         Column(
             modifier = Modifier
@@ -138,14 +138,14 @@ fun SignUpEMailField(
             onValueChange = onEmailChange,
             modifier = Modifier.fillMaxWidth(),
             colors = TextFieldDefaults.colors(
-                unfocusedContainerColor = Color(0xFF2f2f2f),
-                focusedContainerColor = Color(0xFF2f2f2f)
+                unfocusedContainerColor = Grey100,
+                focusedContainerColor = Grey100
             ),
             shape = RoundedCornerShape(10.dp),
             placeholder = {
                 Text(
                     text = stringResource(id = R.string.sign_up_email_placeholder),
-                    color = Color(0xFFa8a8a8)
+                    color = Grey200
                 )
             }
         )
@@ -156,12 +156,12 @@ fun SignUpEMailField(
             Icon(
                 imageVector = Icons.Outlined.Info,
                 contentDescription = stringResource(id = R.string.sign_up_password_description),
-                tint = Color(0xFFb6b6b6)
+                tint = White100
             )
             Spacer(modifier = Modifier.width(5.dp))
             Text(
                 text = stringResource(id = R.string.sign_up_email_caution),
-                color = Color(0xFFb6b6b6),
+                color = White100,
                 style = TextStyle(fontSize = 11.sp)
             )
         }
@@ -181,21 +181,21 @@ fun SignUpPasswordField(
             onValueChange = onPasswordChange,
             modifier = Modifier.fillMaxWidth(),
             colors = TextFieldDefaults.colors(
-                unfocusedContainerColor = Color(0xFF2f2f2f),
-                focusedContainerColor = Color(0xFF2f2f2f)
+                unfocusedContainerColor = Grey100,
+                focusedContainerColor = Grey100
             ),
             shape = RoundedCornerShape(10.dp),
             placeholder = {
                 Text(
                     text = stringResource(id = R.string.sign_up_password_placeholder),
-                    color = Color(0xFFa8a8a8)
+                    color = Grey200
                 )
             },
             visualTransformation = if (isVisible) VisualTransformation.None else PasswordVisualTransformation(),
             trailingIcon = {
                 Text(
                     text = stringResource(id = if (isVisible) R.string.hide_password_button else R.string.show_password_button),
-                    color = Color(0xFFfbfbfb),
+                    color = White100,
                     modifier = Modifier
                         .padding(end = 12.dp)
                         .clickable(onClick = onVisibilityChange)
@@ -209,12 +209,12 @@ fun SignUpPasswordField(
             Icon(
                 imageVector = Icons.Outlined.Info,
                 contentDescription = stringResource(id = R.string.sign_up_password_description),
-                tint = Color(0xFFb6b6b6)
+                tint = White100
             )
             Spacer(modifier = Modifier.width(5.dp))
             Text(
                 text = stringResource(id = R.string.sign_up_password_caution),
-                color = Color(0xFFb6b6b6),
+                color = White100,
                 style = TextStyle(fontSize = 11.sp)
             )
         }
@@ -226,12 +226,12 @@ fun Greeting(fontSize: Int) {
     Row {
         Text(
             text = stringResource(id = R.string.sign_up_focused_welcome_text_first_line),
-            color = Color(0xFFfbfbfb),
+            color = White100,
             style = TextStyle(fontSize = fontSize.sp)
         )
         Text(
             text = stringResource(id = R.string.sign_up_remainder_welcome_text_first_line),
-            color = Color(0xFF9f9f9f),
+            color = Grey200,
             style = TextStyle(fontSize = fontSize.sp)
         )
     }
@@ -239,12 +239,12 @@ fun Greeting(fontSize: Int) {
     Row {
         Text(
             text = stringResource(id = R.string.sign_up_focused_welcome_text_second_line),
-            color = Color(0xFFfbfbfb),
+            color = White100,
             style = TextStyle(fontSize = fontSize.sp)
         )
         Text(
             text = stringResource(id = R.string.sign_up_remainder_welcome_text_second_line),
-            color = Color(0xFF9f9f9f),
+            color = Grey200,
             style = TextStyle(fontSize = fontSize.sp)
         )
     }
@@ -262,13 +262,13 @@ fun SignUpTop() {
         )
         Text(
             text = stringResource(id = R.string.sign_up_screen_title),
-            color = Color(0xFFfbfbfb),
+            color = White100,
             style = TextStyle(fontSize = 18.sp)
         )
         Icon(
             imageVector = Icons.Default.Close,
             contentDescription = stringResource(id = R.string.sign_up_close_description),
-            tint = Color(0xFFfbfbfb),
+            tint = White100,
             modifier = Modifier.size(36.dp)
         )
     }
@@ -312,8 +312,8 @@ fun SignUpBtn(
             .height(60.dp),
         shape = RoundedCornerShape(0.dp),
         colors = ButtonDefaults.buttonColors(
-            containerColor = Color(0xFF717171),
-            contentColor = Color(0xFFfcfbfc)
+            containerColor = Grey200,
+            contentColor = White100
         )
     ) {
         Text(

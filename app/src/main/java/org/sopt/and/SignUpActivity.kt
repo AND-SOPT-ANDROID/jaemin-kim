@@ -33,9 +33,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.ParagraphStyle
+import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.style.LineHeightStyle
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import org.sopt.and.ui.theme.*
 import org.sopt.and.ui.theme.ANDANDROIDTheme
@@ -182,36 +188,60 @@ fun SignUpPasswordField(
 
 @Composable
 fun Greeting(fontSize: Int) {
-    Row {
-        
-        Text(
-            text = stringResource(id = R.string.sign_up_focused_welcome_text_first_line),
-            color = White100,
-            style = TextStyle(fontSize = fontSize.sp)
-        )
+    val firstLineFocusedText = stringResource(id = R.string.sign_up_focused_welcome_text_first_line)
+    val firstLineRemainderText = stringResource(id = R.string.sign_up_remainder_welcome_text_first_line)
+    val secondLineFocusedText = stringResource(id = R.string.sign_up_focused_welcome_text_second_line)
+    val secondLineRemainderText = stringResource(id = R.string.sign_up_remainder_welcome_text_second_line)
 
-        Text(
-            text = stringResource(id = R.string.sign_up_remainder_welcome_text_first_line),
-            color = Grey200,
-            style = TextStyle(fontSize = fontSize.sp)
-        )
-    }
+    Text(
+        buildAnnotatedString {
+            withStyle(
+                style = ParagraphStyle(
+                    lineHeight = 2.em,
+                    lineHeightStyle = LineHeightStyle(
+                        alignment = LineHeightStyle.Alignment.Top,
+                        trim = LineHeightStyle.Trim.Both
+                    )
+                )
+            ) {
+                withStyle(
+                    style = SpanStyle(
+                        color = White100,
+                        fontSize = fontSize.sp
+                    )
+                ) {
+                    append(firstLineFocusedText)
+                }
 
-    Spacer(modifier = Modifier.height(4.dp))
+                withStyle(
+                    style = SpanStyle(
+                        color = Grey200,
+                        fontSize = fontSize.sp
+                    )
+                ) {
+                    append(firstLineRemainderText)
+                }
 
-    Row {
-        Text(
-            text = stringResource(id = R.string.sign_up_focused_welcome_text_second_line),
-            color = White100,
-            style = TextStyle(fontSize = fontSize.sp)
-        )
+                withStyle(
+                    style = SpanStyle(
+                        color = White100,
+                        fontSize = fontSize.sp
+                    )
+                ) {
+                    append(secondLineFocusedText)
+                }
 
-        Text(
-            text = stringResource(id = R.string.sign_up_remainder_welcome_text_second_line),
-            color = Grey200,
-            style = TextStyle(fontSize = fontSize.sp)
-        )
-    }
+                withStyle(
+                    style = SpanStyle(
+                        color = Grey200,
+                        fontSize = fontSize.sp
+                    )
+                ) {
+                    append(secondLineRemainderText)
+                }
+            }
+        }
+    )
 }
 
 @Composable
@@ -304,12 +334,12 @@ fun SignUpScreenPreview() {
                 modifier = Modifier
                     .padding(innerPadding),
                 onSignUpComplete = { email, password -> },
-                email = TODO(),
-                onEmailChange = TODO(),
-                password = TODO(),
-                onPasswordChange = TODO(),
-                isPasswordVisible = TODO(),
-                onVisibilityChange = TODO()
+                email = "",
+                onEmailChange = { TODO() },
+                password = "",
+                onPasswordChange = { },
+                isPasswordVisible = false,
+                onVisibilityChange = { }
             )
         }
     }

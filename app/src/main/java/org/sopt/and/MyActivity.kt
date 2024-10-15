@@ -84,19 +84,25 @@ fun MyScreen(
                     modifier = Modifier.size(80.dp),
                     tint = White100
                 )
+
                 Spacer(modifier = Modifier.width(5.dp))
+
                 Text(
                     text = myEmail,
                     color = White100
                 )
+
                 Spacer(modifier = Modifier.weight(1f))
+
                 Icon(
                     imageVector = Icons.Outlined.Notifications,
                     contentDescription = stringResource(id = R.string.my_notification_icon_description),
                     modifier = Modifier.size(30.dp),
                     tint = White100
                 )
+
                 Spacer(modifier = Modifier.width(24.dp))
+
                 Icon(
                     imageVector = Icons.Outlined.Settings,
                     contentDescription = stringResource(id = R.string.my_setting_icon_description),
@@ -104,19 +110,24 @@ fun MyScreen(
                     tint = White100
                 )
             }
+
             Spacer(modifier = Modifier.height(25.dp))
 
             Text(
                 text = stringResource(id = R.string.my_first_payment_text),
                 color = White100
             )
+
             Spacer(modifier = Modifier.height(4.dp))
+
             Text(
                 text = stringResource(id = R.string.my_to_payment_button),
                 color = White100
             )
         }
+
         Spacer(modifier = Modifier.height(2.dp))
+
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -128,7 +139,9 @@ fun MyScreen(
                 text = stringResource(id = R.string.my_no_ticket_text),
                 color = White100
             )
+
             Spacer(modifier = Modifier.height(4.dp))
+
             Text(
                 text = stringResource(id = R.string.my_to_payment_button),
                 color = White100
@@ -139,6 +152,7 @@ fun MyScreen(
             stringResource(R.string.my_viewing_history_box_empty_text),
             modifier = Modifier.weight(0.3f)
         )
+
         EmptyBox(
             stringResource(
                 R.string.my_program_of_interest_box_title
@@ -168,6 +182,7 @@ fun EmptyBox(
                 fontWeight = FontWeight(1000)
             )
         )
+
         Row(
             modifier = Modifier.fillMaxSize(),
             horizontalArrangement = Arrangement.Center
@@ -183,7 +198,9 @@ fun EmptyBox(
                     modifier = Modifier.size(40.dp),
                     tint = White100
                 )
+
                 Spacer(modifier = Modifier.height(10.dp))
+
                 Text(
                     text = description,
                     color = White100

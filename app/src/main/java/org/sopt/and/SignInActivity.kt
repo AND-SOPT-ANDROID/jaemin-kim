@@ -27,8 +27,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -40,8 +38,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -51,13 +47,18 @@ import org.sopt.and.ui.theme.ANDANDROIDTheme
 
 class SignInActivity : ComponentActivity() {
 
-    lateinit var eMail: String
-    lateinit var password: String
+    var email by mutableStateOf("")
+    var password by mutableStateOf("")
+    var isPasswordVisible by mutableStateOf(false)
+
+    var myEmail: String? by mutableStateOf("")
+    var myPassword: String? by mutableStateOf("")
+
     private val signUpLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             if (result.resultCode == RESULT_OK) {
-                eMail = result.data?.getStringExtra(Companion.EMAIL_KEY) ?: ""
-                password = result.data?.getStringExtra(Companion.PASSWORD_KEY) ?: ""
+                myEmail = result.data?.getStringExtra(Companion.EMAIL_KEY) ?: ""
+                myPassword = result.data?.getStringExtra(Companion.PASSWORD_KEY) ?: ""
             }
         }
 
@@ -80,7 +81,7 @@ class SignInActivity : ComponentActivity() {
                             signUpLauncher.launch(intent)
                         },
                         onLoginClick = { enteredEmail, enteredPassword ->
-                            if (enteredEmail == eMail && enteredPassword == password) {
+                            if (enteredEmail == myEmail && enteredPassword == myPassword) {
                                 scope.launch {
                                     snackbarHostState.showSnackbar(message = getString(R.string.sign_in_success_message))
                                 }
@@ -93,7 +94,15 @@ class SignInActivity : ComponentActivity() {
                                     snackbarHostState.showSnackbar(message = getString(R.string.sign_in_failed_message))
                                 }
                             }
-                        }
+                        },
+                        email = email,
+                        onEmailChange = { newValue ->
+                            email = newValue
+                        },
+                        password = password,
+                        onPasswordChange = { newValue -> password = newValue },
+                        isPasswordVisible = isPasswordVisible,
+                        onVisibilityChange = { isPasswordVisible = !isPasswordVisible }
                     )
                 }
             }
@@ -105,11 +114,14 @@ class SignInActivity : ComponentActivity() {
 fun SignInScreen(
     modifier: Modifier = Modifier,
     onSignUpClick: () -> Unit,
-    onLoginClick: (String, String) -> Unit
+    onLoginClick: (String, String) -> Unit,
+    email: String,
+    onEmailChange: (String) -> Unit,
+    password: String,
+    onPasswordChange: (String) -> Unit,
+    isPasswordVisible: Boolean,
+    onVisibilityChange: () -> Unit
 ) {
-    var eMail by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-    var passwordVisibility by remember { mutableStateOf(false) }
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -133,6 +145,7 @@ fun SignInScreen(
                         .size(48.dp),
                     tint = White100
                 )
+
                 Text(
                     text = stringResource(id = R.string.app_name),
                     color = White100,
@@ -141,21 +154,24 @@ fun SignInScreen(
                         fontWeight = FontWeight(800)
                     )
                 )
+
                 Spacer(modifier = Modifier.size(48.dp))
             }
+
             Spacer(modifier = Modifier.height(60.dp))
 
             SignInEMailField(
-                eMail = eMail,
-                onEmailChange = { newEmail -> eMail = newEmail }
+                email = email,
+                onEmailChange = onEmailChange
             )
+
             Spacer(modifier = Modifier.height(5.dp))
 
             SignInPasswordField(
                 password = password,
-                onPasswordChange = { newPassword -> password = newPassword },
-                isVisible = passwordVisibility,
-                onVisibilityChange = { passwordVisibility = !passwordVisibility }
+                onPasswordChange = onPasswordChange,
+                isPasswordVisible = isPasswordVisible,
+                onVisibilityChange = onVisibilityChange
             )
 
             Spacer(modifier = Modifier.height(30.dp))
@@ -165,7 +181,7 @@ fun SignInScreen(
                     .fillMaxWidth()
                     .height(50.dp),
                 onClick = {
-                    onLoginClick(eMail, password)
+                    onLoginClick(email, password)
                 },
                 shape = RoundedCornerShape(50.dp),
                 colors = ButtonDefaults.buttonColors(
@@ -177,7 +193,9 @@ fun SignInScreen(
                     text = stringResource(id = R.string.sign_in_button)
                 )
             }
+
             Spacer(modifier = Modifier.height(20.dp))
+
             Row(
                 modifier = Modifier.fillMaxWidth(0.6f),
                 horizontalArrangement = Arrangement.SpaceBetween
@@ -189,6 +207,7 @@ fun SignInScreen(
                         fontSize = 11.sp
                     )
                 )
+
                 Text(
                     text = stringResource(id = R.string.seperator),
                     color = Grey200,
@@ -196,6 +215,7 @@ fun SignInScreen(
                         fontSize = 11.sp
                     )
                 )
+
                 Text(
                     text = stringResource(id = R.string.sign_in_to_reset_password_button),
                     color = Grey200,
@@ -203,6 +223,7 @@ fun SignInScreen(
                         fontSize = 11.sp
                     )
                 )
+
                 Text(
                     text = stringResource(id = R.string.seperator),
                     color = Grey200,
@@ -210,6 +231,7 @@ fun SignInScreen(
                         fontSize = 11.sp
                     )
                 )
+
                 Text(
                     text = stringResource(id = R.string.sign_in_to_sign_up_button),
                     color = Grey200,
@@ -225,25 +247,13 @@ fun SignInScreen(
 
 @Composable
 fun SignInEMailField(
-    eMail: String,
+    email: String,
     onEmailChange: (String) -> Unit
 ) {
-    TextField(
-        value = eMail,
+    SignInOrSignUpTextField(
+        emailOrPassword = email,
         onValueChange = onEmailChange,
-        modifier = Modifier.fillMaxWidth(),
-        colors = TextFieldDefaults.colors(
-            unfocusedContainerColor = Grey100,
-            focusedContainerColor = Grey100
-        ),
-        shape = RoundedCornerShape(10.dp),
-        placeholder = {
-            Text(
-                text = stringResource(id = R.string.sign_in_email_placeholder),
-                color = Grey200,
-                style = TextStyle(fontSize = 12.sp)
-            )
-        }
+        placeholder = R.string.sign_in_email_placeholder
     )
 }
 
@@ -251,35 +261,16 @@ fun SignInEMailField(
 fun SignInPasswordField(
     password: String,
     onPasswordChange: (String) -> Unit,
-    isVisible: Boolean,
+    isPasswordVisible: Boolean,
     onVisibilityChange: () -> Unit
 ) {
-    TextField(
-        value = password,
+    SignInOrSignUpTextField(
+        emailOrPassword = password,
         onValueChange = onPasswordChange,
-        modifier = Modifier.fillMaxWidth(),
-        colors = TextFieldDefaults.colors(
-            unfocusedContainerColor = Grey100,
-            focusedContainerColor = Grey100
-        ),
-        shape = RoundedCornerShape(10.dp),
-        placeholder = {
-            Text(
-                text = stringResource(id = R.string.sign_in_password_placeholder),
-                color = Grey200,
-                style = TextStyle(fontSize = 12.sp)
-            )
-        },
-        visualTransformation = if (isVisible) VisualTransformation.None else PasswordVisualTransformation(),
+        placeholder = R.string.sign_in_password_placeholder,
+        visualTransformation = transformationPasswordVisual(isPasswordVisible),
         trailingIcon = {
-            Text(
-                text = stringResource(id = if (isVisible) R.string.hide_password_button else R.string.show_password_button),
-                color = White100,
-                modifier = Modifier
-                    .padding(end = 12.dp)
-                    .clickable(onClick = onVisibilityChange),
-                style = TextStyle(fontSize = 12.sp)
-            )
+            ShowAndHideToggle(isPasswordVisible, onVisibilityChange)
         }
     )
 }
@@ -295,7 +286,13 @@ fun SignInScreenPreview() {
             SignInScreen(
                 modifier = Modifier.padding(innerPadding),
                 onSignUpClick = {},
-                onLoginClick = { email, password -> }
+                onLoginClick = { email, password -> },
+                email = TODO(),
+                onEmailChange = TODO(),
+                password = TODO(),
+                onPasswordChange = TODO(),
+                isPasswordVisible = TODO(),
+                onVisibilityChange = TODO(),
             )
         }
     }

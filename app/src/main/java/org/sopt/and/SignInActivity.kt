@@ -65,7 +65,6 @@ class SignInActivity : ComponentActivity() {
 
         super.onCreate(savedInstanceState)
 
-
         setContent {
             ANDANDROIDTheme {
                 val snackbarHostState = remember { SnackbarHostState() }
@@ -221,7 +220,6 @@ fun SignIn(
                 )
             }
         }
-
     }
 }
 

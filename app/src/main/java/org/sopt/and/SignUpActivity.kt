@@ -344,11 +344,11 @@ fun SignUpPreview() {
 }
 
 // 이메일 양식을 확인하는 검증함수
-fun validateEmail(email: String): Boolean {
-    return PatternsCompat.EMAIL_ADDRESS.matcher(email).matches()
-}
+fun validateEmail(email: String): Boolean = PatternsCompat
+    .EMAIL_ADDRESS
+    .matcher(email)
+    .matches()
 
-// 일단 3가지를 만족시키는 정규식 4개를 다 만들고 이중 하나라도 만족하면 통과
 fun validatePassword(password: String): Boolean {
     if (password.length !in Companion.MIN_PASSWORD_LENGTH..Companion.MAX_PASSWORD_LENGTH) return false
 

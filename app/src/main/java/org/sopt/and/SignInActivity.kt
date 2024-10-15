@@ -83,7 +83,7 @@ class SignInActivity : ComponentActivity() {
                         onLoginClick = { enteredEmail, enteredPassword ->
                             if (enteredEmail == eMail && enteredPassword == password) {
                                 scope.launch {
-                                    snackbarHostState.showSnackbar(message = getString(R.string.login_success_message))
+                                    snackbarHostState.showSnackbar(message = getString(R.string.sign_in_success_message))
                                 }
                                 val intent = Intent(this, MyActivity::class.java).apply {
                                     putExtra("myEmail", enteredEmail)
@@ -91,7 +91,7 @@ class SignInActivity : ComponentActivity() {
                                 startActivity(intent)
                             } else {
                                 scope.launch {
-                                    snackbarHostState.showSnackbar(message = getString(R.string.login_failed_message))
+                                    snackbarHostState.showSnackbar(message = getString(R.string.sign_in_failed_message))
                                 }
                             }
                         }
@@ -129,7 +129,7 @@ fun SignIn(
             ) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Default.KeyboardArrowLeft,
-                    contentDescription = stringResource(id = R.string.sign_in_screen_back_icon_description),
+                    contentDescription = stringResource(id = R.string.sign_in_to_back_screen_description),
                     modifier = Modifier
                         .size(48.dp),
                     tint = Color(0xFFFDFDFD)
@@ -184,7 +184,7 @@ fun SignIn(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = stringResource(id = R.string.to_find_id_button),
+                    text = stringResource(id = R.string.sign_in_to_find_id_button),
                     color = Color(0xFFa8a8a8),
                     style = TextStyle(
                         fontSize = 11.sp
@@ -198,7 +198,7 @@ fun SignIn(
                     )
                 )
                 Text(
-                    text = stringResource(id = R.string.to_reset_password_button),
+                    text = stringResource(id = R.string.sign_in_to_reset_password_button),
                     color = Color(0xFFa8a8a8),
                     style = TextStyle(
                         fontSize = 11.sp
@@ -212,7 +212,7 @@ fun SignIn(
                     )
                 )
                 Text(
-                    text = stringResource(id = R.string.to_sign_up_button),
+                    text = stringResource(id = R.string.sign_in_to_sign_up_button),
                     color = Color(0xFFa8a8a8),
                     modifier = Modifier.clickable { onSignUpClick() },
                     style = TextStyle(

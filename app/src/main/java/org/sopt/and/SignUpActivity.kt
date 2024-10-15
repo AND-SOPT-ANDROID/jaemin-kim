@@ -350,16 +350,15 @@ fun validateEmail(email: String): Boolean {
 
 // 일단 3가지를 만족시키는 정규식 4개를 다 만들고 이중 하나라도 만족하면 통과
 fun validatePassword(password: String): Boolean {
-    val passwordPatternExceptLower =
-        """^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$""".toRegex()
-    val passwordPatternExceptUpper =
-        """^(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$""".toRegex()
-    val passwordPatternExceptNumber =
-        """^(?=.*[A-Z])(?=.*[a-z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$""".toRegex()
-    val passwordPatternExceptSpecial =
-        """^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,20}$""".toRegex()
-    return passwordPatternExceptLower.matches(password) ||
-            passwordPatternExceptUpper.matches(password) ||
-            passwordPatternExceptSpecial.matches(password) ||
-            passwordPatternExceptNumber.matches(password)
+    if (password.length !in Companion.MIN_PASSWORD_LENGTH..Companion.MAX_PASSWORD_LENGTH) return false
+
+    val validateValues = listOf<Boolean>(
+        password.any { it.isLowerCase() },
+        password.any { it.isUpperCase() },
+        password.any { it.isDigit() },
+        password.any { !it.isLetterOrDigit() }
+    )
+    val isValidate = validateValues.count { it } >= 3
+
+    return isValidate
 }

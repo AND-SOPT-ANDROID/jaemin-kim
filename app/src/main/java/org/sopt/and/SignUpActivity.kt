@@ -225,12 +225,12 @@ fun SignUpPasswordField(
 fun Greeting(fontSize: Int) {
     Row {
         Text(
-            text = stringResource(id = R.string.focused_welcome_text_first_line),
+            text = stringResource(id = R.string.sign_up_focused_welcome_text_first_line),
             color = Color(0xFFfbfbfb),
             style = TextStyle(fontSize = fontSize.sp)
         )
         Text(
-            text = stringResource(id = R.string.remainder_welcome_text_first_line),
+            text = stringResource(id = R.string.sign_up_remainder_welcome_text_first_line),
             color = Color(0xFF9f9f9f),
             style = TextStyle(fontSize = fontSize.sp)
         )
@@ -238,12 +238,12 @@ fun Greeting(fontSize: Int) {
     Spacer(modifier = Modifier.height(4.dp))
     Row {
         Text(
-            text = stringResource(id = R.string.focused_welcome_text_second_line),
+            text = stringResource(id = R.string.sign_up_focused_welcome_text_second_line),
             color = Color(0xFFfbfbfb),
             style = TextStyle(fontSize = fontSize.sp)
         )
         Text(
-            text = stringResource(id = R.string.remainder_welcome_text_second_line),
+            text = stringResource(id = R.string.sign_up_remainder_welcome_text_second_line),
             color = Color(0xFF9f9f9f),
             style = TextStyle(fontSize = fontSize.sp)
         )
@@ -267,7 +267,7 @@ fun SignUpTop() {
         )
         Icon(
             imageVector = Icons.Default.Close,
-            contentDescription = stringResource(id = R.string.close_sign_up_description),
+            contentDescription = stringResource(id = R.string.sign_up_close_description),
             tint = Color(0xFFfbfbfb),
             modifier = Modifier.size(36.dp)
         )

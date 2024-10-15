@@ -76,7 +76,7 @@ fun My(
             ) {
                 Icon(
                     imageVector = Icons.Default.AccountCircle,
-                    contentDescription = stringResource(id = R.string.my_screen_account_icon_description),
+                    contentDescription = stringResource(id = R.string.my_account_icon_description),
                     modifier = Modifier.size(80.dp),
                     tint = Color(0xFFF2F2F2)
                 )
@@ -88,14 +88,14 @@ fun My(
                 Spacer(modifier = Modifier.weight(1f))
                 Icon(
                     imageVector = Icons.Outlined.Notifications,
-                    contentDescription = stringResource(id = R.string.my_screen_notification_icon_description),
+                    contentDescription = stringResource(id = R.string.my_notification_icon_description),
                     modifier = Modifier.size(30.dp),
                     tint = Color(0xFFF2F2F2)
                 )
                 Spacer(modifier = Modifier.width(24.dp))
                 Icon(
                     imageVector = Icons.Outlined.Settings,
-                    contentDescription = stringResource(id = R.string.my_screen_setting_icon_description),
+                    contentDescription = stringResource(id = R.string.my_setting_icon_description),
                     modifier = Modifier.size(30.dp),
                     tint = Color(0xFFF2F2F2)
                 )
@@ -103,12 +103,12 @@ fun My(
             Spacer(modifier = Modifier.height(25.dp))
 
             Text(
-                text = stringResource(id = R.string.first_payment_text),
+                text = stringResource(id = R.string.my_first_payment_text),
                 color = Color(0xFF9A9A9A)
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
-                text = stringResource(id = R.string.to_payment_button),
+                text = stringResource(id = R.string.my_to_payment_button),
                 color = Color(0xFFF2F2F2)
             )
         }
@@ -121,25 +121,25 @@ fun My(
                 .padding(16.dp)
         ) {
             Text(
-                text = stringResource(id = R.string.no_ticket_text),
+                text = stringResource(id = R.string.my_no_ticket_text),
                 color = Color(0xFF9A9A9A)
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
-                text = stringResource(id = R.string.to_payment_button),
+                text = stringResource(id = R.string.my_to_payment_button),
                 color = Color(0xFFF2F2F2)
             )
         }
         EmptyBox(
-            stringResource(R.string.viewing_history_box_title),
-            stringResource(R.string.viewing_history_box_empty_text),
+            stringResource(R.string.my_viewing_history_box_title),
+            stringResource(R.string.my_viewing_history_box_empty_text),
             modifier = Modifier.weight(0.3f)
         )
         EmptyBox(
             stringResource(
-                R.string.program_of_interest_box_title
+                R.string.my_program_of_interest_box_title
             ),
-            stringResource(R.string.program_of_interest_empty_text),
+            stringResource(R.string.my_program_of_interest_empty_text),
             modifier = Modifier.weight(0.3f)
         )
     }

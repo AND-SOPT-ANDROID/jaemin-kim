@@ -56,8 +56,8 @@ class SignInActivity : ComponentActivity() {
     private val signUpLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             if (result.resultCode == RESULT_OK) {
-                eMail = result.data?.getStringExtra("email") ?: ""
-                password = result.data?.getStringExtra("password") ?: ""
+                eMail = result.data?.getStringExtra(Companion.EMAIL_KEY) ?: ""
+                password = result.data?.getStringExtra(Companion.PASSWORD_KEY) ?: ""
             }
         }
 
@@ -85,7 +85,7 @@ class SignInActivity : ComponentActivity() {
                                     snackbarHostState.showSnackbar(message = getString(R.string.sign_in_success_message))
                                 }
                                 val intent = Intent(this, MyActivity::class.java).apply {
-                                    putExtra("myEmail", enteredEmail)
+                                    putExtra(Companion.MY_EMAIL_KEY, enteredEmail)
                                 }
                                 startActivity(intent)
                             } else {

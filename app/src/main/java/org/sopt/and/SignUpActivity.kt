@@ -61,8 +61,8 @@ class SignUpActivity : ComponentActivity() {
                         modifier = Modifier.padding(innerPadding)
                     ) { email, password ->
                         val intent = Intent(this@SignUpActivity, SignInActivity::class.java).apply {
-                            putExtra("email", email)
-                            putExtra("password", password)
+                            putExtra(Companion.EMAIL_KEY, email)
+                            putExtra(Companion.PASSWORD_KEY, password)
                         }
                         setResult(RESULT_OK, intent)
 //                        startActivity(intent)   // 요녀석 수상하다

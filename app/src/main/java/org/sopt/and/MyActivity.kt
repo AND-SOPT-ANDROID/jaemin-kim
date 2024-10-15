@@ -40,7 +40,9 @@ import org.sopt.and.ui.theme.White100
 class MyActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val myEmail = intent.getStringExtra("myEmail") ?: ""
+
+        val myEmail = intent.getStringExtra(Companion.MY_EMAIL_KEY) ?: ""
+
         setContent {
             ANDANDROIDTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->

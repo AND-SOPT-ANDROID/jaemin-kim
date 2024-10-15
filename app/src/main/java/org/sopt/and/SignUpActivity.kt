@@ -57,7 +57,7 @@ class SignUpActivity : ComponentActivity() {
                 Scaffold(
                     modifier = Modifier.fillMaxSize()
                 ) { innerPadding ->
-                    SignUp(
+                    SignUpScreen(
                         modifier = Modifier.padding(innerPadding)
                     ) { email, password ->
                         val intent = Intent(this@SignUpActivity, SignInActivity::class.java).apply {
@@ -65,7 +65,6 @@ class SignUpActivity : ComponentActivity() {
                             putExtra(Companion.PASSWORD_KEY, password)
                         }
                         setResult(RESULT_OK, intent)
-//                        startActivity(intent)   // 요녀석 수상하다
                         finish()
                     }
                 }
@@ -75,7 +74,7 @@ class SignUpActivity : ComponentActivity() {
 }
 
 @Composable
-fun SignUp(
+fun SignUpScreen(
     modifier: Modifier = Modifier,
     onSignUpComplete: (String, String) -> Unit
 ) {
@@ -124,7 +123,6 @@ fun SignUp(
             onSignUpComplete = onSignUpComplete
         )
     }
-
 }
 
 @Composable
@@ -328,13 +326,13 @@ fun SignUpBtn(
     showSystemUi = true
 )
 @Composable
-fun SignUpPreview() {
+fun SignUpScreenPreview() {
     ANDANDROIDTheme {
         Scaffold(
             modifier = Modifier
                 .fillMaxSize()
         ) { innerPadding ->
-            SignUp(
+            SignUpScreen(
                 modifier = Modifier
                     .padding(innerPadding),
                 onSignUpComplete = { email, password -> }

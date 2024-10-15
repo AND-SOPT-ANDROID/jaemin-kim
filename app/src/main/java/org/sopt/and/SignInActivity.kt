@@ -73,7 +73,7 @@ class SignInActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
                 ) { innerPadding ->
-                    SignIn(
+                    SignInScreen(
                         modifier = Modifier.padding(innerPadding),
                         onSignUpClick = {
                             val intent = Intent(this, SignUpActivity::class.java)
@@ -102,7 +102,7 @@ class SignInActivity : ComponentActivity() {
 }
 
 @Composable
-fun SignIn(
+fun SignInScreen(
     modifier: Modifier = Modifier,
     onSignUpClick: () -> Unit,
     onLoginClick: (String, String) -> Unit
@@ -289,10 +289,10 @@ fun SignInPasswordField(
     showSystemUi = true
 )
 @Composable
-fun SignInPreview() {
+fun SignInScreenPreview() {
     ANDANDROIDTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-            SignIn(
+            SignInScreen(
                 modifier = Modifier.padding(innerPadding),
                 onSignUpClick = {},
                 onLoginClick = { email, password -> }

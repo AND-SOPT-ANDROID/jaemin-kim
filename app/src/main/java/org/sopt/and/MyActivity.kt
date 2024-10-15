@@ -46,7 +46,7 @@ class MyActivity : ComponentActivity() {
         setContent {
             ANDANDROIDTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    My(
+                    MyScreen(
                         modifier = Modifier.padding(innerPadding),
                         myEmail
                     )
@@ -57,7 +57,7 @@ class MyActivity : ComponentActivity() {
 }
 
 @Composable
-fun My(
+fun MyScreen(
     modifier: Modifier = Modifier,
     myEmail: String
 ) {
@@ -198,10 +198,10 @@ fun EmptyBox(
     showSystemUi = true
 )
 @Composable
-fun MyPreview() {
+fun MyScreenPreview() {
     ANDANDROIDTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-            My(
+            MyScreen(
                 modifier = Modifier.padding(innerPadding),
                 myEmail = "내 이메일"
             )

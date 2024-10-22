@@ -127,6 +127,10 @@ fun SignUpScreen(
                 isPasswordVisible = isPasswordVisible,
                 onVisibilityChange = onVisibilityChange
             )
+
+            Spacer(modifier = Modifier.size(40.dp))
+
+            LinkWithSNSBox(stringResource(R.string.sign_in_link_with_another_service_title))
         }
 
         SignUpBtn(
@@ -189,9 +193,12 @@ fun SignUpPasswordField(
 @Composable
 fun Greeting(fontSize: Int) {
     val firstLineFocusedText = stringResource(id = R.string.sign_up_focused_welcome_text_first_line)
-    val firstLineRemainderText = stringResource(id = R.string.sign_up_remainder_welcome_text_first_line)
-    val secondLineFocusedText = stringResource(id = R.string.sign_up_focused_welcome_text_second_line)
-    val secondLineRemainderText = stringResource(id = R.string.sign_up_remainder_welcome_text_second_line)
+    val firstLineRemainderText =
+        stringResource(id = R.string.sign_up_remainder_welcome_text_first_line)
+    val secondLineFocusedText =
+        stringResource(id = R.string.sign_up_focused_welcome_text_second_line)
+    val secondLineRemainderText =
+        stringResource(id = R.string.sign_up_remainder_welcome_text_second_line)
 
     Text(
         buildAnnotatedString {

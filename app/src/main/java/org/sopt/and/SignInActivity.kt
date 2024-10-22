@@ -241,6 +241,10 @@ fun SignInScreen(
                     )
                 )
             }
+
+            Spacer(modifier = Modifier.size(40.dp))
+
+            LinkWithSNSBox(stringResource(R.string.sign_in_link_with_another_service_title))
         }
     }
 }

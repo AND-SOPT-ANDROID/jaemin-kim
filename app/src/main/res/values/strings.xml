@@ -4,6 +4,14 @@
     <string name="seperator">|</string>
     <string name="hide_password_button">hide</string>
     <string name="show_password_button">show</string>
+    <string name="link_kakao_icon_description">카카오 계정과 연동하는 아이콘</string>
+    <string name="link_tworld_icon_description">T World 계정과 연동하는 아이콘</string>
+    <string name="link_naver_icon_description">네이버 계정과 연동하는 아이콘</string>
+    <string name="link_facebook_icon_description">페이스북 계정과 연동하는 아이콘</string>
+    <string name="link_apple_icon_description">애플 계정과 연동하는 아이콘</string>
+    <string name="link_with_another_service_description">• SNS계정으로 간편하게 가입하여 서비스를 이용하실 수 있습니다.\n
+  기존 POOQ 계정 또는 Wavve 계정과는 연동되지 않으니 이용에 참고하세요.</string>
+
 
     <!--signup-->
     <string name="sign_up_screen_title">회원가입</string>
@@ -22,6 +30,7 @@
     <string name="sign_up_remainder_welcome_text_first_line">만으로\n</string>
     <string name="sign_up_focused_welcome_text_second_line">Wavve를 즐길 수 </string>
     <string name="sign_up_remainder_welcome_text_second_line">있어요!</string>
+    <string name="sign_up_link_with_another_service_title">또는 다른 서비스 계정으로 가입</string>
 
     <!--signin-->
     <string name="sign_in_button">로그인</string>
@@ -33,6 +42,8 @@
     <string name="sign_in_success_message">로그인 성공. 환영합니다~</string>
     <string name="sign_in_failed_message">로그인 실패. 다시 시도해 주세요</string>
     <string name="sign_in_to_back_screen_description">이전 화면으로 가기</string>
+    <string name="sign_in_link_with_another_service_title">또는 다른 서비스 계정으로 로그인</string>
+
 
     <!--my-->
     <string name="my_account_icon_description">내 프로필</string>

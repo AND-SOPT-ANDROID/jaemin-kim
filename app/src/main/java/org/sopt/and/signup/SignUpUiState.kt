@@ -1,4 +1,4 @@
-package org.sopt.and
+package org.sopt.and.signup
 
 data class SignUpUiState(
     val signUpEmail: String = "",

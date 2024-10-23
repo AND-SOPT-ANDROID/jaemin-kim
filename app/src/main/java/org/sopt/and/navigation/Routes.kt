@@ -1,11 +1,11 @@
-package org.sopt.and
+package org.sopt.and.navigation
 
 import kotlinx.serialization.Serializable
 
 
 object Routes {
     @Serializable
-    data class My(
+    data class MyInfo(
         val myEmail: String
     )
 

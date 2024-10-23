@@ -32,7 +32,7 @@
             android:exported="false" />
 
         <activity
-            android:name=".MyActivity"
+            android:name=".myinfo.MyActivity"
             android:exported="false" />
 
     </application>

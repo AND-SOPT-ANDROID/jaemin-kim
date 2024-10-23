@@ -39,10 +39,10 @@ import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat.getString
 import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.launch
-import org.sopt.and.LinkWithSNSBox
 import org.sopt.and.R
-import org.sopt.and.ShowAndHideToggle
-import org.sopt.and.SignInOrSignUpTextField
+import org.sopt.and.components.LinkWithSNSBox
+import org.sopt.and.components.ShowOrHideToggle
+import org.sopt.and.components.SignInOrSignUpTextField
 import org.sopt.and.transformationPasswordVisual
 import org.sopt.and.ui.theme.*
 import org.sopt.and.ui.theme.ANDANDROIDTheme
@@ -61,9 +61,9 @@ fun SignInScreen(
     val signInViewModel = viewModel<SignInViewModel>()
     val signInUiState by signInViewModel.uiState.collectAsState()
 
-    val email = signInUiState.signInEmail
-    val password = signInUiState.signInPassword
-    val isPasswordVisible = signInUiState.isSignInPasswordVisible
+    val signInEmail = signInUiState.signInEmail
+    val signInPassword = signInUiState.signInPassword
+    val isSignInPasswordVisible = signInUiState.isSignInPasswordVisible
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -111,16 +111,16 @@ fun SignInScreen(
                 Spacer(modifier = Modifier.height(60.dp))
 
                 SignInEmailField(
-                    email = email,
-                    onEmailChange = signInViewModel::setSignInEmail
+                    signInEmail = signInEmail,
+                    onSignInEmailChange = signInViewModel::setSignInEmail
                 )
 
                 Spacer(modifier = Modifier.height(5.dp))
 
                 SignInPasswordField(
-                    password = password,
-                    onPasswordChange = signInViewModel::setSignInPassword,
-                    isPasswordVisible = isPasswordVisible,
+                    signInPassword = signInPassword,
+                    onSignInPasswordChange = signInViewModel::setSignInPassword,
+                    isSignInPasswordVisible = isSignInPasswordVisible,
                     onVisibilityChange = signInViewModel::changeSignInPasswordVisibility
                 )
 
@@ -222,30 +222,30 @@ fun SignInScreen(
 
 @Composable
 fun SignInEmailField(
-    email: String,
-    onEmailChange: (String) -> Unit
+    signInEmail: String,
+    onSignInEmailChange: (String) -> Unit
 ) {
     SignInOrSignUpTextField(
-        emailOrPassword = email,
-        onValueChange = onEmailChange,
+        emailOrPassword = signInEmail,
+        onValueChange = onSignInEmailChange,
         placeholder = R.string.sign_in_email_placeholder
     )
 }
 
 @Composable
 fun SignInPasswordField(
-    password: String,
-    onPasswordChange: (String) -> Unit,
-    isPasswordVisible: Boolean,
+    signInPassword: String,
+    onSignInPasswordChange: (String) -> Unit,
+    isSignInPasswordVisible: Boolean,
     onVisibilityChange: () -> Unit
 ) {
     SignInOrSignUpTextField(
-        emailOrPassword = password,
-        onValueChange = onPasswordChange,
+        emailOrPassword = signInPassword,
+        onValueChange = onSignInPasswordChange,
         placeholder = R.string.sign_in_password_placeholder,
-        visualTransformation = transformationPasswordVisual(isPasswordVisible),
+        visualTransformation = transformationPasswordVisual(isSignInPasswordVisible),
         trailingIcon = {
-            ShowAndHideToggle(isPasswordVisible, onVisibilityChange)
+            ShowOrHideToggle(isSignInPasswordVisible, onVisibilityChange)
         }
     )
 }

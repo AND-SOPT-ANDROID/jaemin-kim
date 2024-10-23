@@ -6,7 +6,7 @@ import androidx.navigation.toRoute
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import org.sopt.and.Routes
+import org.sopt.and.navigation.Routes
 
 class SignInViewModel(
     savedStateHandle: SavedStateHandle,

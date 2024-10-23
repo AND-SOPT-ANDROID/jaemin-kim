@@ -1,8 +1,6 @@
-package org.sopt.and
+package org.sopt.and.myinfo
 
-import androidx.activity.ComponentActivity
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -16,7 +14,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.Settings
-import androidx.compose.material.icons.sharp.Warning
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -24,20 +21,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import org.sopt.and.R
+import org.sopt.and.components.EmptyInfoBox
 import org.sopt.and.ui.theme.ANDANDROIDTheme
 import org.sopt.and.ui.theme.Black100
 import org.sopt.and.ui.theme.Grey100
 import org.sopt.and.ui.theme.White100
-
-
-class MyActivity : ComponentActivity() {
-
-}
 
 @Composable
 fun MyInfoScreen(
@@ -130,13 +121,14 @@ fun MyInfoScreen(
                 color = White100
             )
         }
-        EmptyBox(
+
+        EmptyInfoBox(
             stringResource(R.string.my_viewing_history_box_title),
             stringResource(R.string.my_viewing_history_box_empty_text),
             modifier = Modifier.weight(0.3f)
         )
 
-        EmptyBox(
+        EmptyInfoBox(
             stringResource(
                 R.string.my_program_of_interest_box_title
             ),
@@ -146,52 +138,6 @@ fun MyInfoScreen(
     }
 }
 
-@Composable
-fun EmptyBox(
-    title: String,
-    description: String,
-    modifier: Modifier = Modifier
-) {
-    Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(16.dp)
-    ) {
-        Text(
-            text = title,
-            color = White100,
-            style = TextStyle(
-                fontSize = 20.sp,
-                fontWeight = FontWeight(1000)
-            )
-        )
-
-        Row(
-            modifier = Modifier.fillMaxSize(),
-            horizontalArrangement = Arrangement.Center
-        ) {
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                Icon(
-                    imageVector = Icons.Sharp.Warning,
-                    contentDescription = description,
-                    modifier = Modifier.size(40.dp),
-                    tint = White100
-                )
-
-                Spacer(modifier = Modifier.height(10.dp))
-
-                Text(
-                    text = description,
-                    color = White100
-                )
-            }
-        }
-    }
-}
 
 @Preview(
     showBackground = true,

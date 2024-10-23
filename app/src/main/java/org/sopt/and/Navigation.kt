@@ -7,6 +7,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
+import org.sopt.and.signin.SignInScreen
 
 @Composable
 fun Navigation(
@@ -22,28 +24,26 @@ fun Navigation(
         ) {
             composable<Routes.SignIn> {
                 SignInScreen(
-                    onSignUpClick = {
+                    navigateToSignUp = {
                         navController.navigate(Routes.SignUp)
+                    },
+                    navigateToMyInfo = { myEmail ->
+                        navController.navigate(Routes.My(myEmail))
                     },
                     paddingValues = innerPadding
                 )
             }
             composable<Routes.SignUp> {
                 SignUpScreen(
-                    email = "",
-                    onEmailChange = { newValue -> },
-                    password = "",
-                    onPasswordChange = { newvalue -> },
-                    isPasswordVisible = false,
-                    onVisibilityChange = {},
-                    onSignUpComplete = { a, b ->
-                        navController.navigate(Routes.SignIn(a, b))
+                    onSignUpComplete = { signUpEmail, signUpPassword ->
+                        navController.navigate(Routes.SignIn(signUpEmail, signUpPassword))
                     }
                 )
             }
-            composable<Routes.My> {
-                MyScreen(
-                    myEmail = ""
+            composable<Routes.My> { backStackEntry ->
+                val item = backStackEntry.toRoute<Routes.My>()
+                MyInfoScreen(
+                    myEmail = item.myEmail
                 )
             }
         }

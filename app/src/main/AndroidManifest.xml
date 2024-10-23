@@ -23,7 +23,7 @@
         </activity>
 
         <activity
-            android:name=".SignInActivity"
+            android:name=".signin.SignInActivity"
             android:exported="false" />
 
 

@@ -1,8 +1,6 @@
 package org.sopt.and
 
-import android.os.Bundle
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -38,26 +36,11 @@ import org.sopt.and.ui.theme.White100
 
 
 class MyActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
 
-        val myEmail = intent.getStringExtra(Companion.MY_EMAIL_KEY) ?: ""
-
-        setContent {
-            ANDANDROIDTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    MyScreen(
-                        modifier = Modifier.padding(innerPadding),
-                        myEmail
-                    )
-                }
-            }
-        }
-    }
 }
 
 @Composable
-fun MyScreen(
+fun MyInfoScreen(
     modifier: Modifier = Modifier,
     myEmail: String
 ) {
@@ -218,7 +201,7 @@ fun EmptyBox(
 fun MyScreenPreview() {
     ANDANDROIDTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-            MyScreen(
+            MyInfoScreen(
                 modifier = Modifier.padding(innerPadding),
                 myEmail = "내 이메일"
             )

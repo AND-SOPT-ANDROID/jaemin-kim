@@ -1,7 +1,6 @@
 package org.sopt.and
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -26,9 +25,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -43,16 +41,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat.getString
+import androidx.lifecycle.viewmodel.compose.viewModel
 import org.sopt.and.ui.theme.*
 import org.sopt.and.ui.theme.ANDANDROIDTheme
 
 
 class SignUpActivity : ComponentActivity() {
-    var email by mutableStateOf("")
-    var password by mutableStateOf("")
-    var isPasswordVisible by mutableStateOf(false)
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -62,19 +57,7 @@ class SignUpActivity : ComponentActivity() {
                 ) { innerPadding ->
                     SignUpScreen(
                         modifier = Modifier.padding(innerPadding),
-                        email = email,
-                        onEmailChange = { newEmail -> email = newEmail },
-                        password = password,
-                        onPasswordChange = { newPassword -> password = newPassword },
-                        isPasswordVisible = isPasswordVisible,
-                        onVisibilityChange = { isPasswordVisible = !isPasswordVisible }
                     ) { email, password ->
-                        val intent = Intent(this@SignUpActivity, SignInActivity::class.java).apply {
-                            putExtra(Companion.EMAIL_KEY, email)
-                            putExtra(Companion.PASSWORD_KEY, password)
-                        }
-                        setResult(RESULT_OK, intent)
-                        finish()
                     }
                 }
             }
@@ -85,15 +68,16 @@ class SignUpActivity : ComponentActivity() {
 @Composable
 fun SignUpScreen(
     modifier: Modifier = Modifier,
-    email: String,
-    onEmailChange: (String) -> Unit,
-    password: String,
-    onPasswordChange: (String) -> Unit,
-    isPasswordVisible: Boolean,
-    onVisibilityChange: () -> Unit,
     onSignUpComplete: (String, String) -> Unit,
 ) {
     val context = LocalContext.current
+
+    val signUpViewModel = viewModel<SignUpViewModel>()
+    val signUpUiState by signUpViewModel.uiState.collectAsState()
+
+    val signUpEmail = signUpUiState.signUpEmail
+    val signUpPassword = signUpUiState.signUpPassword
+    val isSignUpPasswordVisible = signUpUiState.isSignUpPasswordVisible
 
     Column(
         modifier = modifier
@@ -110,22 +94,22 @@ fun SignUpScreen(
 
             Spacer(modifier = Modifier.height(30.dp))
 
-            Greeting(24)
+            Greeting(24, context)
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            SignUpEMailField(
-                email = email,
-                onEmailChange = onEmailChange
+            SignUpEmailField(
+                email = signUpEmail,
+                onEmailChange = signUpViewModel::setSignUpEmail
             )
 
             Spacer(modifier = Modifier.height(20.dp))
 
             SignUpPasswordField(
-                password = password,
-                onPasswordChange = onPasswordChange,
-                isPasswordVisible = isPasswordVisible,
-                onVisibilityChange = onVisibilityChange
+                signUpPassword = signUpPassword,
+                onPasswordChange = signUpViewModel::setSignUpPassword,
+                isSignUpPasswordVisible = isSignUpPasswordVisible,
+                onVisibilityChange = signUpViewModel::changeSignUpPasswordVisibility
             )
 
             Spacer(modifier = Modifier.size(40.dp))
@@ -134,16 +118,17 @@ fun SignUpScreen(
         }
 
         SignUpBtn(
-            email = email,
-            password = password,
+            signUpEmail = signUpEmail,
+            signUpPassword = signUpPassword,
             context = context,
-            onSignUpComplete = onSignUpComplete
+            onSignUpComplete = onSignUpComplete,
+            signUpViewModel
         )
     }
 }
 
 @Composable
-fun SignUpEMailField(
+fun SignUpEmailField(
     email: String,
     onEmailChange: (String) -> Unit
 ) {
@@ -165,19 +150,19 @@ fun SignUpEMailField(
 
 @Composable
 fun SignUpPasswordField(
-    password: String,
+    signUpPassword: String,
     onPasswordChange: (String) -> Unit,
-    isPasswordVisible: Boolean,
+    isSignUpPasswordVisible: Boolean,
     onVisibilityChange: () -> Unit
 ) {
     Column {
         SignInOrSignUpTextField(
-            emailOrPassword = password,
+            emailOrPassword = signUpPassword,
             onValueChange = onPasswordChange,
             placeholder = R.string.sign_up_password_placeholder,
-            visualTransformation = transformationPasswordVisual(isPasswordVisible),
+            visualTransformation = transformationPasswordVisual(isSignUpPasswordVisible),
             trailingIcon = {
-                ShowAndHideToggle(isPasswordVisible, onVisibilityChange)
+                ShowAndHideToggle(isSignUpPasswordVisible, onVisibilityChange)
             }
         )
 
@@ -191,15 +176,10 @@ fun SignUpPasswordField(
 }
 
 @Composable
-fun Greeting(fontSize: Int) {
-    val firstLineFocusedText = stringResource(id = R.string.sign_up_focused_welcome_text_first_line)
-    val firstLineRemainderText =
-        stringResource(id = R.string.sign_up_remainder_welcome_text_first_line)
-    val secondLineFocusedText =
-        stringResource(id = R.string.sign_up_focused_welcome_text_second_line)
-    val secondLineRemainderText =
-        stringResource(id = R.string.sign_up_remainder_welcome_text_second_line)
-
+fun Greeting(
+    fontSize: Int,
+    context: Context
+) {
     Text(
         buildAnnotatedString {
             withStyle(
@@ -217,7 +197,7 @@ fun Greeting(fontSize: Int) {
                         fontSize = fontSize.sp
                     )
                 ) {
-                    append(firstLineFocusedText)
+                    append(getString(context, R.string.sign_up_focused_welcome_text_first_line))
                 }
 
                 withStyle(
@@ -226,7 +206,7 @@ fun Greeting(fontSize: Int) {
                         fontSize = fontSize.sp
                     )
                 ) {
-                    append(firstLineRemainderText)
+                    append(getString(context, R.string.sign_up_remainder_welcome_text_first_line))
                 }
 
                 withStyle(
@@ -235,7 +215,7 @@ fun Greeting(fontSize: Int) {
                         fontSize = fontSize.sp
                     )
                 ) {
-                    append(secondLineFocusedText)
+                    append(getString(context, R.string.sign_up_focused_welcome_text_second_line))
                 }
 
                 withStyle(
@@ -244,7 +224,7 @@ fun Greeting(fontSize: Int) {
                         fontSize = fontSize.sp
                     )
                 ) {
-                    append(secondLineRemainderText)
+                    append(getString(context, R.string.sign_up_remainder_welcome_text_second_line))
                 }
             }
         }
@@ -279,18 +259,19 @@ fun SignUpTop() {
 
 @Composable
 fun SignUpBtn(
-    email: String,
-    password: String,
+    signUpEmail: String,
+    signUpPassword: String,
     context: Context,
-    onSignUpComplete: (String, String) -> Unit
+    onSignUpComplete: (String, String) -> Unit,
+    signUpViewModel: SignUpViewModel
 ) {
     Button(
         onClick = {
-            val isEmailValid = validateEmail(email)
-            val isPasswordValid = validatePassword(password)
+            val isEmailValid = signUpViewModel.validateSignUpEmail(signUpEmail)
+            val isPasswordValid = signUpViewModel.validateSignUpPassword(signUpPassword)
 
             if (isEmailValid && isPasswordValid) {
-                onSignUpComplete(email, password)
+                onSignUpComplete(signUpEmail, signUpPassword)
                 Toast.makeText(
                     context,
                     context.getString(R.string.sign_up_success),
@@ -340,13 +321,7 @@ fun SignUpScreenPreview() {
             SignUpScreen(
                 modifier = Modifier
                     .padding(innerPadding),
-                onSignUpComplete = { email, password -> },
-                email = "",
-                onEmailChange = { TODO() },
-                password = "",
-                onPasswordChange = { },
-                isPasswordVisible = false,
-                onVisibilityChange = { }
+                onSignUpComplete = { email, password -> }
             )
         }
     }

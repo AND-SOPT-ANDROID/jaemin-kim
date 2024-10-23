@@ -1,13 +1,20 @@
-package org.sopt.and
+package org.sopt.and.signin
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.navigation.toRoute
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import org.sopt.and.Routes
 
-class SignInViewModel : ViewModel() {
+class SignInViewModel(
+    savedStateHandle: SavedStateHandle,
+) : ViewModel() {
     private val _uiState = MutableStateFlow(SignInUiState())
     val uiState: StateFlow<SignInUiState> = _uiState.asStateFlow()
+
+    val signUpAccount = savedStateHandle.toRoute<Routes.SignIn>()
 
     fun setSignInEmail(signInEmail: String) {
         _uiState.value = _uiState.value.copy(
@@ -21,12 +28,14 @@ class SignInViewModel : ViewModel() {
         )
     }
 
-    fun changePasswordVisibility() {
+    fun changeSignInPasswordVisibility() {
         _uiState.value = _uiState.value.copy(
-            isPasswordVisible = !_uiState.value.isPasswordVisible
+            isSignInPasswordVisible = !_uiState.value.isSignInPasswordVisible
         )
     }
 
-    fun isLoginSuccess(myEmail: String, myPassword: String): Boolean =
-        myEmail.isNotEmpty() && _uiState.value.signInEmail == myEmail && _uiState.value.signInPassword == myPassword
+    fun isLoginSuccess(): Boolean =
+        signUpAccount.signUpEmail.isNotEmpty()
+                && _uiState.value.signInEmail == signUpAccount.signUpEmail
+                && _uiState.value.signInPassword == signUpAccount.signUpPassword
 }

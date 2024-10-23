@@ -11,8 +11,8 @@ object Routes {
 
     @Serializable
     data class SignIn(
-        val myEmail: String,
-        val myPassword: String
+        val signUpEmail: String,
+        val signUpPassword: String
     )
 
     @Serializable

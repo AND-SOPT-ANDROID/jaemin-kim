@@ -1,11 +1,5 @@
-package org.sopt.and
+package org.sopt.and.signin
 
-import android.content.Intent
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.result.ActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -31,10 +25,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -47,66 +39,19 @@ import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat.getString
 import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.launch
+import org.sopt.and.LinkWithSNSBox
+import org.sopt.and.R
+import org.sopt.and.ShowAndHideToggle
+import org.sopt.and.SignInOrSignUpTextField
+import org.sopt.and.transformationPasswordVisual
 import org.sopt.and.ui.theme.*
 import org.sopt.and.ui.theme.ANDANDROIDTheme
-
-class SignInActivity : ComponentActivity() {
-
-    var myEmail: String? by mutableStateOf("")
-    var myPassword: String? by mutableStateOf("")
-
-    private val signUpLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-            if (result.resultCode == RESULT_OK) {
-                myEmail = result.data?.getStringExtra(Companion.EMAIL_KEY) ?: ""
-                myPassword = result.data?.getStringExtra(Companion.PASSWORD_KEY) ?: ""
-            }
-        }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-
-        super.onCreate(savedInstanceState)
-
-        setContent {
-            ANDANDROIDTheme {
-                val snackbarHostState = remember { SnackbarHostState() }
-                val scope = rememberCoroutineScope()
-                Scaffold(
-                    modifier = Modifier.fillMaxSize(),
-                    snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
-                ) { innerPadding ->
-                    SignInScreen(
-                        onSignUpClick = {
-                            val intent = Intent(this, SignUpActivity::class.java)
-                            signUpLauncher.launch(intent)
-                        },
-//                        onLoginClick = { enteredEmail, enteredPassword ->
-//                            if (enteredEmail == myEmail && enteredPassword == myPassword) {
-//                                scope.launch {
-//                                    snackbarHostState.showSnackbar(message = getString(R.string.sign_in_success_message))
-//                                }
-//                                val intent = Intent(this, MyActivity::class.java).apply {
-//                                    putExtra(Companion.MY_EMAIL_KEY, enteredEmail)
-//                                }
-//                                startActivity(intent)
-//                            } else {
-//                                scope.launch {
-//                                    snackbarHostState.showSnackbar(message = getString(R.string.sign_in_failed_message))
-//                                }
-//                            }
-//                        },
-                        paddingValues = innerPadding
-                    )
-                }
-            }
-        }
-    }
-}
 
 @Composable
 fun SignInScreen(
     modifier: Modifier = Modifier,
-    onSignUpClick: () -> Unit,
+    navigateToSignUp: () -> Unit,
+    navigateToMyInfo: (String) -> Unit,
     paddingValues: PaddingValues
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
@@ -118,10 +63,7 @@ fun SignInScreen(
 
     val email = signInUiState.signInEmail
     val password = signInUiState.signInPassword
-    val isPasswordVisible = signInUiState.isPasswordVisible
-
-    val myEmail = ""
-    val myPassword = ""
+    val isPasswordVisible = signInUiState.isSignInPasswordVisible
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -168,7 +110,7 @@ fun SignInScreen(
 
                 Spacer(modifier = Modifier.height(60.dp))
 
-                SignInEMailField(
+                SignInEmailField(
                     email = email,
                     onEmailChange = signInViewModel::setSignInEmail
                 )
@@ -179,7 +121,7 @@ fun SignInScreen(
                     password = password,
                     onPasswordChange = signInViewModel::setSignInPassword,
                     isPasswordVisible = isPasswordVisible,
-                    onVisibilityChange = signInViewModel::changePasswordVisibility
+                    onVisibilityChange = signInViewModel::changeSignInPasswordVisibility
                 )
 
                 Spacer(modifier = Modifier.height(30.dp))
@@ -189,12 +131,23 @@ fun SignInScreen(
                         .fillMaxWidth()
                         .height(50.dp),
                     onClick = {
-                        if (signInViewModel.isLoginSuccess(myEmail, myPassword)) {
-                            //이 때 스낵바 띄우기
+                        if (signInViewModel.isLoginSuccess()) {
+                            scope.launch {
+                                snackbarHostState.showSnackbar(
+                                    message = getString(
+                                        context,
+                                        R.string.sign_in_success_message
+                                    )
+                                )
+                                navigateToMyInfo(signInUiState.signInEmail)
+                            }
                         } else {
                             scope.launch {
                                 snackbarHostState.showSnackbar(
-                                    message = getString(context, R.string.sign_in_failed_message)
+                                    message = getString(
+                                        context,
+                                        R.string.sign_in_failed_message
+                                    )
                                 )
                             }
                         }
@@ -251,7 +204,7 @@ fun SignInScreen(
                     Text(
                         text = stringResource(id = R.string.sign_in_to_sign_up_button),
                         color = Grey200,
-                        modifier = Modifier.clickable { onSignUpClick() },
+                        modifier = Modifier.clickable { navigateToSignUp() },
                         style = TextStyle(
                             fontSize = 11.sp
                         )
@@ -268,7 +221,7 @@ fun SignInScreen(
 
 
 @Composable
-fun SignInEMailField(
+fun SignInEmailField(
     email: String,
     onEmailChange: (String) -> Unit
 ) {
@@ -306,7 +259,8 @@ fun SignInScreenPreview() {
     ANDANDROIDTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             SignInScreen(
-                onSignUpClick = {},
+                navigateToSignUp = {},
+                navigateToMyInfo = { a -> },
                 paddingValues = innerPadding
             )
         }

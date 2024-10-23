@@ -1,7 +1,7 @@
-package org.sopt.and
+package org.sopt.and.signin
 
 data class SignInUiState(
     val signInEmail: String = "",
     val signInPassword: String = "",
-    val isPasswordVisible: Boolean = false
+    val isSignInPasswordVisible: Boolean = false
 )

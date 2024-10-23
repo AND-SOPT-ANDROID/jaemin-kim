@@ -21,7 +21,6 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.util.PatternsCompat
 import org.sopt.and.ui.theme.Grey100
 import org.sopt.and.ui.theme.Grey200
 import org.sopt.and.ui.theme.White100
@@ -93,21 +92,3 @@ fun CautionBox(
 fun transformationPasswordVisual(isVisible: Boolean): VisualTransformation =
     if (isVisible) VisualTransformation.None else PasswordVisualTransformation()
 
-fun validateEmail(email: String): Boolean = PatternsCompat
-    .EMAIL_ADDRESS
-    .matcher(email)
-    .matches()
-
-fun validatePassword(password: String): Boolean {
-    if (password.length !in Companion.MIN_PASSWORD_LENGTH..Companion.MAX_PASSWORD_LENGTH) return false
-
-    val validateValues = listOf<Boolean>(
-        password.any { it.isLowerCase() },
-        password.any { it.isUpperCase() },
-        password.any { it.isDigit() },
-        password.any { !it.isLetterOrDigit() }
-    )
-    val isValidate = validateValues.count { it } >= 3
-
-    return isValidate
-}

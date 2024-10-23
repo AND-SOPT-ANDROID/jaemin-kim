@@ -10,6 +10,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -75,7 +76,6 @@ class SignInActivity : ComponentActivity() {
                     snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
                 ) { innerPadding ->
                     SignInScreen(
-                        modifier = Modifier.padding(innerPadding),
                         onSignUpClick = {
                             val intent = Intent(this, SignUpActivity::class.java)
                             signUpLauncher.launch(intent)
@@ -102,7 +102,8 @@ class SignInActivity : ComponentActivity() {
                         password = password,
                         onPasswordChange = { newValue -> password = newValue },
                         isPasswordVisible = isPasswordVisible,
-                        onVisibilityChange = { isPasswordVisible = !isPasswordVisible }
+                        onVisibilityChange = { isPasswordVisible = !isPasswordVisible },
+                        paddingValues = innerPadding
                     )
                 }
             }
@@ -120,12 +121,14 @@ fun SignInScreen(
     password: String,
     onPasswordChange: (String) -> Unit,
     isPasswordVisible: Boolean,
-    onVisibilityChange: () -> Unit
+    onVisibilityChange: () -> Unit,
+    paddingValues: PaddingValues
 ) {
     Column(
         modifier = modifier
             .fillMaxSize()
             .background(color = Black100)
+            .padding(paddingValues)
     ) {
         Column(
             modifier = Modifier
@@ -288,7 +291,6 @@ fun SignInScreenPreview() {
     ANDANDROIDTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             SignInScreen(
-                modifier = Modifier.padding(innerPadding),
                 onSignUpClick = {},
                 onLoginClick = { email, password -> },
                 email = TODO(),
@@ -297,6 +299,7 @@ fun SignInScreenPreview() {
                 onPasswordChange = TODO(),
                 isPasswordVisible = TODO(),
                 onVisibilityChange = TODO(),
+                paddingValues = innerPadding
             )
         }
     }

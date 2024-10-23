@@ -18,25 +18,17 @@ fun Navigation(
         val navController = rememberNavController()
         NavHost(
             navController = navController,
-            startDestination = Routes.SignInScreen
+            startDestination = Routes.SignIn("", "") // 이녀석 생성자 안써서 3시간 날림
         ) {
-            composable<Routes.SignInScreen> {
+            composable<Routes.SignIn> {
                 SignInScreen(
                     onSignUpClick = {
-                        navController.navigate(Routes.SignUpScreen)
+                        navController.navigate(Routes.SignUp)
                     },
-                    onLoginClick = { a, b -> },
-                    email = "",
-                    onEmailChange = { newValue ->
-                    },
-                    password = "",
-                    onPasswordChange = { newValue -> },
-                    isPasswordVisible = false,
-                    onVisibilityChange = {},
                     paddingValues = innerPadding
                 )
             }
-            composable<Routes.SignUpScreen> {
+            composable<Routes.SignUp> {
                 SignUpScreen(
                     email = "",
                     onEmailChange = { newValue -> },
@@ -44,10 +36,12 @@ fun Navigation(
                     onPasswordChange = { newvalue -> },
                     isPasswordVisible = false,
                     onVisibilityChange = {},
-                    onSignUpComplete = { a, b -> }
+                    onSignUpComplete = { a, b ->
+                        navController.navigate(Routes.SignIn(a, b))
+                    }
                 )
             }
-            composable<Routes.MyScreen> {
+            composable<Routes.My> {
                 MyScreen(
                     myEmail = ""
                 )

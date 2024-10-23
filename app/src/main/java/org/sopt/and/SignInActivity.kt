@@ -29,6 +29,7 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -36,21 +37,20 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat.getString
+import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.launch
 import org.sopt.and.ui.theme.*
 import org.sopt.and.ui.theme.ANDANDROIDTheme
 
 class SignInActivity : ComponentActivity() {
-
-    var email by mutableStateOf("")
-    var password by mutableStateOf("")
-    var isPasswordVisible by mutableStateOf(false)
 
     var myEmail: String? by mutableStateOf("")
     var myPassword: String? by mutableStateOf("")
@@ -80,29 +80,21 @@ class SignInActivity : ComponentActivity() {
                             val intent = Intent(this, SignUpActivity::class.java)
                             signUpLauncher.launch(intent)
                         },
-                        onLoginClick = { enteredEmail, enteredPassword ->
-                            if (enteredEmail == myEmail && enteredPassword == myPassword) {
-                                scope.launch {
-                                    snackbarHostState.showSnackbar(message = getString(R.string.sign_in_success_message))
-                                }
-                                val intent = Intent(this, MyActivity::class.java).apply {
-                                    putExtra(Companion.MY_EMAIL_KEY, enteredEmail)
-                                }
-                                startActivity(intent)
-                            } else {
-                                scope.launch {
-                                    snackbarHostState.showSnackbar(message = getString(R.string.sign_in_failed_message))
-                                }
-                            }
-                        },
-                        email = email,
-                        onEmailChange = { newValue ->
-                            email = newValue
-                        },
-                        password = password,
-                        onPasswordChange = { newValue -> password = newValue },
-                        isPasswordVisible = isPasswordVisible,
-                        onVisibilityChange = { isPasswordVisible = !isPasswordVisible },
+//                        onLoginClick = { enteredEmail, enteredPassword ->
+//                            if (enteredEmail == myEmail && enteredPassword == myPassword) {
+//                                scope.launch {
+//                                    snackbarHostState.showSnackbar(message = getString(R.string.sign_in_success_message))
+//                                }
+//                                val intent = Intent(this, MyActivity::class.java).apply {
+//                                    putExtra(Companion.MY_EMAIL_KEY, enteredEmail)
+//                                }
+//                                startActivity(intent)
+//                            } else {
+//                                scope.launch {
+//                                    snackbarHostState.showSnackbar(message = getString(R.string.sign_in_failed_message))
+//                                }
+//                            }
+//                        },
                         paddingValues = innerPadding
                     )
                 }
@@ -115,142 +107,165 @@ class SignInActivity : ComponentActivity() {
 fun SignInScreen(
     modifier: Modifier = Modifier,
     onSignUpClick: () -> Unit,
-    onLoginClick: (String, String) -> Unit,
-    email: String,
-    onEmailChange: (String) -> Unit,
-    password: String,
-    onPasswordChange: (String) -> Unit,
-    isPasswordVisible: Boolean,
-    onVisibilityChange: () -> Unit,
     paddingValues: PaddingValues
 ) {
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .background(color = Black100)
-            .padding(paddingValues)
-    ) {
+    val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
+    val context = LocalContext.current
+
+    val signInViewModel = viewModel<SignInViewModel>()
+    val signInUiState by signInViewModel.uiState.collectAsState()
+
+    val email = signInUiState.signInEmail
+    val password = signInUiState.signInPassword
+    val isPasswordVisible = signInUiState.isPasswordVisible
+
+    val myEmail = ""
+    val myPassword = ""
+
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState)
+        }
+    ) { innerPadding ->
         Column(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxSize()
-                .padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .background(color = Black100)
+                .padding(innerPadding)
         ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Default.KeyboardArrowLeft,
-                    contentDescription = stringResource(id = R.string.sign_in_to_back_screen_description),
-                    modifier = Modifier
-                        .size(48.dp),
-                    tint = White100
-                )
-
-                Text(
-                    text = stringResource(id = R.string.app_name),
-                    color = White100,
-                    style = TextStyle(
-                        fontSize = 30.sp,
-                        fontWeight = FontWeight(800)
-                    )
-                )
-
-                Spacer(modifier = Modifier.size(48.dp))
-            }
-
-            Spacer(modifier = Modifier.height(60.dp))
-
-            SignInEMailField(
-                email = email,
-                onEmailChange = onEmailChange
-            )
-
-            Spacer(modifier = Modifier.height(5.dp))
-
-            SignInPasswordField(
-                password = password,
-                onPasswordChange = onPasswordChange,
-                isPasswordVisible = isPasswordVisible,
-                onVisibilityChange = onVisibilityChange
-            )
-
-            Spacer(modifier = Modifier.height(30.dp))
-
-            Button(
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height(50.dp),
-                onClick = {
-                    onLoginClick(email, password)
-                },
-                shape = RoundedCornerShape(50.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Blue100,
-                    contentColor = White100
-                )
+                    .fillMaxSize()
+                    .padding(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(
-                    text = stringResource(id = R.string.sign_in_button)
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Default.KeyboardArrowLeft,
+                        contentDescription = stringResource(id = R.string.sign_in_to_back_screen_description),
+                        modifier = Modifier
+                            .size(48.dp),
+                        tint = White100
+                    )
+
+                    Text(
+                        text = stringResource(id = R.string.app_name),
+                        color = White100,
+                        style = TextStyle(
+                            fontSize = 30.sp,
+                            fontWeight = FontWeight(800)
+                        )
+                    )
+
+                    Spacer(modifier = Modifier.size(48.dp))
+                }
+
+                Spacer(modifier = Modifier.height(60.dp))
+
+                SignInEMailField(
+                    email = email,
+                    onEmailChange = signInViewModel::setSignInEmail
                 )
+
+                Spacer(modifier = Modifier.height(5.dp))
+
+                SignInPasswordField(
+                    password = password,
+                    onPasswordChange = signInViewModel::setSignInPassword,
+                    isPasswordVisible = isPasswordVisible,
+                    onVisibilityChange = signInViewModel::changePasswordVisibility
+                )
+
+                Spacer(modifier = Modifier.height(30.dp))
+
+                Button(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(50.dp),
+                    onClick = {
+                        if (signInViewModel.isLoginSuccess(myEmail, myPassword)) {
+                            //이 때 스낵바 띄우기
+                        } else {
+                            scope.launch {
+                                snackbarHostState.showSnackbar(
+                                    message = getString(context, R.string.sign_in_failed_message)
+                                )
+                            }
+                        }
+                    },
+                    shape = RoundedCornerShape(50.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Blue100,
+                        contentColor = White100
+                    )
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.sign_in_button)
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(20.dp))
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(0.6f),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.sign_in_to_find_id_button),
+                        color = Grey200,
+                        style = TextStyle(
+                            fontSize = 11.sp
+                        )
+                    )
+
+                    Text(
+                        text = stringResource(id = R.string.seperator),
+                        color = Grey200,
+                        style = TextStyle(
+                            fontSize = 11.sp
+                        )
+                    )
+
+                    Text(
+                        text = stringResource(id = R.string.sign_in_to_reset_password_button),
+                        color = Grey200,
+                        style = TextStyle(
+                            fontSize = 11.sp
+                        )
+                    )
+
+                    Text(
+                        text = stringResource(id = R.string.seperator),
+                        color = Grey200,
+                        style = TextStyle(
+                            fontSize = 11.sp
+                        )
+                    )
+
+                    Text(
+                        text = stringResource(id = R.string.sign_in_to_sign_up_button),
+                        color = Grey200,
+                        modifier = Modifier.clickable { onSignUpClick() },
+                        style = TextStyle(
+                            fontSize = 11.sp
+                        )
+                    )
+                }
+
+                Spacer(modifier = Modifier.size(40.dp))
+
+                LinkWithSNSBox(stringResource(R.string.sign_in_link_with_another_service_title))
             }
-
-            Spacer(modifier = Modifier.height(20.dp))
-
-            Row(
-                modifier = Modifier.fillMaxWidth(0.6f),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(
-                    text = stringResource(id = R.string.sign_in_to_find_id_button),
-                    color = Grey200,
-                    style = TextStyle(
-                        fontSize = 11.sp
-                    )
-                )
-
-                Text(
-                    text = stringResource(id = R.string.seperator),
-                    color = Grey200,
-                    style = TextStyle(
-                        fontSize = 11.sp
-                    )
-                )
-
-                Text(
-                    text = stringResource(id = R.string.sign_in_to_reset_password_button),
-                    color = Grey200,
-                    style = TextStyle(
-                        fontSize = 11.sp
-                    )
-                )
-
-                Text(
-                    text = stringResource(id = R.string.seperator),
-                    color = Grey200,
-                    style = TextStyle(
-                        fontSize = 11.sp
-                    )
-                )
-
-                Text(
-                    text = stringResource(id = R.string.sign_in_to_sign_up_button),
-                    color = Grey200,
-                    modifier = Modifier.clickable { onSignUpClick() },
-                    style = TextStyle(
-                        fontSize = 11.sp
-                    )
-                )
-            }
-
-            Spacer(modifier = Modifier.size(40.dp))
-
-            LinkWithSNSBox(stringResource(R.string.sign_in_link_with_another_service_title))
         }
     }
 }
+
 
 @Composable
 fun SignInEMailField(
@@ -292,13 +307,6 @@ fun SignInScreenPreview() {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             SignInScreen(
                 onSignUpClick = {},
-                onLoginClick = { email, password -> },
-                email = TODO(),
-                onEmailChange = TODO(),
-                password = TODO(),
-                onPasswordChange = TODO(),
-                isPasswordVisible = TODO(),
-                onVisibilityChange = TODO(),
                 paddingValues = innerPadding
             )
         }

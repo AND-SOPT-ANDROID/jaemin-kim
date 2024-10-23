@@ -2,13 +2,19 @@ package org.sopt.and
 
 import kotlinx.serialization.Serializable
 
+
 object Routes {
     @Serializable
-    object MyScreen
+    data class My(
+        val myEmail: String
+    )
 
     @Serializable
-    object SignInScreen
+    data class SignIn(
+        val myEmail: String,
+        val myPassword: String
+    )
 
     @Serializable
-    object SignUpScreen
+    object SignUp
 }

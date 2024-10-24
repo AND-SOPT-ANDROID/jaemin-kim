@@ -54,7 +54,7 @@ class Constants {
             R.drawable.recommend_6,
         )
 
-        val ranker = listOf<Int>(
+        val rankers = listOf<Int>(
             R.drawable.top_1,
             R.drawable.top_2,
             R.drawable.top_3,

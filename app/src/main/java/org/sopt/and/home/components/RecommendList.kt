@@ -28,7 +28,10 @@ import org.sopt.and.ui.theme.Grey200
 import org.sopt.and.ui.theme.White100
 
 @Composable
-fun RecommendList() {
+fun RecommendList(
+    title: String,
+    items: List<Int>
+) {
     Column(
         modifier = Modifier.padding(horizontal = 16.dp)
     ) {
@@ -38,7 +41,7 @@ fun RecommendList() {
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = "믿고 보는 웨이브 에디터 추천작",
+                text = title,
                 color = White100,
                 fontWeight = FontWeight.W900
             )
@@ -56,11 +59,11 @@ fun RecommendList() {
             horizontalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             items(
-                Constants.recommends.size,
+                items.size,
                 key = { it }
             ) { index ->
                 Image(
-                    painter = painterResource(Constants.recommends[index]),
+                    painter = painterResource(items[index]),
                     contentDescription = "",
                     modifier = Modifier
                         .width(110.dp)
@@ -74,5 +77,5 @@ fun RecommendList() {
 @Preview
 @Composable
 fun RecommendListPreview() {
-    RecommendList()
+    RecommendList("", Constants.recommends)
 }

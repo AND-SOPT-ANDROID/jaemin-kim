@@ -57,6 +57,10 @@
     <string name="my_program_of_interest_box_title">관심 프로그램</string>
     <string name="my_program_of_interest_empty_text">관심 프로그램이 없어요.</string>
 
+    <!--home-->
+    <string name="home_picks_of_editor_title">믿고 보는 웨이브 에디터 추천작</string>
+    <string name="home_top20_title">오늘의 TOP 20</string>
+
     <!--bottom_navigation-->
     <string name="bottom_navigation_home_label">홈</string>
     <string name="bottom_navigation_search_label">검색</string>

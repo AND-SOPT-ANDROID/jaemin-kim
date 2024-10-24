@@ -11,6 +11,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import org.sopt.and.home.components.HomeBannerPager
 import org.sopt.and.home.components.HomeTopBar
 import org.sopt.and.ui.theme.Grey100
 
@@ -31,7 +32,7 @@ fun HomeScreen(
                 .fillMaxSize()
                 .verticalScroll(scrollState)
         ) {
-
+            HomeBannerPager()
         }
     }
 }

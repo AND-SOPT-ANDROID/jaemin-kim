@@ -4,6 +4,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.res.painterResource
 import org.sopt.and.navigation.Routes
 import org.sopt.and.navigation.WavveBottomNavigationItem
 
@@ -35,6 +37,12 @@ class Constants {
         )
         val genres = listOf<String>(
             "뉴클래식", "드라마", "예능", "영화", "애니", "해외시리즈"
+        )
+        val banners = listOf<Int>(
+            R.drawable.banner_1,
+            R.drawable.banner_2,
+            R.drawable.banner_3,
+            R.drawable.banner_4
         )
     }
 }

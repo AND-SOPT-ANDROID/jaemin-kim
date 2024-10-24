@@ -22,19 +22,6 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".signin.SignInActivity"
-            android:exported="false" />
-
-
-        <activity
-            android:name=".SignUpActivity"
-            android:exported="false" />
-
-        <activity
-            android:name=".myinfo.MyActivity"
-            android:exported="false" />
-
     </application>
 
 </manifest>

@@ -57,4 +57,9 @@
     <string name="my_program_of_interest_box_title">관심 프로그램</string>
     <string name="my_program_of_interest_empty_text">관심 프로그램이 없어요.</string>
 
+    <!--bottom_navigation-->
+    <string name="bottom_navigation_home_label">홈</string>
+    <string name="bottom_navigation_search_label">검색</string>
+    <string name="bottom_navigation_my_info_label">My</string>
+
 </resources>

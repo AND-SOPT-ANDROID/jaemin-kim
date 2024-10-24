@@ -2,6 +2,7 @@ package org.sopt.and.myinfo
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -32,13 +33,15 @@ import org.sopt.and.ui.theme.White100
 
 @Composable
 fun MyInfoScreen(
+    myEmail: String,
+    paddingValues: PaddingValues,
     modifier: Modifier = Modifier,
-    myEmail: String
 ) {
     Column(
         modifier = modifier
             .fillMaxSize()
             .background(color = Black100)
+            .padding(paddingValues)
     ) {
         Column(
             modifier = Modifier
@@ -148,8 +151,8 @@ fun MyScreenPreview() {
     ANDANDROIDTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             MyInfoScreen(
-                modifier = Modifier.padding(innerPadding),
-                myEmail = "내 이메일"
+                myEmail = "내 이메일",
+                paddingValues = innerPadding
             )
         }
     }

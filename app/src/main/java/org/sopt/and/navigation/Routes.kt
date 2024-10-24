@@ -17,4 +17,10 @@ object Routes {
 
     @Serializable
     object SignUp
+
+    @Serializable
+    object Home
+
+    @Serializable
+    object Search
 }

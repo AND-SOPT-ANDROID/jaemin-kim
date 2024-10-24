@@ -11,6 +11,7 @@ import org.sopt.and.ui.theme.ANDANDROIDTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
             ANDANDROIDTheme {
                 Navigation(

@@ -33,5 +33,8 @@ class Constants {
                 index = 2
             )
         )
+        val genres = listOf<String>(
+            "뉴클래식", "드라마", "예능", "영화", "애니", "해외시리즈"
+        )
     }
 }

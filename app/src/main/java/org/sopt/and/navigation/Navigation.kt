@@ -75,7 +75,9 @@ fun Navigation(
             }
 
             composable<Routes.Home> {
-                HomeScreen()
+                HomeScreen(
+                    innerPadding = innerPadding
+                )
             }
 
             composable<Routes.Search> {

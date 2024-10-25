@@ -32,6 +32,7 @@ import org.sopt.and.ui.theme.White100
 @Composable
 fun HomeBannerPager() {
     val pagerState = rememberPagerState(pageCount = { Constants.banners.size })
+
     HorizontalPager(
         state = pagerState,
         contentPadding = PaddingValues(start = 10.dp, end = 10.dp),
@@ -56,6 +57,7 @@ fun HomeBannerPage(index: Int) {
             modifier = Modifier
                 .fillMaxSize()
         )
+
         HomeBannerIndicator(
             Modifier
                 .align(Alignment.BottomEnd)

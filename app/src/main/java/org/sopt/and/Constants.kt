@@ -66,5 +66,13 @@ class Constants {
             R.drawable.top_9,
             R.drawable.top_10
         )
+
+        val linkableSNS = listOf<Pair<Int, Int>>(
+            Pair(R.drawable.kakao_talk_icon, R.string.link_kakao_icon_description),
+            Pair(R.drawable.t_world_icon, R.string.link_tworld_icon_description),
+            Pair(R.drawable.naver_icon, R.string.link_naver_icon_description),
+            Pair(R.drawable.facebook_icon, R.string.link_facebook_icon_description),
+            Pair(R.drawable.apple_icon, R.string.link_apple_icon_description),
+        )
     }
 }

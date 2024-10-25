@@ -35,6 +35,7 @@ fun HomeScreen(
             .padding(innerPadding)
     ) {
         HomeTopBar()
+
         Column(
             modifier = Modifier
                 .fillMaxSize()

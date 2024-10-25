@@ -65,6 +65,7 @@ fun RankedItem(index: Int) {
                 .clip(shape = RoundedCornerShape(15.dp))
                 .align(Alignment.TopStart)
         )
+
         Text(
             text = "${index + 1}",
             fontSize = 50.sp,

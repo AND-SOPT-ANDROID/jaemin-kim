@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import org.sopt.and.navigation.Routes
 
 class SignInViewModel(
-    savedStateHandle: SavedStateHandle,
+    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(SignInUiState())
     val uiState: StateFlow<SignInUiState> = _uiState.asStateFlow()

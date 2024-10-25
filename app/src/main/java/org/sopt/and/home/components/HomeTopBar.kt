@@ -30,25 +30,28 @@ fun HomeTopBar() {
         modifier = Modifier.padding(horizontal = 16.dp)
     ) {
         Row(
-            modifier = Modifier
-                .fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Image(
                 painter = painterResource(R.drawable.wavve_logo),
-                contentDescription = "Wavve 로고",
+                contentDescription = "",
                 modifier = Modifier
                     .height(60.dp)
                     .width(100.dp)
             )
+
             Spacer(modifier = Modifier.weight(1f))
+
             Icon(
                 painter = painterResource(R.drawable.cast_24px),
                 contentDescription = "",
                 modifier = Modifier.size(30.dp),
                 tint = White100
             )
+
             Spacer(modifier = Modifier.size(16.dp))
+
             Icon(
                 painter = painterResource(R.drawable.live_tv_24px),
                 contentDescription = "",

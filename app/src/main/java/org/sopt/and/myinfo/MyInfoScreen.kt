@@ -33,9 +33,9 @@ import org.sopt.and.ui.theme.White100
 
 @Composable
 fun MyInfoScreen(
-    myEmail: String,
     paddingValues: PaddingValues,
-    modifier: Modifier = Modifier,
+    myEmail: String,
+    modifier: Modifier = Modifier
 ) {
     Column(
         modifier = modifier
@@ -151,8 +151,8 @@ fun MyScreenPreview() {
     ANDANDROIDTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             MyInfoScreen(
-                myEmail = "내 이메일",
-                paddingValues = innerPadding
+                paddingValues = innerPadding,
+                myEmail = ""
             )
         }
     }

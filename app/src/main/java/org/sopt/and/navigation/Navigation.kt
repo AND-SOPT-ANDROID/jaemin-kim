@@ -14,17 +14,20 @@ import androidx.navigation.toRoute
 import org.sopt.and.Constants
 import org.sopt.and.home.HomeScreen
 import org.sopt.and.myinfo.MyInfoScreen
+import org.sopt.and.myinfo.MyInfoViewModel
 import org.sopt.and.search.SearchScreen
 import org.sopt.and.signin.SignInScreen
 import org.sopt.and.signup.SignUpScreen
 
 @Composable
 fun Navigation(
-    modifier: Modifier = Modifier,
 ) {
     val navigationViewModel = viewModel<NavigationViewModel>()
     val navigationUiState by navigationViewModel.uiState.collectAsState()
     val navController = rememberNavController()
+
+    val myInfoViewModel = viewModel<MyInfoViewModel>()
+    val myInfoUiState by myInfoViewModel.uiState.collectAsState()
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -41,7 +44,7 @@ fun Navigation(
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = Routes.Home//Routes.SignIn("", "") // 이녀석 생성자 안써서 3시간 날림
+            startDestination = Routes.SignIn("", "") // 이녀석 생성자 안써서 3시간 날림
         ) {
             composable<Routes.SignIn> {
                 SignInScreen(
@@ -53,8 +56,7 @@ fun Navigation(
                         navController.navigate(
                             Routes.MyInfo(myEmail)
                         )
-                    },
-                    paddingValues = innerPadding
+                    }
                 )
             }
 
@@ -68,9 +70,11 @@ fun Navigation(
 
             composable<Routes.MyInfo> { backStackEntry ->
                 val item = backStackEntry.toRoute<Routes.MyInfo>()
+                myInfoViewModel.setMyEmail(item.myEmail)
+
                 MyInfoScreen(
-                    myEmail = item.myEmail,
-                    paddingValues = innerPadding
+                    paddingValues = innerPadding,
+                    myInfoUiState.myEmail
                 )
             }
 

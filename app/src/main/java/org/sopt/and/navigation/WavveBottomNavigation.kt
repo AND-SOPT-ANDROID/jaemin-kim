@@ -7,7 +7,6 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemColors
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -16,7 +15,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import org.sopt.and.Constants
@@ -30,8 +28,6 @@ fun WavveBottomNavigation(
     setNavigationSelectedScreenIndex: (Int) -> Unit,
     navigationSelectedScreenIndex: Int
 ) {
-    val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentRoute = navBackStackEntry?.destination?.route
     NavigationBar(
         modifier = Modifier.height(60.dp),
         containerColor = Color.Black
@@ -43,7 +39,9 @@ fun WavveBottomNavigation(
                     setNavigationSelectedScreenIndex(index)
                     navController.navigate(
                         item.route,
-                        navOptions = navOptions { launchSingleTop }
+                        navOptions = navOptions {
+                            launchSingleTop
+                        }
                     )
                 },
                 icon = {

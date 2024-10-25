@@ -22,6 +22,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import org.sopt.and.Constants
 import org.sopt.and.R
 import org.sopt.and.ui.theme.ANDANDROIDTheme
 import org.sopt.and.ui.theme.Grey200
@@ -65,48 +66,20 @@ fun LinkWithSNSBox(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            Icon(
-                painter = painterResource(R.drawable.kakao_talk_icon),
-                contentDescription = stringResource(R.string.link_kakao_icon_description),
-                tint = Color.Unspecified,
-                modifier = Modifier
-                    .clip(CircleShape)
-                    .size(42.dp)
-            )
-            Icon(
-                painter = painterResource(R.drawable.t_world_icon),
-                contentDescription = stringResource(R.string.link_tworld_icon_description),
-                tint = Color.Unspecified,
-                modifier = Modifier
-                    .clip(CircleShape)
-                    .size(42.dp)
-            )
-            Icon(
-                painter = painterResource(R.drawable.naver_icon),
-                contentDescription = stringResource(R.string.link_naver_icon_description),
-                tint = Color.Unspecified,
-                modifier = Modifier
-                    .clip(CircleShape)
-                    .size(42.dp)
-            )
-            Icon(
-                painter = painterResource(R.drawable.facebook_icon),
-                contentDescription = stringResource(R.string.link_facebook_icon_description),
-                tint = Color.Unspecified,
-                modifier = Modifier
-                    .clip(CircleShape)
-                    .size(42.dp)
-            )
-            Icon(
-                painter = painterResource(R.drawable.apple_icon),
-                contentDescription = stringResource(R.string.link_apple_icon_description),
-                tint = Color.Unspecified,
-                modifier = Modifier
-                    .clip(CircleShape)
-                    .size(42.dp)
-            )
+            Constants.linkableSNS.forEach { item ->
+                Icon(
+                    painter = painterResource(item.first),
+                    contentDescription = stringResource(item.second),
+                    tint = Color.Unspecified,
+                    modifier = Modifier
+                        .clip(CircleShape)
+                        .size(42.dp)
+                )
+            }
         }
+
         Spacer(modifier = Modifier.size(16.dp))
+
         Text(
             text = stringResource(R.string.link_with_another_service_description),
             color = Grey200,

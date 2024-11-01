@@ -18,12 +18,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import org.sopt.and.R
-import org.sopt.and.components.GreetingText
 import org.sopt.and.components.LinkWithSNSBox
-import org.sopt.and.signup.components.SignUpBtn
-import org.sopt.and.signup.components.SignUpEmailField
-import org.sopt.and.signup.components.SignUpPasswordField
-import org.sopt.and.signup.components.SignUpTop
+import org.sopt.and.signup.components.*
 import org.sopt.and.ui.theme.*
 import org.sopt.and.ui.theme.ANDANDROIDTheme
 
@@ -56,7 +52,7 @@ fun SignUpScreen(
 
             Spacer(modifier = Modifier.height(30.dp))
 
-            GreetingText(24, context)
+            SignUpGreetingText(24, context)
 
             Spacer(modifier = Modifier.height(20.dp))
 

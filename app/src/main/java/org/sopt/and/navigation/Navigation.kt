@@ -52,7 +52,7 @@ fun Navigation(
                         navController.navigate(Routes.SignUp)
                     },
                     navigateToMyInfo = { myEmail ->
-                        navigationViewModel.changeSignInPasswordVisibility()
+                        navigationViewModel.changeBottomNavigationVisibility()
                         navController.navigate(
                             Routes.MyInfo(myEmail)
                         )

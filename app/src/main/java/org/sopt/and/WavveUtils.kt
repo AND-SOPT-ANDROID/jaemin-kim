@@ -9,10 +9,13 @@ import androidx.compose.ui.text.input.VisualTransformation
 import org.sopt.and.navigation.Routes
 import org.sopt.and.navigation.WavveBottomNavigationItem
 
-
 object WavveUtils {
     const val MIN_PASSWORD_LENGTH = 8
     const val MAX_PASSWORD_LENGTH = 20
+
+    const val MYINFO_SCREEN_INDEX = 2
+    const val SEARCH_SCREEN_INDEX = 1
+    const val HOME_SCREEN_INDEX = 0
 
     val wavveBottomNavigationItems = listOf<WavveBottomNavigationItem>(
         WavveBottomNavigationItem(

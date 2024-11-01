@@ -1,5 +1,6 @@
 package org.sopt.and.home.components
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -21,12 +22,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.sopt.and.R
-import org.sopt.and.WavveUtils
 import org.sopt.and.ui.theme.Grey200
 import org.sopt.and.ui.theme.White100
 
 @Composable
-fun HomeTopBar() {
+fun HomeTopBar(
+    @StringRes genres: List<Int>
+) {
     Column(
         modifier = Modifier.padding(horizontal = 16.dp)
     ) {
@@ -67,7 +69,7 @@ fun HomeTopBar() {
                 .padding(vertical = 10.dp),
             horizontalArrangement = Arrangement.spacedBy(14.dp)
         ) {
-            WavveUtils.genres.forEach { genre ->
+            genres.forEach { genre ->
                 Text(
                     text = stringResource(genre),
                     color = Grey200,
@@ -81,6 +83,6 @@ fun HomeTopBar() {
 @Preview
 @Composable
 fun HomeTopBarPreview() {
-    HomeTopBar()
+    HomeTopBar(genres = listOf(R.string.home_top20_title))
 }
 

@@ -1,5 +1,6 @@
 package org.sopt.and.home.components
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -32,20 +33,23 @@ import org.sopt.and.ui.theme.Grey200
 import org.sopt.and.ui.theme.White100
 
 @Composable
-fun HomeBannerPager() {
-    val pagerState = rememberPagerState(pageCount = { WavveUtils.banners.size })
+fun HomeBannerPager(@DrawableRes banners: List<Int>) {
+    val pagerState = rememberPagerState(pageCount = { banners.size })
 
     HorizontalPager(
         state = pagerState,
         contentPadding = PaddingValues(horizontal = 10.dp),
         pageSpacing = 10.dp
     ) { page ->
-        HomeBannerPage(page)
+        HomeBannerPage(page, banners)
     }
 }
 
 @Composable
-fun HomeBannerPage(index: Int) {
+fun HomeBannerPage(
+    index: Int,
+    @DrawableRes banners: List<Int>
+) {
     Box(
         Modifier
             .fillMaxSize()
@@ -53,7 +57,7 @@ fun HomeBannerPage(index: Int) {
             .border(1.dp, Grey200, shape = RoundedCornerShape(16.dp))
     ) {
         Image(
-            painter = painterResource(WavveUtils.banners[index]),
+            painter = painterResource(banners[index]),
             contentDescription = "",
             contentScale = ContentScale.Crop,
             modifier = Modifier
@@ -61,10 +65,10 @@ fun HomeBannerPage(index: Int) {
         )
 
         HomeBannerIndicator(
-            Modifier
+            modifier = Modifier
                 .align(Alignment.BottomEnd)
                 .padding(6.dp),
-            index
+            index = index
         )
     }
 }
@@ -119,6 +123,6 @@ fun HomeBannerPagerPreview() {
         modifier = Modifier
             .fillMaxSize()
     ) {
-        HomeBannerPager()
+        HomeBannerPager(listOf())
     }
 }

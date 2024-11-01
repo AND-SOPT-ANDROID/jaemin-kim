@@ -75,5 +75,6 @@
     <string name="genre_movie">영화</string>
     <string name="genre_animation">애니</string>
     <string name="genre_foreign_country_series">해외시리즈</string>
+    <string name="home_rank_of_item">%1$s</string>
 
 </resources>

@@ -1,5 +1,6 @@
 package org.sopt.and.home.components
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -22,11 +23,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.sopt.and.R
-import org.sopt.and.WavveUtils
 import org.sopt.and.ui.theme.White100
 
 @Composable
-fun Top20List() {
+fun Top20List(@DrawableRes rankers: List<Int>) {
     Column(
         modifier = Modifier.padding(horizontal = 16.dp)
     ) {
@@ -42,22 +42,25 @@ fun Top20List() {
             horizontalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             items(
-                WavveUtils.rankers.size,
+                rankers.size,
                 key = { it }
             ) { index ->
-                RankedItem(index)
+                RankedItem(index, rankers)
             }
         }
     }
 }
 
 @Composable
-fun RankedItem(index: Int) {
+fun RankedItem(
+    index: Int,
+    @DrawableRes rankers: List<Int>
+) {
     Box(
         Modifier.height(240.dp)
     ) {
         Image(
-            painter = painterResource(WavveUtils.rankers[index]),
+            painter = painterResource(rankers[index]),
             contentDescription = "",
             contentScale = ContentScale.Crop,
             modifier = Modifier
@@ -67,7 +70,7 @@ fun RankedItem(index: Int) {
         )
 
         Text(
-            text = "${index + 1}",
+            text = stringResource(R.string.home_rank_of_item, index + 1),
             fontSize = 50.sp,
             fontWeight = W900,
             color = White100,
@@ -81,5 +84,5 @@ fun RankedItem(index: Int) {
 @Preview
 @Composable
 fun Top20ListPreview() {
-    Top20List()
+    Top20List(listOf())
 }

@@ -45,7 +45,7 @@ fun HomeTopBar() {
             Spacer(modifier = Modifier.weight(1f))
 
             Icon(
-                painter = painterResource(R.drawable.cast_24px),
+                painter = painterResource(R.drawable.ic_cast_24),
                 contentDescription = "",
                 modifier = Modifier.size(30.dp),
                 tint = White100
@@ -54,7 +54,7 @@ fun HomeTopBar() {
             Spacer(modifier = Modifier.size(16.dp))
 
             Icon(
-                painter = painterResource(R.drawable.live_tv_24px),
+                painter = painterResource(R.drawable.ic_live_tv_24),
                 contentDescription = "",
                 modifier = Modifier.size(30.dp),
                 tint = White100

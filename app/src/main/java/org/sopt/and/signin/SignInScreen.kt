@@ -30,9 +30,9 @@ import org.sopt.and.ui.theme.ANDANDROIDTheme
 
 @Composable
 fun SignInScreen(
-    modifier: Modifier = Modifier,
     navigateToSignUp: () -> Unit,
-    navigateToMyInfo: (String) -> Unit
+    navigateToMyInfo: (String) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()

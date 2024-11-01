@@ -32,13 +32,13 @@ fun WavveBottomNavigation(
         modifier = Modifier.height(60.dp),
         containerColor = Color.Black
     ) {
-        items.forEachIndexed { index, item ->
+        items.forEachIndexed { index, bottomNavigationItem ->
             NavigationBarItem(
                 selected = index == navigationSelectedScreenIndex,
                 onClick = {
                     setNavigationSelectedScreenIndex(index)
                     navController.navigate(
-                        item.route,
+                        bottomNavigationItem.route,
                         navOptions = navOptions {
                             launchSingleTop
                         }
@@ -46,13 +46,13 @@ fun WavveBottomNavigation(
                 },
                 icon = {
                     Icon(
-                        imageVector = item.icon,
+                        imageVector = bottomNavigationItem.icon,
                         contentDescription = ""
                     )
                 },
                 label = {
                     Text(
-                        text = stringResource(item.label),
+                        text = stringResource(bottomNavigationItem.label),
                         style = TextStyle(
                             fontSize = 12.sp
                         )

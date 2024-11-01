@@ -77,5 +77,5 @@ fun RecommendList(
 @Preview
 @Composable
 fun RecommendListPreview() {
-    RecommendList("", WavveUtils.recommends)
+    RecommendList("", listOf())
 }

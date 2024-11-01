@@ -28,7 +28,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.sopt.and.R
-import org.sopt.and.WavveUtils
 import org.sopt.and.ui.theme.Grey200
 import org.sopt.and.ui.theme.White100
 
@@ -68,7 +67,8 @@ fun HomeBannerPage(
             modifier = Modifier
                 .align(Alignment.BottomEnd)
                 .padding(6.dp),
-            index = index
+            index = index,
+            totalPage = banners.size
         )
     }
 }
@@ -76,7 +76,8 @@ fun HomeBannerPage(
 @Composable
 fun HomeBannerIndicator(
     modifier: Modifier,
-    index: Int
+    index: Int,
+    totalPage: Int
 ) {
     Box(
         modifier = modifier
@@ -107,7 +108,7 @@ fun HomeBannerIndicator(
                     append(
                         stringResource(
                             R.string.home_banner_indicator_back,
-                            WavveUtils.banners.size
+                            totalPage
                         )
                     )
                 }

@@ -16,10 +16,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import org.sopt.and.Constants
 import org.sopt.and.R
-import org.sopt.and.home.components.HomeBottomCoupon
+import org.sopt.and.WavveUtils
 import org.sopt.and.home.components.HomeBannerPager
+import org.sopt.and.home.components.HomeBottomCoupon
 import org.sopt.and.home.components.HomeTopBar
 import org.sopt.and.home.components.RecommendList
 import org.sopt.and.home.components.Top20List
@@ -50,7 +50,7 @@ fun HomeScreen(
 
             RecommendList(
                 title = stringResource(R.string.home_picks_of_editor_title),
-                items = Constants.recommends
+                items = WavveUtils.recommends
             )
 
             Spacer(modifier = Modifier.height(20.dp))

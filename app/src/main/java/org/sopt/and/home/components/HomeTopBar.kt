@@ -19,8 +19,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import org.sopt.and.Constants
 import org.sopt.and.R
+import org.sopt.and.WavveUtils
 import org.sopt.and.ui.theme.Grey200
 import org.sopt.and.ui.theme.White100
 
@@ -66,7 +66,7 @@ fun HomeTopBar() {
                 .padding(vertical = 10.dp),
             horizontalArrangement = Arrangement.spacedBy(14.dp)
         ) {
-            Constants.genres.forEach { genre ->
+            WavveUtils.genres.forEach { genre ->
                 Text(
                     text = genre,
                     color = Grey200,

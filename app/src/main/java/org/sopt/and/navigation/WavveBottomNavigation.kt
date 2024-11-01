@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
-import org.sopt.and.Constants
+import org.sopt.and.WavveUtils
 import org.sopt.and.ui.theme.Grey100
 import org.sopt.and.ui.theme.Grey200
 
@@ -77,7 +77,7 @@ fun WavveBottomNavigation(
 @Composable
 fun WavveBottomNavigationPreview() {
     WavveBottomNavigation(
-        Constants.wavveBottomNavigationItems,
+        WavveUtils.wavveBottomNavigationItems,
         navController = rememberNavController(),
         setNavigationSelectedScreenIndex = TODO(),
         navigationSelectedScreenIndex = TODO(),

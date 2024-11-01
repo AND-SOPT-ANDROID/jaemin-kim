@@ -23,7 +23,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import org.sopt.and.Constants
+import org.sopt.and.WavveUtils
 import org.sopt.and.ui.theme.Grey200
 import org.sopt.and.ui.theme.White100
 
@@ -77,5 +77,5 @@ fun RecommendList(
 @Preview
 @Composable
 fun RecommendListPreview() {
-    RecommendList("", Constants.recommends)
+    RecommendList("", WavveUtils.recommends)
 }

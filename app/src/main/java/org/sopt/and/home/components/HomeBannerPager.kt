@@ -25,13 +25,13 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import org.sopt.and.Constants
+import org.sopt.and.WavveUtils
 import org.sopt.and.ui.theme.Grey200
 import org.sopt.and.ui.theme.White100
 
 @Composable
 fun HomeBannerPager() {
-    val pagerState = rememberPagerState(pageCount = { Constants.banners.size })
+    val pagerState = rememberPagerState(pageCount = { WavveUtils.banners.size })
 
     HorizontalPager(
         state = pagerState,
@@ -51,7 +51,7 @@ fun HomeBannerPage(index: Int) {
             .border(1.dp, Grey200, shape = RoundedCornerShape(16.dp))
     ) {
         Image(
-            painter = painterResource(Constants.banners[index]),
+            painter = painterResource(WavveUtils.banners[index]),
             contentDescription = "",
             contentScale = ContentScale.Crop,
             modifier = Modifier
@@ -94,7 +94,7 @@ fun HomeBannerIndicator(
                         fontSize = 11.sp
                     )
                 ) {
-                    append(" | ${Constants.banners.size}")
+                    append(" | ${WavveUtils.banners.size}")
                 }
             }
         )

@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import org.sopt.and.Constants
+import org.sopt.and.WavveUtils
 
 class SignUpViewModel : ViewModel() {
     private val _uiState = MutableStateFlow(SignUpUiState())
@@ -30,7 +30,7 @@ class SignUpViewModel : ViewModel() {
     }
 
     fun validateSignUpPassword(signUpPassword: String): Boolean {
-        if (signUpPassword.length !in Constants.MIN_PASSWORD_LENGTH..Constants.MAX_PASSWORD_LENGTH) return false
+        if (signUpPassword.length !in WavveUtils.MIN_PASSWORD_LENGTH..WavveUtils.MAX_PASSWORD_LENGTH) return false
 
         val validateValues = listOf<Boolean>(
             signUpPassword.any { it.isLowerCase() },

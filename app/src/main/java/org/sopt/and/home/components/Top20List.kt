@@ -21,8 +21,8 @@ import androidx.compose.ui.text.font.FontWeight.Companion.W900
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import org.sopt.and.Constants
 import org.sopt.and.R
+import org.sopt.and.WavveUtils
 import org.sopt.and.ui.theme.White100
 
 @Composable
@@ -42,7 +42,7 @@ fun Top20List() {
             horizontalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             items(
-                Constants.rankers.size,
+                WavveUtils.rankers.size,
                 key = { it }
             ) { index ->
                 RankedItem(index)
@@ -57,7 +57,7 @@ fun RankedItem(index: Int) {
         Modifier.height(240.dp)
     ) {
         Image(
-            painter = painterResource(Constants.rankers[index]),
+            painter = painterResource(WavveUtils.rankers[index]),
             contentDescription = "",
             contentScale = ContentScale.Crop,
             modifier = Modifier

@@ -22,8 +22,8 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import org.sopt.and.Constants
 import org.sopt.and.R
+import org.sopt.and.WavveUtils
 import org.sopt.and.ui.theme.ANDANDROIDTheme
 import org.sopt.and.ui.theme.Grey200
 
@@ -66,7 +66,7 @@ fun LinkWithSNSBox(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            Constants.linkableSNS.forEach { item ->
+            WavveUtils.linkableSNS.forEach { item ->
                 Icon(
                     painter = painterResource(item.first),
                     contentDescription = stringResource(item.second),

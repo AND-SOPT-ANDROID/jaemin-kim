@@ -50,16 +50,14 @@ fun MyInfoScreen(
         )
 
         EmptyInfoBox(
-            stringResource(R.string.my_viewing_history_box_title),
-            stringResource(R.string.my_viewing_history_box_empty_text),
+            title = stringResource(R.string.my_viewing_history_box_title),
+            description = stringResource(R.string.my_viewing_history_box_empty_text),
             modifier = Modifier.weight(0.3f)
         )
 
         EmptyInfoBox(
-            stringResource(
-                R.string.my_program_of_interest_box_title
-            ),
-            stringResource(R.string.my_program_of_interest_empty_text),
+            title = stringResource(R.string.my_program_of_interest_box_title),
+            description = stringResource(R.string.my_program_of_interest_empty_text),
             modifier = Modifier.weight(0.3f)
         )
     }

@@ -90,7 +90,6 @@ fun LinkWithSNSBox(
     }
 }
 
-
 @Preview(
     showBackground = true
 )

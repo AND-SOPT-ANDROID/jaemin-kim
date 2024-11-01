@@ -2,7 +2,6 @@ package org.sopt.and.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -41,30 +40,25 @@ fun EmptyInfoBox(
                 fontWeight = FontWeight(1000)
             )
         )
-
-        Row(
+        
+        Column(
             modifier = Modifier.fillMaxSize(),
-            horizontalArrangement = Arrangement.Center
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
         ) {
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                Icon(
-                    imageVector = Icons.Sharp.Warning,
-                    contentDescription = description,
-                    modifier = Modifier.size(40.dp),
-                    tint = White100
-                )
+            Icon(
+                imageVector = Icons.Sharp.Warning,
+                contentDescription = description,
+                modifier = Modifier.size(40.dp),
+                tint = White100
+            )
 
-                Spacer(modifier = Modifier.height(10.dp))
+            Spacer(modifier = Modifier.height(10.dp))
 
-                Text(
-                    text = description,
-                    color = White100
-                )
-            }
+            Text(
+                text = description,
+                color = White100
+            )
         }
     }
 }

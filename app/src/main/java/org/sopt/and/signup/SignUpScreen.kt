@@ -48,7 +48,7 @@ fun SignUpScreen(
                 .weight(1f)
                 .padding(16.dp)
         ) {
-            SignUpTop()
+            SignUpTopBar()
 
             Spacer(modifier = Modifier.height(30.dp))
 

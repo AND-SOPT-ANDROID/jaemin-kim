@@ -21,7 +21,7 @@ import org.sopt.and.R
 import org.sopt.and.ui.theme.White100
 
 @Composable
-fun SignUpTop() {
+fun SignUpTopBar() {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,

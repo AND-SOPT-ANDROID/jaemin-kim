@@ -1,4 +1,4 @@
-package org.sopt.and.components
+package org.sopt.and.home.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth

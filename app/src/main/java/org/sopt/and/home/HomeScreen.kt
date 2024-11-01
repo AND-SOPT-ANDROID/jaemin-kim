@@ -18,7 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.sopt.and.Constants
 import org.sopt.and.R
-import org.sopt.and.components.HomeBottomCoupon
+import org.sopt.and.home.components.HomeBottomCoupon
 import org.sopt.and.home.components.HomeBannerPager
 import org.sopt.and.home.components.HomeTopBar
 import org.sopt.and.home.components.RecommendList

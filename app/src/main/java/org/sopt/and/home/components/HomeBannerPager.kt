@@ -1,0 +1,113 @@
+package org.sopt.and.home.components
+
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import org.sopt.and.Constants
+import org.sopt.and.ui.theme.Grey200
+import org.sopt.and.ui.theme.White100
+
+@Composable
+fun HomeBannerPager() {
+    val pagerState = rememberPagerState(pageCount = { Constants.banners.size })
+
+    HorizontalPager(
+        state = pagerState,
+        contentPadding = PaddingValues(start = 10.dp, end = 10.dp),
+        pageSpacing = 10.dp
+    ) { page ->
+        HomeBannerPage(page)
+    }
+}
+
+@Composable
+fun HomeBannerPage(index: Int) {
+    Box(
+        Modifier
+            .fillMaxSize()
+            .clip(shape = RoundedCornerShape(16.dp))
+            .border(1.dp, Grey200, shape = RoundedCornerShape(16.dp))
+    ) {
+        Image(
+            painter = painterResource(Constants.banners[index]),
+            contentDescription = "",
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .fillMaxSize()
+        )
+
+        HomeBannerIndicator(
+            Modifier
+                .align(Alignment.BottomEnd)
+                .padding(6.dp),
+            index
+        )
+    }
+}
+
+@Composable
+fun HomeBannerIndicator(
+    modifier: Modifier,
+    index: Int
+) {
+    Box(
+        modifier = modifier
+            .clip(RoundedCornerShape(50))
+            .background(Color.Black)
+            .padding(horizontal = 8.dp, vertical = 4.dp)
+    ) {
+        Text(
+            buildAnnotatedString {
+                withStyle(
+                    style = SpanStyle(
+                        color = White100,
+                        fontSize = 11.sp
+                    )
+                ) {
+                    append("${index + 1}")
+                }
+                withStyle(
+                    style = SpanStyle(
+                        color = Grey200,
+                        fontSize = 11.sp
+                    )
+                ) {
+                    append(" | ${Constants.banners.size}")
+                }
+            }
+        )
+    }
+}
+
+@Preview
+@Composable
+fun HomeBannerPagerPreview() {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+    ) {
+        HomeBannerPager()
+    }
+}

@@ -66,4 +66,12 @@
     <string name="bottom_navigation_search_label">검색</string>
     <string name="bottom_navigation_my_info_label">My</string>
 
+    <!--genre-->
+    <string name="genre_new_classic">뉴클래식</string>
+    <string name="genre_drama">드라마</string>
+    <string name="genre_entertainment">예능</string>
+    <string name="genre_movie">영화</string>
+    <string name="genre_animation">애니</string>
+    <string name="genre_foreign_country_series">해외시리즈</string>
+
 </resources>

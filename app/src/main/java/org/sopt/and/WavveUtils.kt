@@ -1,5 +1,7 @@
 package org.sopt.and
 
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Home
@@ -38,10 +40,17 @@ object WavveUtils {
         )
     )
 
-    val genres = listOf<String>(
-        "뉴클래식", "드라마", "예능", "영화", "애니", "해외시리즈"
+    @StringRes
+    val genres = listOf<Int>(
+        R.string.genre_new_classic,
+        R.string.genre_drama,
+        R.string.genre_entertainment,
+        R.string.genre_movie,
+        R.string.genre_animation,
+        R.string.genre_foreign_country_series
     )
 
+    @DrawableRes
     val banners = listOf<Int>(
         R.drawable.banner_1,
         R.drawable.banner_2,
@@ -49,6 +58,7 @@ object WavveUtils {
         R.drawable.banner_4
     )
 
+    @DrawableRes
     val recommends = listOf<Int>(
         R.drawable.recommend_1,
         R.drawable.recommend_2,
@@ -58,6 +68,7 @@ object WavveUtils {
         R.drawable.recommend_6,
     )
 
+    @DrawableRes
     val rankers = listOf<Int>(
         R.drawable.top_1,
         R.drawable.top_2,

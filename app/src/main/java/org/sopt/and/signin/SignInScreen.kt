@@ -24,11 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import org.sopt.and.R
 import org.sopt.and.components.LinkWithSNSBox
-import org.sopt.and.signin.components.SignInBtn
-import org.sopt.and.signin.components.SignInEmailField
-import org.sopt.and.signin.components.SignInPasswordField
-import org.sopt.and.signin.components.SignInToAdditionalFeatures
-import org.sopt.and.signin.components.SignInTop
+import org.sopt.and.signin.components.*
 import org.sopt.and.ui.theme.*
 import org.sopt.and.ui.theme.ANDANDROIDTheme
 
@@ -67,7 +63,7 @@ fun SignInScreen(
                     .padding(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                SignInTop()
+                SignInTopBar()
 
                 Spacer(modifier = Modifier.height(60.dp))
 
@@ -116,6 +112,7 @@ fun SignInScreen(
 fun SignInScreenPreview() {
     ANDANDROIDTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+            innerPadding
             SignInScreen(
                 navigateToSignUp = {},
                 navigateToMyInfo = { a -> }

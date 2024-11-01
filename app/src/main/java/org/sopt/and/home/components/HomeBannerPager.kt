@@ -35,7 +35,7 @@ fun HomeBannerPager() {
 
     HorizontalPager(
         state = pagerState,
-        contentPadding = PaddingValues(start = 10.dp, end = 10.dp),
+        contentPadding = PaddingValues(horizontal = 10.dp),
         pageSpacing = 10.dp
     ) { page ->
         HomeBannerPage(page)

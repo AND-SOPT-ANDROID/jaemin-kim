@@ -90,9 +90,7 @@ fun LinkWithSNSBox(
     }
 }
 
-@Preview(
-    showBackground = true
-)
+@Preview(showBackground = true)
 @Composable
 fun LinkWithSNSBoxPreview() {
     ANDANDROIDTheme {

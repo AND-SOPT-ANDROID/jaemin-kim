@@ -7,6 +7,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
@@ -27,7 +28,9 @@ fun SignInOrSignUpTextField(
         modifier = Modifier.fillMaxWidth(),
         colors = TextFieldDefaults.colors(
             unfocusedContainerColor = Grey100,
-            focusedContainerColor = Grey100
+            focusedContainerColor = Grey100,
+            focusedIndicatorColor = Color.Transparent,  // 요놈들로 textfield의 밑줄없앰
+            unfocusedIndicatorColor = Color.Transparent
         ),
         shape = RoundedCornerShape(10.dp),
         placeholder = {

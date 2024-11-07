@@ -19,9 +19,13 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import org.sopt.and.R
 import org.sopt.and.components.LinkWithSNSBox
-import org.sopt.and.signup.components.*
-import org.sopt.and.ui.theme.*
+import org.sopt.and.signup.components.SignUpBtn
+import org.sopt.and.signup.components.SignUpEmailField
+import org.sopt.and.signup.components.SignUpGreetingText
+import org.sopt.and.signup.components.SignUpPasswordField
+import org.sopt.and.signup.components.SignUpTopBar
 import org.sopt.and.ui.theme.ANDANDROIDTheme
+import org.sopt.and.ui.theme.Black100
 
 @Composable
 fun SignUpScreen(
@@ -52,7 +56,7 @@ fun SignUpScreen(
 
             Spacer(modifier = Modifier.height(30.dp))
 
-            SignUpGreetingText(24, context)
+            SignUpGreetingText(fontSize = 24)
 
             Spacer(modifier = Modifier.height(20.dp))
 

@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
-import org.sopt.and.Constants
+import org.sopt.and.WavveUtils
 import org.sopt.and.ui.theme.Grey100
 import org.sopt.and.ui.theme.Grey200
 
@@ -32,13 +32,13 @@ fun WavveBottomNavigation(
         modifier = Modifier.height(60.dp),
         containerColor = Color.Black
     ) {
-        items.forEachIndexed { index, item ->
+        items.forEachIndexed { index, bottomNavigationItem ->
             NavigationBarItem(
                 selected = index == navigationSelectedScreenIndex,
                 onClick = {
                     setNavigationSelectedScreenIndex(index)
                     navController.navigate(
-                        item.route,
+                        bottomNavigationItem.route,
                         navOptions = navOptions {
                             launchSingleTop
                         }
@@ -46,13 +46,13 @@ fun WavveBottomNavigation(
                 },
                 icon = {
                     Icon(
-                        imageVector = item.icon,
+                        imageVector = bottomNavigationItem.icon,
                         contentDescription = ""
                     )
                 },
                 label = {
                     Text(
-                        text = stringResource(item.label),
+                        text = stringResource(bottomNavigationItem.label),
                         style = TextStyle(
                             fontSize = 12.sp
                         )
@@ -77,7 +77,7 @@ fun WavveBottomNavigation(
 @Composable
 fun WavveBottomNavigationPreview() {
     WavveBottomNavigation(
-        Constants.wavveBottomNavigationItems,
+        WavveUtils.wavveBottomNavigationItems,
         navController = rememberNavController(),
         setNavigationSelectedScreenIndex = TODO(),
         navigationSelectedScreenIndex = TODO(),

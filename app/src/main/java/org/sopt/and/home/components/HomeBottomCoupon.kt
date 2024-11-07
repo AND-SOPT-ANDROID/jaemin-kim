@@ -1,4 +1,4 @@
-package org.sopt.and.components
+package org.sopt.and.home.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import org.sopt.and.R
 
 @Composable
-fun Coupon(modifier: Modifier = Modifier) {
+fun HomeBottomCoupon(modifier: Modifier = Modifier) {
     Text(
         text = stringResource(R.string.my_first_payment_text),
         textAlign = TextAlign.Center,

@@ -1,5 +1,6 @@
 package org.sopt.and.home.components
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,16 +17,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import org.sopt.and.Constants
 import org.sopt.and.R
 import org.sopt.and.ui.theme.Grey200
 import org.sopt.and.ui.theme.White100
 
 @Composable
-fun HomeTopBar() {
+fun HomeTopBar(
+    @StringRes genres: List<Int>
+) {
     Column(
         modifier = Modifier.padding(horizontal = 16.dp)
     ) {
@@ -44,7 +47,7 @@ fun HomeTopBar() {
             Spacer(modifier = Modifier.weight(1f))
 
             Icon(
-                painter = painterResource(R.drawable.cast_24px),
+                painter = painterResource(R.drawable.ic_cast_24),
                 contentDescription = "",
                 modifier = Modifier.size(30.dp),
                 tint = White100
@@ -53,7 +56,7 @@ fun HomeTopBar() {
             Spacer(modifier = Modifier.size(16.dp))
 
             Icon(
-                painter = painterResource(R.drawable.live_tv_24px),
+                painter = painterResource(R.drawable.ic_live_tv_24),
                 contentDescription = "",
                 modifier = Modifier.size(30.dp),
                 tint = White100
@@ -66,9 +69,9 @@ fun HomeTopBar() {
                 .padding(vertical = 10.dp),
             horizontalArrangement = Arrangement.spacedBy(14.dp)
         ) {
-            Constants.genres.forEach { genre ->
+            genres.forEach { genre ->
                 Text(
-                    text = genre,
+                    text = stringResource(genre),
                     color = Grey200,
                     fontSize = 14.sp
                 )
@@ -80,6 +83,6 @@ fun HomeTopBar() {
 @Preview
 @Composable
 fun HomeTopBarPreview() {
-    HomeTopBar()
+    HomeTopBar(genres = listOf(R.string.home_top20_title))
 }
 

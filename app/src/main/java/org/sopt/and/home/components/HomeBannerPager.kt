@@ -1,5 +1,6 @@
 package org.sopt.and.home.components
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -19,31 +20,38 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import org.sopt.and.Constants
+import org.sopt.and.R
 import org.sopt.and.ui.theme.Grey200
 import org.sopt.and.ui.theme.White100
 
 @Composable
-fun HomeBannerPager() {
-    val pagerState = rememberPagerState(pageCount = { Constants.banners.size })
+fun HomeBannerPager(@DrawableRes banners: List<Int>) {
+    val pagerState = rememberPagerState(pageCount = { banners.size })
 
     HorizontalPager(
         state = pagerState,
-        contentPadding = PaddingValues(start = 10.dp, end = 10.dp),
+        contentPadding = PaddingValues(horizontal = 10.dp),
         pageSpacing = 10.dp
     ) { page ->
-        HomeBannerPage(page)
+        HomeBannerPage(
+            index = page,
+            banners = banners
+        )
     }
 }
 
 @Composable
-fun HomeBannerPage(index: Int) {
+fun HomeBannerPage(
+    index: Int,
+    @DrawableRes banners: List<Int>
+) {
     Box(
         Modifier
             .fillMaxSize()
@@ -51,7 +59,7 @@ fun HomeBannerPage(index: Int) {
             .border(1.dp, Grey200, shape = RoundedCornerShape(16.dp))
     ) {
         Image(
-            painter = painterResource(Constants.banners[index]),
+            painter = painterResource(banners[index]),
             contentDescription = "",
             contentScale = ContentScale.Crop,
             modifier = Modifier
@@ -59,10 +67,11 @@ fun HomeBannerPage(index: Int) {
         )
 
         HomeBannerIndicator(
-            Modifier
+            modifier = Modifier
                 .align(Alignment.BottomEnd)
                 .padding(6.dp),
-            index
+            index = index,
+            totalPage = banners.size
         )
     }
 }
@@ -70,7 +79,8 @@ fun HomeBannerPage(index: Int) {
 @Composable
 fun HomeBannerIndicator(
     modifier: Modifier,
-    index: Int
+    index: Int,
+    totalPage: Int
 ) {
     Box(
         modifier = modifier
@@ -86,7 +96,11 @@ fun HomeBannerIndicator(
                         fontSize = 11.sp
                     )
                 ) {
-                    append("${index + 1}")
+                    append(
+                        stringResource(
+                            R.string.home_banner_indicator_front, index + 1
+                        )
+                    )
                 }
                 withStyle(
                     style = SpanStyle(
@@ -94,7 +108,12 @@ fun HomeBannerIndicator(
                         fontSize = 11.sp
                     )
                 ) {
-                    append(" | ${Constants.banners.size}")
+                    append(
+                        stringResource(
+                            R.string.home_banner_indicator_back,
+                            totalPage
+                        )
+                    )
                 }
             }
         )
@@ -108,6 +127,6 @@ fun HomeBannerPagerPreview() {
         modifier = Modifier
             .fillMaxSize()
     ) {
-        HomeBannerPager()
+        HomeBannerPager(listOf())
     }
 }

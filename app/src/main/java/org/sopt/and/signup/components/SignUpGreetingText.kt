@@ -1,4 +1,4 @@
-package org.sopt.and.components
+package org.sopt.and.signup.components
 
 import android.content.Context
 import androidx.compose.material3.Text
@@ -16,7 +16,7 @@ import org.sopt.and.ui.theme.Grey200
 import org.sopt.and.ui.theme.White100
 
 @Composable
-fun GreetingText(
+fun SignUpGreetingText(
     fontSize: Int,
     context: Context
 ) {

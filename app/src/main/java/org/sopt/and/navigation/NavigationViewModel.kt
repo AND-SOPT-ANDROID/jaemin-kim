@@ -9,7 +9,7 @@ class NavigationViewModel() : ViewModel() {
     private val _uiState = MutableStateFlow(NavigationUiState())
     val uiState: StateFlow<NavigationUiState> = _uiState.asStateFlow()
 
-    fun changeSignInPasswordVisibility() {
+    fun changeBottomNavigationVisibility() {
         _uiState.value = _uiState.value.copy(
             isBottomNavigationVisible = !_uiState.value.isBottomNavigationVisible
         )

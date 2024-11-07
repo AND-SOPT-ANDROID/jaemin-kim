@@ -40,7 +40,10 @@ fun HomeBannerPager(@DrawableRes banners: List<Int>) {
         contentPadding = PaddingValues(horizontal = 10.dp),
         pageSpacing = 10.dp
     ) { page ->
-        HomeBannerPage(page, banners)
+        HomeBannerPage(
+            index = page,
+            banners = banners
+        )
     }
 }
 

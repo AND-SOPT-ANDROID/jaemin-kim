@@ -11,7 +11,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
-import org.sopt.and.WavveUtils
 import org.sopt.and.home.HomeScreen
 import org.sopt.and.myinfo.MyInfoScreen
 import org.sopt.and.myinfo.MyInfoViewModel
@@ -34,7 +33,7 @@ fun Navigation(
         bottomBar = {
             if (navigationUiState.isBottomNavigationVisible) {
                 WavveBottomNavigation(
-                    items = WavveUtils.wavveBottomNavigationItems,
+                    items = navigationUiState.wavveBottomNavigationItems,
                     navController,
                     navigationViewModel::setNavigationSelectedIndex,
                     navigationUiState.navigationSelectedIndex

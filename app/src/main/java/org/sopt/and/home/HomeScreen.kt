@@ -12,12 +12,12 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import org.sopt.and.R
 import org.sopt.and.home.components.HomeBannerPager
@@ -32,7 +32,7 @@ fun HomeScreen(
     innerPadding: PaddingValues
 ) {
     val homeViewModel = viewModel<HomeViewModel>()
-    val homeUiState by homeViewModel.uiState.collectAsState()
+    val homeUiState by homeViewModel.uiState.collectAsStateWithLifecycle()
 
     Column(
         modifier = Modifier

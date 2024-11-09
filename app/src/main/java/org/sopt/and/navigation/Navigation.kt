@@ -3,9 +3,9 @@ package org.sopt.and.navigation
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -22,11 +22,11 @@ import org.sopt.and.signup.SignUpScreen
 fun Navigation(
 ) {
     val navigationViewModel = viewModel<NavigationViewModel>()
-    val navigationUiState by navigationViewModel.uiState.collectAsState()
+    val navigationUiState by navigationViewModel.uiState.collectAsStateWithLifecycle()
     val navController = rememberNavController()
 
     val myInfoViewModel = viewModel<MyInfoViewModel>()
-    val myInfoUiState by myInfoViewModel.uiState.collectAsState()
+    val myInfoUiState by myInfoViewModel.uiState.collectAsStateWithLifecycle()
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),

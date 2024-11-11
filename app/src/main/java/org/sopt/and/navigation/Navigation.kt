@@ -10,6 +10,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navOptions
 import androidx.navigation.toRoute
 import org.sopt.and.home.HomeScreen
 import org.sopt.and.myinfo.MyInfoScreen
@@ -47,9 +48,7 @@ fun Navigation(
         ) {
             composable<Routes.SignIn> {
                 SignInScreen(
-                    navigateToSignUp = {
-                        navController.navigate(Routes.SignUp)
-                    },
+                    navigateToSignUp = { navController.navigate(route = Routes.SignUp) },
                     navigateToMyInfo = { myEmail ->
                         navigationViewModel.changeBottomNavigationVisibility()
                         navController.navigate(
@@ -62,7 +61,14 @@ fun Navigation(
             composable<Routes.SignUp> {
                 SignUpScreen(
                     navigateToSignIn = { signUpEmail, signUpPassword ->
-                        navController.navigate(Routes.SignIn(signUpEmail, signUpPassword))
+                        navController.navigate(
+                            route = Routes.SignIn(signUpEmail, signUpPassword),
+                            navOptions = navOptions {
+                                popUpTo<Routes.SignIn> {
+                                    inclusive = true
+                                }
+                            }
+                        )
                     }
                 )
             }

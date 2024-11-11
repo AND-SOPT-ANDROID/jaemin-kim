@@ -39,8 +39,6 @@ fun SignInScreen(
     modifier: Modifier = Modifier,
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
-    val scope = rememberCoroutineScope()
-    val context = LocalContext.current
 
     val signInViewModel = viewModel<SignInViewModel>()
     val signInUiState by signInViewModel.uiState.collectAsStateWithLifecycle()
@@ -89,8 +87,6 @@ fun SignInScreen(
 
                 SignInBtn(
                     isLoginSuccess = signInViewModel::isLoginSuccess,
-                    scope = scope,
-                    context = context,
                     snackbarHostState = snackbarHostState,
                     navigateToMyInfo = navigateToMyInfo,
                     signInEmail = signInUiState.signInEmail

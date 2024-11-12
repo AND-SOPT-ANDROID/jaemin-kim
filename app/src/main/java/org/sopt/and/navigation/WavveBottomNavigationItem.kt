@@ -5,6 +5,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 data class WavveBottomNavigationItem(
     val label: Int,
     val icon: ImageVector,
-    val route: Any,
+    val route: Routes,
     val index: Int
 )

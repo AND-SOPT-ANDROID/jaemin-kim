@@ -2,25 +2,24 @@ package org.sopt.and.navigation
 
 import kotlinx.serialization.Serializable
 
-
-object Routes {
+sealed class Routes {
     @Serializable
     data class MyInfo(
         val myEmail: String
-    )
+    ) : Routes()
 
     @Serializable
     data class SignIn(
         val signUpEmail: String,
         val signUpPassword: String
-    )
+    ) : Routes()
 
     @Serializable
-    object SignUp
+    object SignUp : Routes()
 
     @Serializable
-    object Home
+    object Home : Routes()
 
     @Serializable
-    object Search
+    object Search : Routes()
 }

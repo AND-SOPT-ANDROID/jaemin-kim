@@ -11,7 +11,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
-import androidx.navigation.toRoute
 import org.sopt.and.home.HomeScreen
 import org.sopt.and.myinfo.MyInfoScreen
 import org.sopt.and.myinfo.MyInfoViewModel
@@ -51,9 +50,8 @@ fun Navigation(
                     navigateToSignUp = { navController.navigate(route = Routes.SignUp) },
                     navigateToMyInfo = { myEmail ->
                         navigationViewModel.changeBottomNavigationVisibility()
-                        navController.navigate(
-                            Routes.MyInfo(myEmail)
-                        )
+                        myInfoViewModel.setMyEmail(myEmail)
+                        navController.navigate(Routes.MyInfo(myEmail))
                     }
                 )
             }
@@ -73,10 +71,7 @@ fun Navigation(
                 )
             }
 
-            composable<Routes.MyInfo> { backStackEntry ->
-                val item = backStackEntry.toRoute<Routes.MyInfo>()
-                myInfoViewModel.setMyEmail(item.myEmail)
-
+            composable<Routes.MyInfo> {
                 MyInfoScreen(
                     paddingValues = innerPadding,
                     myInfoUiState.myEmail

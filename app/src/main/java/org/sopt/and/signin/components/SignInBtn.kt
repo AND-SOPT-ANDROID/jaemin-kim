@@ -8,51 +8,60 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat.getString
-import kotlinx.coroutines.launch
 import org.sopt.and.R
+import org.sopt.and.WavveUtils
+import org.sopt.and.signin.SignInResult
+import org.sopt.and.signin.SignInViewModel
 import org.sopt.and.ui.theme.Blue100
 import org.sopt.and.ui.theme.White100
 
 @Composable
 fun SignInBtn(
-    isLoginSuccess: () -> Boolean,
     snackbarHostState: SnackbarHostState,
     navigateToMyInfo: (String) -> Unit,
-    signInEmail: String
+    signInEmail: String,
+    signInViewModel: SignInViewModel
 ) {
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
+
+    val signInResult by signInViewModel.signInResult.observeAsState()
 
     Button(
         modifier = Modifier
             .fillMaxWidth()
             .height(50.dp),
         onClick = {
-            if (isLoginSuccess()) {
-                scope.launch {
-                    snackbarHostState.showSnackbar(
-                        message = getString(
-                            context,
-                            R.string.sign_in_success_message
-                        )
+            signInViewModel.login()
+
+            when (signInResult) {
+                is SignInResult.Success -> {
+                    WavveUtils.showSnackbar(
+                        scope = scope,
+                        context = context,
+                        snackbarHostState = snackbarHostState,
+                        message = R.string.sign_in_success_message,
                     )
                     navigateToMyInfo(signInEmail)
                 }
-            } else {
-                scope.launch {
-                    snackbarHostState.showSnackbar(
-                        message = getString(
-                            context,
-                            R.string.sign_in_failed_message
-                        )
+
+                is SignInResult.Failure -> {
+                    WavveUtils.showSnackbar(
+                        scope = scope,
+                        context = context,
+                        snackbarHostState = snackbarHostState,
+                        message = R.string.sign_in_failed_message,
                     )
                 }
+
+                else -> {}
             }
         },
         shape = RoundedCornerShape(50.dp),

@@ -1,11 +1,15 @@
 package org.sopt.and.signin
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import org.sopt.and.navigation.Routes
 
 class SignInViewModel(
@@ -14,7 +18,10 @@ class SignInViewModel(
     private val _uiState = MutableStateFlow(SignInUiState())
     val uiState: StateFlow<SignInUiState> = _uiState.asStateFlow()
 
-    val signUpAccount = savedStateHandle.toRoute<Routes.SignIn>()
+    private val _signInResult = MutableLiveData<SignInResult>()
+    val signInResult: LiveData<SignInResult> = _signInResult
+
+    private val signUpAccount = savedStateHandle.toRoute<Routes.SignIn>()
 
     fun setSignInEmail(signInEmail: String) {
         _uiState.value = _uiState.value.copy(
@@ -38,4 +45,11 @@ class SignInViewModel(
         signUpAccount.signUpEmail.isNotEmpty()
                 && _uiState.value.signInEmail == signUpAccount.signUpEmail
                 && _uiState.value.signInPassword == signUpAccount.signUpPassword
+
+    fun login() {
+        viewModelScope.launch {
+            _signInResult.value =
+                if (isLoginSuccess()) SignInResult.Success else SignInResult.Failure
+        }
+    }
 }

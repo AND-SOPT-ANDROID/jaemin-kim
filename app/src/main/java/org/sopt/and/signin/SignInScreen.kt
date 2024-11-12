@@ -13,10 +13,8 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -49,9 +47,7 @@ fun SignInScreen(
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        snackbarHost = {
-            SnackbarHost(hostState = snackbarHostState)
-        }
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
     ) { innerPadding ->
         Column(
             modifier = modifier
@@ -86,10 +82,10 @@ fun SignInScreen(
                 Spacer(modifier = Modifier.height(30.dp))
 
                 SignInBtn(
-                    isLoginSuccess = signInViewModel::isLoginSuccess,
                     snackbarHostState = snackbarHostState,
                     navigateToMyInfo = navigateToMyInfo,
-                    signInEmail = signInUiState.signInEmail
+                    signInEmail = signInUiState.signInEmail,
+                    signInViewModel = signInViewModel
                 )
 
                 Spacer(modifier = Modifier.height(20.dp))

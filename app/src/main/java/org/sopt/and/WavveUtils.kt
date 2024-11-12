@@ -3,8 +3,12 @@ package org.sopt.and
 import android.content.Context
 import android.widget.Toast
 import androidx.annotation.StringRes
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.core.content.ContextCompat.getString
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 object WavveUtils {
     const val MIN_PASSWORD_LENGTH = 8
@@ -33,4 +37,18 @@ object WavveUtils {
         context.getString(message),
         Toast.LENGTH_SHORT
     ).show()
+
+    fun showSnackbar(
+        scope: CoroutineScope,
+        context: Context,
+        snackbarHostState: SnackbarHostState,
+        @StringRes message: Int
+    ) = scope.launch {
+        snackbarHostState.showSnackbar(
+            message = getString(
+                context,
+                message
+            )
+        )
+    }
 }

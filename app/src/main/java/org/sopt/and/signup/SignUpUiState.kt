@@ -5,3 +5,9 @@ data class SignUpUiState(
     val signUpPassword: String = "",
     val isSignUpPasswordVisible: Boolean = false
 )
+
+sealed class SignUpResult {
+    object Success : SignUpResult()
+    object FailureEmail : SignUpResult()
+    object FailurePassword : SignUpResult()
+}

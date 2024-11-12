@@ -1,5 +1,8 @@
 package org.sopt.and
 
+import android.content.Context
+import android.widget.Toast
+import androidx.annotation.StringRes
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 
@@ -21,4 +24,13 @@ object WavveUtils {
 
     fun transformationPasswordVisual(isVisible: Boolean): VisualTransformation =
         if (isVisible) VisualTransformation.None else PasswordVisualTransformation()
+
+    fun showToast(
+        context: Context,
+        @StringRes message: Int
+    ) = Toast.makeText(
+        context,
+        context.getString(message),
+        Toast.LENGTH_SHORT
+    ).show()
 }

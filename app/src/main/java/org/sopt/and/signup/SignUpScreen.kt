@@ -82,7 +82,6 @@ fun SignUpScreen(
         SignUpBtn(
             signUpEmail = signUpEmail,
             signUpPassword = signUpPassword,
-            context = context,
             onSignUpComplete = navigateToSignIn,
             signUpViewModel
         )

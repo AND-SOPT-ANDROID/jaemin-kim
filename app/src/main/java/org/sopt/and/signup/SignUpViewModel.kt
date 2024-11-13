@@ -1,6 +1,5 @@
 package org.sopt.and.signup
 
-import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
@@ -54,37 +53,6 @@ class SignUpViewModel : ViewModel() {
         )
     }
 
-    fun validateUserInformation(information: String): Boolean = information.length <= 8
-
-    //    fun signUp(
-//        signUpUsername: String,
-//        signUpPassword: String,
-//        signUpHobby: String
-//    ) {
-//        viewModelScope.launch {
-//            val isUsernameValid = validateUserInformation(signUpUsername)
-//            val isPasswordValid = validateUserInformation(signUpPassword)
-//            val isHobbyValid = validateUserInformation(signUpHobby)
-//
-//            _signUpResult.value = when {
-//                !isUsernameValid -> {
-//                    SignUpResult.FailureUsername
-//                }
-//
-//                !isPasswordValid -> {
-//                    SignUpResult.FailurePassword
-//                }
-//
-//                !isHobbyValid -> {
-//                    SignUpResult.FailureHobby
-//                }
-//
-//                else -> {
-//                    SignUpResult.Success
-//                }
-//            }
-//        }
-//    }
     fun signUp(
         signUpUsername: String,
         signUpPassword: String,
@@ -112,15 +80,13 @@ class SignUpViewModel : ViewModel() {
                     } else if (signUpResultState.value?.code == "00" && response.code() == 409) {
                         _signUpResult.value = SignUpResult.FailureDuplicateUsername
                     }
-                    Log.d("jaemin", "${response.code()} ${signUpResultState.value?.code}")
-                    val error = response.message()
-                    Log.e("error", error.toString())
                 }
             }
 
             override fun onFailure(call: Call<SignUpResponseDto>, t: Throwable) {
-                Log.e("failure", t.message.toString())
+                // 어떤 처리를 할까요?
             }
-        })
+        }
+        )
     }
 }

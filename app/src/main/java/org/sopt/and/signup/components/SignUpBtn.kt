@@ -36,7 +36,7 @@ fun SignUpBtn(
     val signUpResult by signUpViewModel.signUpResult.observeAsState()
     val context = LocalContext.current
 
-    LaunchedEffect(signUpResult) {
+    LaunchedEffect(signUpResult) {  // 얘는 UI 로직이라고 봐야겠죠?
         when (signUpResult) {
             is Success -> {
                 onSignUpComplete(signUpUsername, signUpPassword)
@@ -71,32 +71,6 @@ fun SignUpBtn(
                 signUpPassword = signUpPassword,
                 signUpHobby = signUpHobby
             )
-//
-//            when (signUpResult) {
-//                is Success -> {
-//                    onSignUpComplete(signUpUsername, signUpPassword)
-//                    WavveUtils.showToast(
-//                        context = context,
-//                        message = R.string.sign_up_success
-//                    )
-//                }
-//
-//                is FailureDuplicateUsername -> {
-//                    WavveUtils.showToast(
-//                        context = context,
-//                        message = R.string.sign_up_failed_duplicate_username
-//                    )
-//                }
-//
-//                is FailureInformationLength -> {
-//                    WavveUtils.showToast(
-//                        context = context,
-//                        message = R.string.sign_up_failed_information_length
-//                    )
-//                }
-//
-//                else -> {}
-//            }
         },
         modifier = Modifier
             .fillMaxWidth()

@@ -7,6 +7,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
@@ -17,9 +18,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.sopt.and.R
 import org.sopt.and.WavveUtils
-import org.sopt.and.signup.SignUpResult.FailureHobby
-import org.sopt.and.signup.SignUpResult.FailurePassword
-import org.sopt.and.signup.SignUpResult.FailureUsername
+import org.sopt.and.signup.SignUpResult.FailureDuplicateUsername
+import org.sopt.and.signup.SignUpResult.FailureInformationLength
 import org.sopt.and.signup.SignUpResult.Success
 import org.sopt.and.signup.SignUpViewModel
 import org.sopt.and.ui.theme.Grey200
@@ -36,6 +36,34 @@ fun SignUpBtn(
     val signUpResult by signUpViewModel.signUpResult.observeAsState()
     val context = LocalContext.current
 
+    LaunchedEffect(signUpResult) {
+        when (signUpResult) {
+            is Success -> {
+                onSignUpComplete(signUpUsername, signUpPassword)
+                WavveUtils.showToast(
+                    context = context,
+                    message = R.string.sign_up_success
+                )
+            }
+
+            is FailureDuplicateUsername -> {
+                WavveUtils.showToast(
+                    context = context,
+                    message = R.string.sign_up_failed_duplicate_username
+                )
+            }
+
+            is FailureInformationLength -> {
+                WavveUtils.showToast(
+                    context = context,
+                    message = R.string.sign_up_failed_information_length
+                )
+            }
+
+            else -> {}
+        }
+    }
+
     Button(
         onClick = {
             signUpViewModel.signUp(
@@ -43,39 +71,32 @@ fun SignUpBtn(
                 signUpPassword = signUpPassword,
                 signUpHobby = signUpHobby
             )
-
-            when (signUpResult) {
-                is Success -> {
-                    onSignUpComplete(signUpUsername, signUpPassword)
-                    WavveUtils.showToast(
-                        context = context,
-                        message = R.string.sign_up_success
-                    )
-                }
-
-                is FailureUsername -> {
-                    WavveUtils.showToast(
-                        context = context,
-                        message = R.string.sign_up_failed_username
-                    )
-                }
-
-                is FailurePassword -> {
-                    WavveUtils.showToast(
-                        context = context,
-                        message = R.string.sign_up_failed_password
-                    )
-                }
-
-                is FailureHobby -> {
-                    WavveUtils.showToast(
-                        context = context,
-                        message = R.string.sign_up_failed_hobby
-                    )
-                }
-
-                null -> TODO()
-            }
+//
+//            when (signUpResult) {
+//                is Success -> {
+//                    onSignUpComplete(signUpUsername, signUpPassword)
+//                    WavveUtils.showToast(
+//                        context = context,
+//                        message = R.string.sign_up_success
+//                    )
+//                }
+//
+//                is FailureDuplicateUsername -> {
+//                    WavveUtils.showToast(
+//                        context = context,
+//                        message = R.string.sign_up_failed_duplicate_username
+//                    )
+//                }
+//
+//                is FailureInformationLength -> {
+//                    WavveUtils.showToast(
+//                        context = context,
+//                        message = R.string.sign_up_failed_information_length
+//                    )
+//                }
+//
+//                else -> {}
+//            }
         },
         modifier = Modifier
             .fillMaxWidth()

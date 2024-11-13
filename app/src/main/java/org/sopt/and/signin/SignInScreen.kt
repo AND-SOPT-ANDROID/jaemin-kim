@@ -33,7 +33,7 @@ import org.sopt.and.ui.theme.Black100
 @Composable
 fun SignInScreen(
     navigateToSignUp: () -> Unit,
-    navigateToMyInfo: (String) -> Unit,
+    navigateToMyInfo: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
@@ -84,7 +84,6 @@ fun SignInScreen(
                 SignInBtn(
                     snackbarHostState = snackbarHostState,
                     navigateToMyInfo = navigateToMyInfo,
-                    signInUsername = signInUiState.signInUsername,
                     signInViewModel = signInViewModel
                 )
 
@@ -111,7 +110,7 @@ fun SignInScreenPreview() {
             innerPadding
             SignInScreen(
                 navigateToSignUp = {},
-                navigateToMyInfo = { a -> }
+                navigateToMyInfo = { -> }
             )
         }
     }

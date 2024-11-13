@@ -34,9 +34,9 @@ fun Navigation(
             if (navigationUiState.isBottomNavigationVisible) {
                 WavveBottomNavigation(
                     items = navigationUiState.wavveBottomNavigationItems,
-                    navController,
-                    navigationViewModel::setNavigationSelectedIndex,
-                    navigationUiState.navigationSelectedIndex
+                    navController = navController,
+                    setNavigationSelectedScreenIndex = navigationViewModel::setNavigationSelectedIndex,
+                    navigationSelectedScreenIndex = navigationUiState.navigationSelectedIndex
                 )
             }
         }

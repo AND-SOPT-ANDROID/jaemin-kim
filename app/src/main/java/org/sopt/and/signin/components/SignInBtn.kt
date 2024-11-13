@@ -26,8 +26,7 @@ import org.sopt.and.ui.theme.White100
 @Composable
 fun SignInBtn(
     snackbarHostState: SnackbarHostState,
-    navigateToMyInfo: (String) -> Unit,
-    signInUsername: String,
+    navigateToMyInfo: () -> Unit,
     signInViewModel: SignInViewModel
 ) {
     val scope = rememberCoroutineScope()
@@ -44,7 +43,7 @@ fun SignInBtn(
                     snackbarHostState = snackbarHostState,
                     message = R.string.sign_in_success_message,
                 )
-                navigateToMyInfo(signInUsername)
+                navigateToMyInfo()
                 signInViewModel.initSignInResult()
             }
 

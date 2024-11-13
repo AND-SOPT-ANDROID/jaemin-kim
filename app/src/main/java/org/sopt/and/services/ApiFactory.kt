@@ -13,12 +13,10 @@ object ApiFactory {
     private const val BASE_URL: String = BuildConfig.BASE_URL
 
     fun createRetrofit(context: Context): Retrofit {
-        // AuthInterceptor 생성
         val authInterceptor = AuthInterceptor(context)
 
-        // OkHttpClient에 AuthInterceptor와 LoggingInterceptor 추가
         val client = OkHttpClient.Builder()
-            .addInterceptor(authInterceptor) // AuthInterceptor 추가
+            .addInterceptor(authInterceptor)
             .addInterceptor(HttpLoggingInterceptor().apply {
                 level = HttpLoggingInterceptor.Level.BODY
             })

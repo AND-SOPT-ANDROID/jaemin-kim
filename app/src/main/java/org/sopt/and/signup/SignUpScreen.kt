@@ -30,7 +30,7 @@ import org.sopt.and.ui.theme.Black100
 @Composable
 fun SignUpScreen(
     modifier: Modifier = Modifier,
-    navigateToSignIn: (String, String) -> Unit,
+    navigateToSignIn: () -> Unit,
 ) {
     val signUpViewModel = viewModel<SignUpViewModel>()
     val signUpUiState by signUpViewModel.uiState.collectAsStateWithLifecycle()
@@ -104,7 +104,7 @@ fun SignUpScreenPreview() {
             SignUpScreen(
                 modifier = Modifier
                     .padding(innerPadding),
-                navigateToSignIn = { username, password -> }
+                navigateToSignIn = { }
             )
         }
     }

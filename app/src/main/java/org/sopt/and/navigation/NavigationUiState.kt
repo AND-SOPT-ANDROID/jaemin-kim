@@ -26,7 +26,7 @@ data class NavigationUiState(
         WavveBottomNavigationItem(
             label = R.string.bottom_navigation_my_info_label,
             icon = Icons.Default.AccountCircle,
-            route = Routes.MyInfo(""),
+            route = Routes.MyInfo,
             index = 2
         )
     )

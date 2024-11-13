@@ -4,15 +4,10 @@ import kotlinx.serialization.Serializable
 
 sealed class Routes {
     @Serializable
-    data class MyInfo(
-        val myUsername: String
-    ) : Routes()
+    object MyInfo : Routes()
 
     @Serializable
-    data class SignIn(
-        val signUpUsername: String,
-        val signUpPassword: String
-    ) : Routes()
+    object SignIn : Routes()
 
     @Serializable
     object SignUp : Routes()

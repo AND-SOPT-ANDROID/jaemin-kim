@@ -43,24 +43,23 @@ fun Navigation(
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = Routes.SignIn("", "") // 이녀석 생성자 안써서 3시간 날림
+            startDestination = Routes.SignIn // 이녀석 생성자 안써서 3시간 날림
         ) {
             composable<Routes.SignIn> {
                 SignInScreen(
                     navigateToSignUp = { navController.navigate(route = Routes.SignUp) },
-                    navigateToMyInfo = { myUsername ->
+                    navigateToMyInfo = {
                         navigationViewModel.changeBottomNavigationVisibility()
-                        myInfoViewModel.setMyUsername(myUsername)
-                        navController.navigate(Routes.MyInfo(myUsername))
+                        navController.navigate(Routes.MyInfo)
                     }
                 )
             }
 
             composable<Routes.SignUp> {
                 SignUpScreen(
-                    navigateToSignIn = { signUpUsername, signUpPassword ->
+                    navigateToSignIn = {
                         navController.navigate(
-                            route = Routes.SignIn(signUpUsername, signUpPassword),
+                            route = Routes.SignIn,
                             navOptions = navOptions {
                                 popUpTo<Routes.SignIn> {
                                     inclusive = true
@@ -74,7 +73,8 @@ fun Navigation(
             composable<Routes.MyInfo> {
                 MyInfoScreen(
                     paddingValues = innerPadding,
-                    myInfoUiState.myUsername
+                    myInfoViewModel = myInfoViewModel,
+                    myInfoUiState = myInfoUiState
                 )
             }
 

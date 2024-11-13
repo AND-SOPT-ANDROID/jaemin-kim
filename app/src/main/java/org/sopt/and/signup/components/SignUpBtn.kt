@@ -30,7 +30,7 @@ fun SignUpBtn(
     signUpUsername: String,
     signUpPassword: String,
     signUpHobby: String,
-    onSignUpComplete: (String, String) -> Unit,
+    onSignUpComplete: () -> Unit,
     signUpViewModel: SignUpViewModel
 ) {
     val signUpResult by signUpViewModel.signUpResult.observeAsState()
@@ -39,7 +39,7 @@ fun SignUpBtn(
     LaunchedEffect(signUpResult) {  // 얘는 UI 로직이라고 봐야겠죠?
         when (signUpResult) {
             is Success -> {
-                onSignUpComplete(signUpUsername, signUpPassword)
+                onSignUpComplete()
                 WavveUtils.showToast(
                     context = context,
                     message = R.string.sign_up_success

@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.map
 
 // token을 저장할 방법으로 공식문서가 권장하는 preferenceDatastore 채택
 
-val Context.dataStore by preferencesDataStore("settings")
+val Context.dataStore by preferencesDataStore("token")
 
 object TokenManager {
     private val TOKEN_KEY = stringPreferencesKey("auth_token")

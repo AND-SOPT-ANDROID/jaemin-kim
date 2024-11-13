@@ -1,5 +1,6 @@
 package org.sopt.and.services
 
+import android.content.Context
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
@@ -11,25 +12,29 @@ import retrofit2.Retrofit
 object ApiFactory {
     private const val BASE_URL: String = BuildConfig.BASE_URL
 
-    private val loggingInterceptor = HttpLoggingInterceptor().apply {
-        level = HttpLoggingInterceptor.Level.BODY
-    }
+    fun createRetrofit(context: Context): Retrofit {
+        // AuthInterceptor 생성
+        val authInterceptor = AuthInterceptor(context)
 
-    private val client = OkHttpClient.Builder()
-        .addInterceptor(loggingInterceptor)
-        .build()
+        // OkHttpClient에 AuthInterceptor와 LoggingInterceptor 추가
+        val client = OkHttpClient.Builder()
+            .addInterceptor(authInterceptor) // AuthInterceptor 추가
+            .addInterceptor(HttpLoggingInterceptor().apply {
+                level = HttpLoggingInterceptor.Level.BODY
+            })
+            .build()
 
-    val retrofit: Retrofit by lazy {
-        Retrofit.Builder()
+        return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(client)
             .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))
             .build()
     }
 
-    inline fun <reified T> create(): T = retrofit.create(T::class.java)
+    inline fun <reified T> create(context: Context): T =
+        createRetrofit(context).create(T::class.java)
 }
 
 object ServicePool {
-    val userService = ApiFactory.create<UserService>()
+    fun userService(context: Context) = ApiFactory.create<UserService>(context)
 }

@@ -33,7 +33,7 @@ fun MyInfoScreen(
             .padding(paddingValues)
     ) {
         MyInfoProfile(
-            myUsername = myUsername,
+            myHobby = myUsername,
             modifier = Modifier.weight(0.16f)
         )
 

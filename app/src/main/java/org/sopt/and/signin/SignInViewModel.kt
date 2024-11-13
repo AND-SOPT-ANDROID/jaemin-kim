@@ -1,22 +1,25 @@
 package org.sopt.and.signin
 
+import android.app.Application
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.serialization.json.Json
-import org.sopt.and.services.ServicePool.userService
+import org.sopt.and.services.ServicePool
 import org.sopt.and.signin.dto.SignInRequestDto
 import org.sopt.and.signin.dto.SignInResponseDto
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class SignInViewModel : ViewModel() {
+class SignInViewModel(application: Application) : AndroidViewModel(application) {
+    private val userService by lazy { ServicePool.userService(application) }
+
     private val _uiState = MutableStateFlow(SignInUiState())
     val uiState: StateFlow<SignInUiState> = _uiState.asStateFlow()
 

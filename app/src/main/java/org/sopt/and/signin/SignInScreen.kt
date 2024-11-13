@@ -23,10 +23,10 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import org.sopt.and.R
 import org.sopt.and.components.LinkWithSNSBox
 import org.sopt.and.signin.components.SignInBtn
-import org.sopt.and.signin.components.SignInEmailField
 import org.sopt.and.signin.components.SignInPasswordField
 import org.sopt.and.signin.components.SignInToAdditionalFeatures
 import org.sopt.and.signin.components.SignInTopBar
+import org.sopt.and.signin.components.SignInUsernameField
 import org.sopt.and.ui.theme.ANDANDROIDTheme
 import org.sopt.and.ui.theme.Black100
 
@@ -41,7 +41,7 @@ fun SignInScreen(
     val signInViewModel = viewModel<SignInViewModel>()
     val signInUiState by signInViewModel.uiState.collectAsStateWithLifecycle()
 
-    val signInEmail = signInUiState.signInEmail
+    val signInUsername = signInUiState.signInUsername
     val signInPassword = signInUiState.signInPassword
     val isSignInPasswordVisible = signInUiState.isSignInPasswordVisible
 
@@ -65,9 +65,9 @@ fun SignInScreen(
 
                 Spacer(modifier = Modifier.height(60.dp))
 
-                SignInEmailField(
-                    signInEmail = signInEmail,
-                    onSignInEmailChange = signInViewModel::setSignInEmail
+                SignInUsernameField(
+                    signInUsername = signInUsername,
+                    onSignInUsernameChange = signInViewModel::setSignInUsername
                 )
 
                 Spacer(modifier = Modifier.height(5.dp))
@@ -84,7 +84,7 @@ fun SignInScreen(
                 SignInBtn(
                     snackbarHostState = snackbarHostState,
                     navigateToMyInfo = navigateToMyInfo,
-                    signInEmail = signInUiState.signInEmail,
+                    signInUsername = signInUiState.signInUsername,
                     signInViewModel = signInViewModel
                 )
 

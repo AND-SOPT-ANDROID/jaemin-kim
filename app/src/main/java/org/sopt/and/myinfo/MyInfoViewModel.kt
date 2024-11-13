@@ -10,7 +10,7 @@ class MyInfoViewModel(
     private val _uiState = MutableStateFlow(MyInfoUiState())
     val uiState: StateFlow<MyInfoUiState> = _uiState.asStateFlow()
 
-    fun setMyEmail(email: String) {
-        _uiState.value = _uiState.value.copy(myEmail = email)
+    fun setMyUsername(username: String) {
+        _uiState.value = _uiState.value.copy(myUsername = username)
     }
 }

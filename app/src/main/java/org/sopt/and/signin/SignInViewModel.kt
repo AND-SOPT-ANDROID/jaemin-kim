@@ -23,9 +23,9 @@ class SignInViewModel(
 
     private val signUpAccount = savedStateHandle.toRoute<Routes.SignIn>()
 
-    fun setSignInEmail(signInEmail: String) {
+    fun setSignInUsername(signInUsername: String) {
         _uiState.value = _uiState.value.copy(
-            signInEmail = signInEmail
+            signInUsername = signInUsername
         )
     }
 
@@ -42,8 +42,8 @@ class SignInViewModel(
     }
 
     fun isLoginSuccess(): Boolean =
-        signUpAccount.signUpEmail.isNotEmpty()
-                && _uiState.value.signInEmail == signUpAccount.signUpEmail
+        signUpAccount.signUpUsername.isNotEmpty()
+                && _uiState.value.signInUsername == signUpAccount.signUpUsername
                 && _uiState.value.signInPassword == signUpAccount.signUpPassword
 
     fun login() {

@@ -17,8 +17,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.sopt.and.R
 import org.sopt.and.WavveUtils
-import org.sopt.and.signup.SignUpResult.FailureEmail
+import org.sopt.and.signup.SignUpResult.FailureHobby
 import org.sopt.and.signup.SignUpResult.FailurePassword
+import org.sopt.and.signup.SignUpResult.FailureUsername
 import org.sopt.and.signup.SignUpResult.Success
 import org.sopt.and.signup.SignUpViewModel
 import org.sopt.and.ui.theme.Grey200
@@ -26,8 +27,9 @@ import org.sopt.and.ui.theme.White100
 
 @Composable
 fun SignUpBtn(
-    signUpEmail: String,
+    signUpUsername: String,
     signUpPassword: String,
+    signUpHobby: String,
     onSignUpComplete: (String, String) -> Unit,
     signUpViewModel: SignUpViewModel
 ) {
@@ -37,23 +39,24 @@ fun SignUpBtn(
     Button(
         onClick = {
             signUpViewModel.signUp(
-                signUpEmail = signUpEmail,
-                signUpPassword = signUpPassword
+                signUpUsername = signUpUsername,
+                signUpPassword = signUpPassword,
+                signUpHobby = signUpHobby
             )
 
             when (signUpResult) {
                 is Success -> {
-                    onSignUpComplete(signUpEmail, signUpPassword)
+                    onSignUpComplete(signUpUsername, signUpPassword)
                     WavveUtils.showToast(
                         context = context,
                         message = R.string.sign_up_success
                     )
                 }
 
-                is FailureEmail -> {
+                is FailureUsername -> {
                     WavveUtils.showToast(
                         context = context,
-                        message = R.string.sign_up_failed_email
+                        message = R.string.sign_up_failed_username
                     )
                 }
 
@@ -61,6 +64,13 @@ fun SignUpBtn(
                     WavveUtils.showToast(
                         context = context,
                         message = R.string.sign_up_failed_password
+                    )
+                }
+
+                is FailureHobby -> {
+                    WavveUtils.showToast(
+                        context = context,
+                        message = R.string.sign_up_failed_hobby
                     )
                 }
 

@@ -15,15 +15,17 @@
 
     <!--signup-->
     <string name="sign_up_screen_title">회원가입</string>
-    <string name="sign_up_email_placeholder">wavve@example.com</string>
+    <string name="sign_up_username_placeholder">wavve 닉네임 설정</string>
     <string name="sign_up_password_placeholder">wavve 비밀번호 설정</string>
+    <string name="sign_up_hobby_placeholder">취미입력 ex)축구</string>
     <string name="sign_up_button">Wavve 회원가입</string>
     <string name="sign_up_success">회원가입에 성공했습니다~</string>
-    <string name="sign_up_failed_email">이메일 양식에 맞게 입력해주세요!</string>
-    <string name="sign_up_failed_password">비밀번호 양식에 맞게 입력해주세요!</string>
+    <string name="sign_up_failed_username">닉네임은 8자 이하로 입력해주세요!</string>
+    <string name="sign_up_failed_password">비밀번호는 8자 이하로 입력해주세요!</string>
+    <string name="sign_up_failed_hobby">비밀번호는 8자 이하로 입력해주세요!</string>
     <string name="sign_up_password_caution">비밀번호는 8~20자 이내로 영문 대소문자, 숫자, 특수문자 중\n3가지 이상 혼용하여 입력해 주세요.</string>
-    <string name="sign_up_email_caution">로그인, 비밀번호 찾기, 알림에 사용되니 정확한 이메일을 입력해\n주세요</string>
-    <string name="sign_up_email_description">이메일 입력시 주의사항</string>
+    <string name="sign_up_username_caution">로그인, 비밀번호 찾기, 알림에 사용되니 정확한 이메일을 입력해\n주세요</string>
+    <string name="sign_up_username_description">이메일 입력시 주의사항</string>
     <string name="sign_up_password_description">비밀번호 입력시 주의사항</string>
     <string name="sign_up_close_description">회원가입 화면 닫기</string>
     <string name="sign_up_welcom_text">이메일과 비밀번호만으로\nWavve를 즐길 수 있어요!</string>
@@ -34,7 +36,7 @@
     <string name="sign_in_to_find_id_button">아이디 찾기</string>
     <string name="sign_in_to_reset_password_button">비밀번호 재설정</string>
     <string name="sign_in_to_sign_up_button">회원가입</string>
-    <string name="sign_in_email_placeholder">이메일 주소 또는 아이디</string>
+    <string name="sign_in_username_placeholder">이메일 주소 또는 아이디</string>
     <string name="sign_in_password_placeholder">비밀번호</string>
     <string name="sign_in_success_message">로그인 성공. 환영합니다~</string>
     <string name="sign_in_failed_message">로그인 실패. 다시 시도해 주세요</string>

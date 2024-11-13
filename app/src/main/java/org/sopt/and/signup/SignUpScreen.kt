@@ -19,10 +19,11 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import org.sopt.and.R
 import org.sopt.and.components.LinkWithSNSBox
 import org.sopt.and.signup.components.SignUpBtn
-import org.sopt.and.signup.components.SignUpEmailField
 import org.sopt.and.signup.components.SignUpGreetingText
+import org.sopt.and.signup.components.SignUpHobbyField
 import org.sopt.and.signup.components.SignUpPasswordField
 import org.sopt.and.signup.components.SignUpTopBar
+import org.sopt.and.signup.components.SignUpUsernameField
 import org.sopt.and.ui.theme.ANDANDROIDTheme
 import org.sopt.and.ui.theme.Black100
 
@@ -33,10 +34,6 @@ fun SignUpScreen(
 ) {
     val signUpViewModel = viewModel<SignUpViewModel>()
     val signUpUiState by signUpViewModel.uiState.collectAsStateWithLifecycle()
-
-    val signUpEmail = signUpUiState.signUpEmail
-    val signUpPassword = signUpUiState.signUpPassword
-    val isSignUpPasswordVisible = signUpUiState.isSignUpPasswordVisible
 
     Column(
         modifier = modifier
@@ -57,18 +54,25 @@ fun SignUpScreen(
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            SignUpEmailField(
-                email = signUpEmail,
-                onSignUpEmailChange = signUpViewModel::setSignUpEmail
+            SignUpUsernameField(
+                signUpUsername = signUpUiState.signUpUsername,
+                onSignUpUsernameChange = signUpViewModel::setSignUpUsername
             )
 
             Spacer(modifier = Modifier.height(20.dp))
 
             SignUpPasswordField(
-                signUpPassword = signUpPassword,
+                signUpPassword = signUpUiState.signUpPassword,
                 onSignUpPasswordChange = signUpViewModel::setSignUpPassword,
-                isSignUpPasswordVisible = isSignUpPasswordVisible,
+                isSignUpPasswordVisible = signUpUiState.isSignUpPasswordVisible,
                 onVisibilityChange = signUpViewModel::changeSignUpPasswordVisibility
+            )
+
+            Spacer(modifier = Modifier.height(20.dp))
+
+            SignUpHobbyField(
+                signUpHobby = signUpUiState.signUpHobby,
+                onSignUpHobbyChange = signUpViewModel::setSignUpHobby
             )
 
             Spacer(modifier = Modifier.size(40.dp))
@@ -77,8 +81,9 @@ fun SignUpScreen(
         }
 
         SignUpBtn(
-            signUpEmail = signUpEmail,
-            signUpPassword = signUpPassword,
+            signUpUsername = signUpUiState.signUpUsername,
+            signUpPassword = signUpUiState.signUpPassword,
+            signUpHobby = signUpUiState.signUpHobby,
             onSignUpComplete = navigateToSignIn,
             signUpViewModel = signUpViewModel
         )
@@ -99,7 +104,7 @@ fun SignUpScreenPreview() {
             SignUpScreen(
                 modifier = Modifier
                     .padding(innerPadding),
-                navigateToSignIn = { email, password -> }
+                navigateToSignIn = { username, password -> }
             )
         }
     }

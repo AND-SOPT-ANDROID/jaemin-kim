@@ -16,14 +16,14 @@ import org.sopt.and.ui.theme.Grey200
 
 @Composable
 fun SignInOrSignUpTextField(
-    emailOrPassword: String,
+    information: String,
     onValueChange: (String) -> Unit,
     placeholder: Int,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     trailingIcon: @Composable (() -> Unit)? = null
 ) {
     TextField(
-        value = emailOrPassword,
+        value = information,
         onValueChange = onValueChange,
         modifier = Modifier.fillMaxWidth(),
         colors = TextFieldDefaults.colors(

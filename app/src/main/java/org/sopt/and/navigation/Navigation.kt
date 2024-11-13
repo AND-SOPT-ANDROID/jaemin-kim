@@ -48,19 +48,19 @@ fun Navigation(
             composable<Routes.SignIn> {
                 SignInScreen(
                     navigateToSignUp = { navController.navigate(route = Routes.SignUp) },
-                    navigateToMyInfo = { myEmail ->
+                    navigateToMyInfo = { myUsername ->
                         navigationViewModel.changeBottomNavigationVisibility()
-                        myInfoViewModel.setMyEmail(myEmail)
-                        navController.navigate(Routes.MyInfo(myEmail))
+                        myInfoViewModel.setMyUsername(myUsername)
+                        navController.navigate(Routes.MyInfo(myUsername))
                     }
                 )
             }
 
             composable<Routes.SignUp> {
                 SignUpScreen(
-                    navigateToSignIn = { signUpEmail, signUpPassword ->
+                    navigateToSignIn = { signUpUsername, signUpPassword ->
                         navController.navigate(
-                            route = Routes.SignIn(signUpEmail, signUpPassword),
+                            route = Routes.SignIn(signUpUsername, signUpPassword),
                             navOptions = navOptions {
                                 popUpTo<Routes.SignIn> {
                                     inclusive = true
@@ -74,7 +74,7 @@ fun Navigation(
             composable<Routes.MyInfo> {
                 MyInfoScreen(
                     paddingValues = innerPadding,
-                    myInfoUiState.myEmail
+                    myInfoUiState.myUsername
                 )
             }
 

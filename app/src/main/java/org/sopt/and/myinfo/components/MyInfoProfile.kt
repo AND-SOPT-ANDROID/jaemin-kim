@@ -24,7 +24,7 @@ import org.sopt.and.ui.theme.White100
 
 @Composable
 fun MyInfoProfile(
-    myEmail: String,
+    myUsername: String,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -44,7 +44,7 @@ fun MyInfoProfile(
         Spacer(modifier = Modifier.width(5.dp))
 
         Text(
-            text = myEmail,
+            text = myUsername,
             color = White100
         )
 

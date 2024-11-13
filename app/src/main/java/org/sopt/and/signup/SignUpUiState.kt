@@ -1,13 +1,15 @@
 package org.sopt.and.signup
 
 data class SignUpUiState(
-    val signUpEmail: String = "",
+    val signUpUsername: String = "",
     val signUpPassword: String = "",
+    val signUpHobby: String = "",
     val isSignUpPasswordVisible: Boolean = false
 )
 
 sealed class SignUpResult {
     object Success : SignUpResult()
-    object FailureEmail : SignUpResult()
+    object FailureUsername : SignUpResult()
     object FailurePassword : SignUpResult()
+    object FailureHobby : SignUpResult()
 }

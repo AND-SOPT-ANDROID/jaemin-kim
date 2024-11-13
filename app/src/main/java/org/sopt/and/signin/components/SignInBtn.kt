@@ -26,7 +26,7 @@ import org.sopt.and.ui.theme.White100
 fun SignInBtn(
     snackbarHostState: SnackbarHostState,
     navigateToMyInfo: (String) -> Unit,
-    signInEmail: String,
+    signInUsername: String,
     signInViewModel: SignInViewModel
 ) {
     val scope = rememberCoroutineScope()
@@ -49,7 +49,7 @@ fun SignInBtn(
                         snackbarHostState = snackbarHostState,
                         message = R.string.sign_in_success_message,
                     )
-                    navigateToMyInfo(signInEmail)
+                    navigateToMyInfo(signInUsername)
                 }
 
                 is SignInResult.Failure -> {

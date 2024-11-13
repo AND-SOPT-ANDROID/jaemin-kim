@@ -1,11 +1,13 @@
 package org.sopt.and.services
 
+import org.sopt.and.myinfo.dto.GetHobbyResponseDto
 import org.sopt.and.signin.dto.SignInRequestDto
 import org.sopt.and.signin.dto.SignInResponseDto
 import org.sopt.and.signup.dto.SignUpRequestDto
 import org.sopt.and.signup.dto.SignUpResponseDto
 import retrofit2.Call
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface UserService {
@@ -14,4 +16,7 @@ interface UserService {
 
     @POST("/login")
     fun signIn(@Body request: SignInRequestDto): Call<SignInResponseDto>
+
+    @GET("/user/my-hobby")
+    fun getMyHobby(): Call<GetHobbyResponseDto>
 }

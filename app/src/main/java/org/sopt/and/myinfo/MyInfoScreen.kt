@@ -23,7 +23,8 @@ import org.sopt.and.ui.theme.Black100
 @Composable
 fun MyInfoScreen(
     paddingValues: PaddingValues,
-    myUsername: String,
+    myInfoViewModel: MyInfoViewModel,
+    myInfoUiState: MyInfoUiState,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -33,7 +34,8 @@ fun MyInfoScreen(
             .padding(paddingValues)
     ) {
         MyInfoProfile(
-            myHobby = myUsername,
+            myInfoViewModel = myInfoViewModel,
+            myInfoUiState = myInfoUiState,
             modifier = Modifier.weight(0.16f)
         )
 
@@ -73,7 +75,8 @@ fun MyScreenPreview() {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             MyInfoScreen(
                 paddingValues = innerPadding,
-                myUsername = ""
+                myInfoViewModel = TODO(),
+                myInfoUiState = TODO()
             )
         }
     }

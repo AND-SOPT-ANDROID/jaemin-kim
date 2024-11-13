@@ -6,11 +6,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 import org.sopt.and.services.ServicePool
+import org.sopt.and.services.TokenManager
 import org.sopt.and.signin.dto.SignInRequestDto
 import org.sopt.and.signin.dto.SignInResponseDto
 import retrofit2.Call
@@ -19,6 +22,7 @@ import retrofit2.Response
 
 class SignInViewModel(application: Application) : AndroidViewModel(application) {
     private val userService by lazy { ServicePool.userService(application) }
+    private val tokenManager = TokenManager(application)
 
     private val _uiState = MutableStateFlow(SignInUiState())
     val uiState: StateFlow<SignInUiState> = _uiState.asStateFlow()
@@ -69,6 +73,12 @@ class SignInViewModel(application: Application) : AndroidViewModel(application) 
                     if (response.isSuccessful) {
                         _signInResultState.value = response.body()
                         _signInResult.value = SignInResult.Success
+
+                        response.body()?.result?.token?.let { token ->
+                            viewModelScope.launch {
+                                tokenManager.saveToken(token)
+                            }
+                        }
                     } else {
                         _signInResultState.value = response.errorBody()?.string()
                             ?.let { Json.decodeFromString<SignInResponseDto>(it) }

@@ -19,14 +19,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import org.sopt.and.R
+import org.sopt.and.myinfo.MyInfoUiState
+import org.sopt.and.myinfo.MyInfoViewModel
 import org.sopt.and.ui.theme.Grey100
 import org.sopt.and.ui.theme.White100
 
 @Composable
 fun MyInfoProfile(
-    myHobby: String,
+    myInfoViewModel: MyInfoViewModel,
+    myInfoUiState: MyInfoUiState,
     modifier: Modifier = Modifier
 ) {
+    myInfoViewModel.getMyHobby()
+
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -44,7 +49,7 @@ fun MyInfoProfile(
         Spacer(modifier = Modifier.width(5.dp))
 
         Text(
-            text = myHobby,
+            text = if (myInfoUiState.myHobby.isNotEmpty()) myInfoUiState.myHobby else "Loading...",
             color = White100
         )
 

@@ -8,6 +8,7 @@ data class SignUpUiState(
 )
 
 sealed class SignUpResult {
+    object Initial : SignUpResult()
     object Success : SignUpResult()
     object FailureInformationLength : SignUpResult()
     object FailureDuplicateUsername : SignUpResult()

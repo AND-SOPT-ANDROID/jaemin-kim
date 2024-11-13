@@ -44,6 +44,7 @@ fun SignUpBtn(
                     context = context,
                     message = R.string.sign_up_success
                 )
+                signUpViewModel.initSignUpResult()
             }
 
             is FailureDuplicateUsername -> {
@@ -51,6 +52,7 @@ fun SignUpBtn(
                     context = context,
                     message = R.string.sign_up_failed_duplicate_username
                 )
+                signUpViewModel.initSignUpResult()
             }
 
             is FailureInformationLength -> {
@@ -58,6 +60,7 @@ fun SignUpBtn(
                     context = context,
                     message = R.string.sign_up_failed_information_length
                 )
+                signUpViewModel.initSignUpResult()
             }
 
             else -> {}

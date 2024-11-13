@@ -29,6 +29,10 @@ class SignUpViewModel : ViewModel() {
     private val _signUpResult = MutableLiveData<SignUpResult>()
     val signUpResult: LiveData<SignUpResult> = _signUpResult
 
+    fun initSignUpResult() {
+        _signUpResult.value = SignUpResult.Initial
+    }
+
     fun setSignUpUsername(signUpUsername: String) {
         _uiState.value = _uiState.value.copy(
             signUpUsername = signUpUsername
@@ -64,29 +68,30 @@ class SignUpViewModel : ViewModel() {
                 password = signUpPassword,
                 hobby = signUpHobby
             )
-        ).enqueue(object : Callback<SignUpResponseDto> {
-            override fun onResponse(
-                call: Call<SignUpResponseDto>,
-                response: Response<SignUpResponseDto>
-            ) {
-                if (response.isSuccessful) {
-                    _signUpResultState.value = response.body()
-                    _signUpResult.value = SignUpResult.Success
-                } else {
-                    _signUpResultState.value = response.errorBody()?.string()
-                        ?.let { Json.decodeFromString<SignUpResponseDto>(it) }
-                    if (signUpResultState.value?.code == "01" && response.code() == 400) {
-                        _signUpResult.value = SignUpResult.FailureInformationLength
-                    } else if (signUpResultState.value?.code == "00" && response.code() == 409) {
-                        _signUpResult.value = SignUpResult.FailureDuplicateUsername
+        ).enqueue(
+            object : Callback<SignUpResponseDto> {
+                override fun onResponse(
+                    call: Call<SignUpResponseDto>,
+                    response: Response<SignUpResponseDto>
+                ) {
+                    if (response.isSuccessful) {
+                        _signUpResultState.value = response.body()
+                        _signUpResult.value = SignUpResult.Success
+                    } else {
+                        _signUpResultState.value = response.errorBody()?.string()
+                            ?.let { Json.decodeFromString<SignUpResponseDto>(it) }
+                        if (signUpResultState.value?.code == "01" && response.code() == 400) {
+                            _signUpResult.value = SignUpResult.FailureInformationLength
+                        } else if (signUpResultState.value?.code == "00" && response.code() == 409) {
+                            _signUpResult.value = SignUpResult.FailureDuplicateUsername
+                        }
                     }
                 }
-            }
 
-            override fun onFailure(call: Call<SignUpResponseDto>, t: Throwable) {
-                // 어떤 처리를 할까요?
+                override fun onFailure(call: Call<SignUpResponseDto>, t: Throwable) {
+                    // 어떤 처리를 할까요?
+                }
             }
-        }
         )
     }
 }

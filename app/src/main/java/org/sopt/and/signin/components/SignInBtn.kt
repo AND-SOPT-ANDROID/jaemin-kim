@@ -8,6 +8,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
@@ -34,35 +35,52 @@ fun SignInBtn(
 
     val signInResult by signInViewModel.signInResult.observeAsState()
 
+    LaunchedEffect(signInResult) {
+        when (signInResult) {
+            is SignInResult.Success -> {
+                WavveUtils.showSnackbar(
+                    scope = scope,
+                    context = context,
+                    snackbarHostState = snackbarHostState,
+                    message = R.string.sign_in_success_message,
+                )
+                navigateToMyInfo(signInUsername)
+                signInViewModel.initSignInResult()
+            }
+
+            is SignInResult.FailurePasswordLength -> {
+                WavveUtils.showSnackbar(
+                    scope = scope,
+                    context = context,
+                    snackbarHostState = snackbarHostState,
+                    message = R.string.sign_in_failed_password_length,
+                )
+                signInViewModel.initSignInResult()
+            }
+
+            is SignInResult.FailureWrongPassword -> {
+                WavveUtils.showSnackbar(
+                    scope = scope,
+                    context = context,
+                    snackbarHostState = snackbarHostState,
+                    message = R.string.sign_in_failed_wrong_password,
+                )
+                signInViewModel.initSignInResult()
+            }
+
+            else -> {}
+        }
+    }
+
     Button(
         modifier = Modifier
             .fillMaxWidth()
             .height(50.dp),
         onClick = {
-            signInViewModel.login()
-
-            when (signInResult) {
-                is SignInResult.Success -> {
-                    WavveUtils.showSnackbar(
-                        scope = scope,
-                        context = context,
-                        snackbarHostState = snackbarHostState,
-                        message = R.string.sign_in_success_message,
-                    )
-                    navigateToMyInfo(signInUsername)
-                }
-
-                is SignInResult.Failure -> {
-                    WavveUtils.showSnackbar(
-                        scope = scope,
-                        context = context,
-                        snackbarHostState = snackbarHostState,
-                        message = R.string.sign_in_failed_message,
-                    )
-                }
-
-                else -> {}
-            }
+            signInViewModel.signIn(
+                signInUsername = signInViewModel.uiState.value.signInUsername,
+                signInPassword = signInViewModel.uiState.value.signInPassword
+            )
         },
         shape = RoundedCornerShape(50.dp),
         colors = ButtonDefaults.buttonColors(

@@ -38,7 +38,8 @@
     <string name="sign_in_username_placeholder">Username</string>
     <string name="sign_in_password_placeholder">비밀번호</string>
     <string name="sign_in_success_message">로그인 성공. 환영합니다~</string>
-    <string name="sign_in_failed_message">로그인 실패. 다시 시도해 주세요</string>
+    <string name="sign_in_failed_password_length">로그인 실패. 비밀번호는 8자리 이하입니다!</string>
+    <string name="sign_in_failed_wrong_password">로그인 실패. 비밀번호가 일치하지 않습니다!</string>
     <string name="sign_in_to_back_screen_description">이전 화면으로 가기</string>
     <string name="sign_in_link_with_another_service_title">또는 다른 서비스 계정으로 로그인</string>
 

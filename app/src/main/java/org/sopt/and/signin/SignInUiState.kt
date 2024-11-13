@@ -7,6 +7,8 @@ data class SignInUiState(
 )
 
 sealed class SignInResult {
+    object Initial : SignInResult()
     object Success : SignInResult()
-    object Failure : SignInResult()
+    object FailurePasswordLength : SignInResult()
+    object FailureWrongPassword : SignInResult()
 }

@@ -63,7 +63,7 @@ fun SignUpGreetingText(fontSize: Int) {
                         )
                     ),
                     start = WavveUtils.GREETING_FIRST_LINE_FOCUS_START_INDEX,
-                    end = 29
+                    end = WavveUtils.GREETING_SECOND_LINE_END_INDEX
                 )
             )
         )

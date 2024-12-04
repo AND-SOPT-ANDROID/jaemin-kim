@@ -1,7 +1,6 @@
 package org.sopt.and.myinfo
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -11,7 +10,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MyInfoViewModel(application: Application) : AndroidViewModel(application) {
+class MyInfoViewModel : ViewModel() {
     private val userService by lazy { ServicePool.userService }
 
     private val _uiState = MutableStateFlow(MyInfoUiState())

@@ -1,9 +1,8 @@
 package org.sopt.and.signin
 
-import android.app.Application
 import android.content.Context
 import androidx.compose.material3.SnackbarHostState
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,6 +12,7 @@ import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 import org.sopt.and.R
 import org.sopt.and.WavveUtils.showSnackbar
+import org.sopt.and.services.AppContext
 import org.sopt.and.services.ServicePool
 import org.sopt.and.services.TokenManager
 import org.sopt.and.signin.dto.SignInRequestDto
@@ -21,9 +21,9 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class SignInViewModel(application: Application) : AndroidViewModel(application) {
+class SignInViewModel : ViewModel() {
     private val userService by lazy { ServicePool.userService }
-    private val tokenManager = TokenManager(application)
+    private val tokenManager = TokenManager(AppContext.get())
 
     private val _uiState = MutableStateFlow(SignInUiState())
     val uiState: StateFlow<SignInUiState> = _uiState.asStateFlow()

@@ -29,7 +29,7 @@ fun SignInOrSignUpTextField(
         colors = TextFieldDefaults.colors(
             unfocusedContainerColor = Grey100,
             focusedContainerColor = Grey100,
-            focusedIndicatorColor = Color.Transparent,  // 요놈들로 textfield의 밑줄없앰
+            focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent
         ),
         shape = RoundedCornerShape(10.dp),

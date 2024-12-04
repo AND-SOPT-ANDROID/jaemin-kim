@@ -7,9 +7,6 @@ import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-
-// token을 저장할 방법으로 공식문서가 권장하는 preferenceDatastore 채택
-
 val Context.dataStore by preferencesDataStore("token")
 
 class TokenManager(private val context: Context) {

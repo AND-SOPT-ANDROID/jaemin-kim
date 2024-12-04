@@ -1,4 +1,4 @@
-package org.sopt.and    // 패키지 선언이 중요한 이유
+package org.sopt.and
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

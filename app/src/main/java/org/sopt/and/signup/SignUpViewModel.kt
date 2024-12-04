@@ -89,9 +89,7 @@ class SignUpViewModel(application: Application) : AndroidViewModel(application) 
                     }
                 }
 
-                override fun onFailure(call: Call<SignUpResponseDto>, t: Throwable) {
-                    // 어떤 처리를 할까요?
-                }
+                override fun onFailure(call: Call<SignUpResponseDto>, t: Throwable) {}
             }
         )
     }

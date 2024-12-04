@@ -48,7 +48,7 @@ fun MyInfoProfile(
 
         Spacer(modifier = Modifier.width(5.dp))
 
-        Text(   // 만약에 네트워크 통신이 늦었을 때 얘가 recomposition이 되나요??
+        Text(
             text = if (myInfoUiState.myHobby.isNotEmpty()) myInfoUiState.myHobby else "Loading...",
             color = White100
         )

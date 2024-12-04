@@ -36,7 +36,7 @@ fun SignUpBtn(
     val signUpResult by signUpViewModel.signUpResult.observeAsState()
     val context = LocalContext.current
 
-    LaunchedEffect(signUpResult) {  // 얘는 UI 로직이라고 봐야겠죠?
+    LaunchedEffect(signUpResult) {
         when (signUpResult) {
             is Success -> {
                 onSignUpComplete()

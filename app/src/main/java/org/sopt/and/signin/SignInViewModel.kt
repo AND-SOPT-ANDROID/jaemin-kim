@@ -91,9 +91,7 @@ class SignInViewModel(application: Application) : AndroidViewModel(application) 
                     }
                 }
 
-                override fun onFailure(call: Call<SignInResponseDto>, t: Throwable) {
-                    // 어떤 구현이 들어갈까요?
-                }
+                override fun onFailure(call: Call<SignInResponseDto>, t: Throwable) {}
             }
         )
     }

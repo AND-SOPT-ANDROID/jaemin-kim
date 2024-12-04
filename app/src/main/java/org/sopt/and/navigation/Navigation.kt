@@ -43,7 +43,7 @@ fun Navigation(
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = Routes.SignIn // 이녀석 생성자 안써서 3시간 날림
+            startDestination = Routes.SignIn
         ) {
             composable<Routes.SignIn> {
                 SignInScreen(

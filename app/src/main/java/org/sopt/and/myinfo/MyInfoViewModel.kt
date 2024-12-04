@@ -30,8 +30,6 @@ class MyInfoViewModel(application: Application) : AndroidViewModel(application) 
                 ) {
                     if (response.isSuccessful) {
                         response.body()?.result?.hobby?.let { setMyHobby(it) }
-                    } else {
-                        setMyHobby("오류")
                     }
                 }
 

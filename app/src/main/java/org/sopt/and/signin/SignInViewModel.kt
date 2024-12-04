@@ -32,9 +32,9 @@ class SignInViewModel : ViewModel() {
     val signInResult: StateFlow<SignInResult> = _signInResult.asStateFlow()
 
     private val _signInResultState = MutableStateFlow(SignInResponseDto())
-    val signInResultState: StateFlow<SignInResponseDto?> = _signInResultState.asStateFlow()
+    val signInResultState: StateFlow<SignInResponseDto> = _signInResultState.asStateFlow()
 
-    fun initSignInResult() {
+    private fun initSignInResult() {
         _signInResult.value = SignInResult.Initial
     }
 
@@ -84,11 +84,11 @@ class SignInViewModel : ViewModel() {
                         _signInResultState.value = response.errorBody()?.string()
                             ?.let { Json.decodeFromString<SignInResponseDto>(it) }!!
 
-                        if (signInResultState.value?.code == SignInFailureCase.FAILURE_LENGTH.errorCode
+                        if (signInResultState.value.code == SignInFailureCase.FAILURE_LENGTH.errorCode
                             && response.code() == SignInFailureCase.FAILURE_LENGTH.statusCode
                         ) {
                             _signInResult.value = SignInResult.FailurePasswordLength
-                        } else if (signInResultState.value?.code == SignInFailureCase.FAILURE_WRONG_PASSWORD.errorCode
+                        } else if (signInResultState.value.code == SignInFailureCase.FAILURE_WRONG_PASSWORD.errorCode
                             && response.code() == SignInFailureCase.FAILURE_WRONG_PASSWORD.statusCode
                         ) {
                             _signInResult.value = SignInResult.FailureWrongPassword

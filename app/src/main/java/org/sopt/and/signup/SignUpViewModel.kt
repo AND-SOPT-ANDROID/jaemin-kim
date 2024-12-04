@@ -1,10 +1,6 @@
 package org.sopt.and.signup
 
 import android.content.Context
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -13,9 +9,6 @@ import kotlinx.serialization.json.Json
 import org.sopt.and.R
 import org.sopt.and.WavveUtils.showToast
 import org.sopt.and.services.ServicePool
-import org.sopt.and.signup.SignUpResult.FailureDuplicateUsername
-import org.sopt.and.signup.SignUpResult.FailureInformationLength
-import org.sopt.and.signup.SignUpResult.Success
 import org.sopt.and.signup.dto.SignUpRequestDto
 import org.sopt.and.signup.dto.SignUpResponseDto
 import retrofit2.Call
@@ -26,16 +19,16 @@ import retrofit2.Response
 class SignUpViewModel : ViewModel() {
     private val userService by lazy { ServicePool.userService }
 
-    private val _signUpResultState = mutableStateOf<SignUpResponseDto?>(null)
-    val signUpResultState: State<SignUpResponseDto?> get() = _signUpResultState
+    private val _signUpResultState = MutableStateFlow(SignUpResponseDto())
+    val signUpResultState: StateFlow<SignUpResponseDto> = _signUpResultState.asStateFlow()
 
     private val _uiState = MutableStateFlow(SignUpUiState())
     val uiState: StateFlow<SignUpUiState> = _uiState.asStateFlow()
 
-    private val _signUpResult = MutableLiveData<SignUpResult>()
-    val signUpResult: LiveData<SignUpResult> = _signUpResult
+    private val _signUpResult = MutableStateFlow<SignUpResult>(SignUpResult.Initial)
+    val signUpResult: StateFlow<SignUpResult> = _signUpResult.asStateFlow()
 
-    fun initSignUpResult() {
+    private fun initSignUpResult() {
         _signUpResult.value = SignUpResult.Initial
     }
 
@@ -81,16 +74,16 @@ class SignUpViewModel : ViewModel() {
                     response: Response<SignUpResponseDto>
                 ) {
                     if (response.isSuccessful) {
-                        _signUpResultState.value = response.body()
+                        _signUpResultState.value = response.body()!!
                         _signUpResult.value = SignUpResult.Success
                     } else {
                         _signUpResultState.value = response.errorBody()?.string()
-                            ?.let { Json.decodeFromString<SignUpResponseDto>(it) }
-                        if (signUpResultState.value?.code == SignUpFailureCase.FAILURE_LENGTH.errorCode
+                            ?.let { Json.decodeFromString<SignUpResponseDto>(it) }!!
+                        if (signUpResultState.value.code == SignUpFailureCase.FAILURE_LENGTH.errorCode
                             && response.code() == SignUpFailureCase.FAILURE_LENGTH.statusCode
                         ) {
                             _signUpResult.value = SignUpResult.FailureInformationLength
-                        } else if (signUpResultState.value?.code == SignUpFailureCase.FAILURE_DUPLICATE_USERNAME.errorCode
+                        } else if (signUpResultState.value.code == SignUpFailureCase.FAILURE_DUPLICATE_USERNAME.errorCode
                             && response.code() == SignUpFailureCase.FAILURE_DUPLICATE_USERNAME.statusCode
                         ) {
                             _signUpResult.value = SignUpResult.FailureDuplicateUsername
@@ -108,18 +101,18 @@ class SignUpViewModel : ViewModel() {
         onSignUpComplete: () -> Unit
     ) {
         when (signUpResult.value) {
-            is Success -> {
+            is SignUpResult.Success -> {
                 context.showToast(message = R.string.sign_up_success)
                 initSignUpResult()
                 onSignUpComplete()
             }
 
-            is FailureDuplicateUsername -> {
+            is SignUpResult.FailureDuplicateUsername -> {
                 context.showToast(message = R.string.sign_up_failed_duplicate_username)
                 initSignUpResult()
             }
 
-            is FailureInformationLength -> {
+            is SignUpResult.FailureInformationLength -> {
                 context.showToast(message = R.string.sign_up_failed_information_length)
                 initSignUpResult()
             }

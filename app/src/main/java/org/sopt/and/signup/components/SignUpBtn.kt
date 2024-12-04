@@ -9,13 +9,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.sopt.and.R
 import org.sopt.and.signup.SignUpViewModel
 import org.sopt.and.ui.theme.Grey200
@@ -29,7 +29,7 @@ fun SignUpBtn(
     onSignUpComplete: () -> Unit,
     signUpViewModel: SignUpViewModel
 ) {
-    val signUpResult by signUpViewModel.signUpResult.observeAsState()
+    val signUpResult by signUpViewModel.signUpResult.collectAsStateWithLifecycle()
     val context = LocalContext.current
 
     LaunchedEffect(signUpResult) {

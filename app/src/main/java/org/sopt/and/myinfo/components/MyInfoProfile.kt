@@ -26,11 +26,11 @@ import org.sopt.and.ui.theme.White100
 
 @Composable
 fun MyInfoProfile(
-    myInfoViewModel: MyInfoViewModel,
-    myInfoUiState: MyInfoUiState,
+    myHobby: String,
+    getMyHobby: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    myInfoViewModel.getMyHobby()
+    getMyHobby()
 
     Row(
         modifier = modifier
@@ -49,7 +49,7 @@ fun MyInfoProfile(
         Spacer(modifier = Modifier.width(5.dp))
 
         Text(
-            text = if (myInfoUiState.myHobby.isNotEmpty()) myInfoUiState.myHobby else "Loading...",
+            text = myHobby.ifEmpty { "Loading..." },
             color = White100
         )
 

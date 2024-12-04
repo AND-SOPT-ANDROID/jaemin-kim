@@ -73,8 +73,8 @@ fun Navigation(
             composable<Routes.MyInfo> {
                 MyInfoScreen(
                     paddingValues = innerPadding,
-                    myInfoViewModel = myInfoViewModel,
-                    myInfoUiState = myInfoUiState
+                    myHobby = myInfoUiState.myHobby,
+                    getMyHobby = myInfoViewModel::getMyHobby
                 )
             }
 

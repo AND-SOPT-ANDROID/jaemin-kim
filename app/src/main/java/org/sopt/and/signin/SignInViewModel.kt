@@ -1,17 +1,18 @@
 package org.sopt.and.signin
 
 import android.app.Application
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
+import android.content.Context
+import androidx.compose.material3.SnackbarHostState
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
+import org.sopt.and.R
+import org.sopt.and.WavveUtils.showSnackbar
 import org.sopt.and.services.ServicePool
 import org.sopt.and.services.TokenManager
 import org.sopt.and.signin.dto.SignInRequestDto
@@ -98,6 +99,45 @@ class SignInViewModel(application: Application) : AndroidViewModel(application) 
                 override fun onFailure(call: Call<SignInResponseDto>, t: Throwable) {}
             }
         )
+    }
+
+    fun confirmLogin(
+        snackbarHostState: SnackbarHostState,
+        navigateToMyInfo: () -> Unit,
+        context: Context,
+        scope: CoroutineScope
+    ) {
+        when (signInResult.value) {
+            is SignInResult.Success -> {
+                context.showSnackbar(
+                    scope = scope,
+                    snackbarHostState = snackbarHostState,
+                    message = R.string.sign_in_success_message,
+                )
+                navigateToMyInfo()
+                initSignInResult()
+            }
+
+            is SignInResult.FailurePasswordLength -> {
+                context.showSnackbar(
+                    scope = scope,
+                    snackbarHostState = snackbarHostState,
+                    message = R.string.sign_in_failed_password_length,
+                )
+                initSignInResult()
+            }
+
+            is SignInResult.FailureWrongPassword -> {
+                context.showSnackbar(
+                    scope = scope,
+                    snackbarHostState = snackbarHostState,
+                    message = R.string.sign_in_failed_wrong_password,
+                )
+                initSignInResult()
+            }
+
+            else -> {}
+        }
     }
 }
 

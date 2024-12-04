@@ -10,15 +10,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.sopt.and.R
-import org.sopt.and.WavveUtils.showSnackbar
-import org.sopt.and.signin.SignInResult
 import org.sopt.and.signin.SignInViewModel
 import org.sopt.and.ui.theme.Blue100
 import org.sopt.and.ui.theme.White100
@@ -32,40 +30,15 @@ fun SignInBtn(
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
 
-    val signInResult by signInViewModel.signInResult.observeAsState()
+    val signInResult by signInViewModel.signInResult.collectAsStateWithLifecycle()
 
-    LaunchedEffect(signInResult) {
-        when (signInResult) {
-            is SignInResult.Success -> {
-                context.showSnackbar(
-                    scope = scope,
-                    snackbarHostState = snackbarHostState,
-                    message = R.string.sign_in_success_message,
-                )
-                navigateToMyInfo()
-                signInViewModel.initSignInResult()
-            }
-
-            is SignInResult.FailurePasswordLength -> {
-                context.showSnackbar(
-                    scope = scope,
-                    snackbarHostState = snackbarHostState,
-                    message = R.string.sign_in_failed_password_length,
-                )
-                signInViewModel.initSignInResult()
-            }
-
-            is SignInResult.FailureWrongPassword -> {
-                context.showSnackbar(
-                    scope = scope,
-                    snackbarHostState = snackbarHostState,
-                    message = R.string.sign_in_failed_wrong_password,
-                )
-                signInViewModel.initSignInResult()
-            }
-
-            else -> {}
-        }
+    LaunchedEffect(signInResult) {  // 이곳에 LaunchedEffect가 없으면 실행이 왜 안될까요?
+        signInViewModel.confirmLogin(
+            snackbarHostState = snackbarHostState,
+            navigateToMyInfo = navigateToMyInfo,
+            context = context,
+            scope = scope
+        )
     }
 
     Button(

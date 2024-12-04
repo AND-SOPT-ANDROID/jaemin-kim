@@ -10,6 +10,7 @@ import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import org.sopt.and.R
+import org.sopt.and.WavveUtils
 import org.sopt.and.ui.theme.Grey200
 import org.sopt.and.ui.theme.White100
 
@@ -24,32 +25,32 @@ fun SignUpGreetingText(fontSize: Int) {
                         color = White100,
                         fontSize = fontSize.sp
                     ),
-                    start = 0,
-                    end = 9
+                    start = WavveUtils.GREETING_FIRST_LINE_FOCUS_START_INDEX,
+                    end = WavveUtils.GREETING_FIRST_LINE_FOCUS_END_INDEX
                 ),
                 AnnotatedString.Range(
                     item = SpanStyle(
                         color = Grey200,
                         fontSize = fontSize.sp
                     ),
-                    start = 9,
-                    end = 12
+                    start = WavveUtils.GREETING_FIRST_LINE_FOCUS_END_INDEX,
+                    end = WavveUtils.GREETING_FIRST_LINE_END_INDEX
                 ),
                 AnnotatedString.Range(
                     item = SpanStyle(
                         color = White100,
                         fontSize = fontSize.sp
                     ),
-                    start = 13,
-                    end = 24
+                    start = WavveUtils.GREETING_SECOND_LINE_FOCUS_START_INDEX,
+                    end = WavveUtils.GREETING_SECOND_LINE_FOCUS_END_INDEX
                 ),
                 AnnotatedString.Range(
                     item = SpanStyle(
                         color = Grey200,
                         fontSize = fontSize.sp
                     ),
-                    start = 24,
-                    end = 29
+                    start = WavveUtils.GREETING_SECOND_LINE_FOCUS_END_INDEX,
+                    end = WavveUtils.GREETING_SECOND_LINE_END_INDEX
                 ),
             ),
             paragraphStyles = listOf(
@@ -61,7 +62,7 @@ fun SignUpGreetingText(fontSize: Int) {
                             trim = LineHeightStyle.Trim.Both
                         )
                     ),
-                    start = 0,
+                    start = WavveUtils.GREETING_FIRST_LINE_FOCUS_START_INDEX,
                     end = 29
                 )
             )

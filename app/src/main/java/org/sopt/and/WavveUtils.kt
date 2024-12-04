@@ -18,6 +18,13 @@ object WavveUtils {
     const val SEARCH_SCREEN_INDEX = 1
     const val HOME_SCREEN_INDEX = 0
 
+    const val GREETING_FIRST_LINE_FOCUS_START_INDEX = 0
+    const val GREETING_FIRST_LINE_FOCUS_END_INDEX = 9
+    const val GREETING_FIRST_LINE_END_INDEX = 12
+    const val GREETING_SECOND_LINE_FOCUS_START_INDEX = 13
+    const val GREETING_SECOND_LINE_FOCUS_END_INDEX = 24
+    const val GREETING_SECOND_LINE_END_INDEX = 29
+
     val linkableSNS = listOf<Pair<Int, Int>>(
         Pair(R.drawable.kakao_talk_icon, R.string.link_kakao_icon_description),
         Pair(R.drawable.t_world_icon, R.string.link_tworld_icon_description),

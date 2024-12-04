@@ -17,7 +17,7 @@ import org.sopt.and.ui.theme.White100
 fun SignUpGreetingText(fontSize: Int) {
     Text(
         AnnotatedString(
-            text = stringResource(R.string.sign_up_welcom_text),
+            text = stringResource(R.string.sign_up_welcome_text),
             spanStyles = listOf(
                 AnnotatedString.Range(
                     item = SpanStyle(

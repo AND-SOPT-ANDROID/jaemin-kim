@@ -13,7 +13,7 @@ val properties = Properties().apply {
 
 android {
     namespace = "org.sopt.and"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "org.sopt.and"

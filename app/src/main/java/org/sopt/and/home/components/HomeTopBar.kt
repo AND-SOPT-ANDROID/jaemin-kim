@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -71,11 +72,11 @@ fun HomeTopBar(
             horizontalArrangement = Arrangement.spacedBy(14.dp)
         ) {
             items(
-                count = genres.size,
-                key = { genres[it] }
-            ) { index ->
+                items = genres,
+                key = {it}
+            ) { genre ->
                 Text(
-                    text = stringResource(genres[index]),
+                    text = stringResource(genre),
                     color = Grey200,
                     fontSize = 14.sp
                 )

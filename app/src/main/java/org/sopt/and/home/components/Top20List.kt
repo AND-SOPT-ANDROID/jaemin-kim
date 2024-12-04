@@ -42,7 +42,7 @@ fun Top20List(@DrawableRes rankers: List<Int>) {
             horizontalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             items(
-                rankers.size,
+                count = rankers.size,
                 key = { it }
             ) { index ->
                 RankedItem(index, rankers)

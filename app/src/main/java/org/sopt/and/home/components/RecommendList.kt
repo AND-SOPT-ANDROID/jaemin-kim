@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
@@ -23,6 +24,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import org.sopt.and.R
 import org.sopt.and.WavveUtils
 import org.sopt.and.ui.theme.Grey200
 import org.sopt.and.ui.theme.White100
@@ -59,11 +61,11 @@ fun RecommendList(
             horizontalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             items(
-                items.size,
+                items = items,
                 key = { it }
-            ) { index ->
+            ) { item ->
                 Image(
-                    painter = painterResource(items[index]),
+                    painter = painterResource(item),
                     contentDescription = "",
                     modifier = Modifier
                         .width(110.dp)
@@ -77,5 +79,15 @@ fun RecommendList(
 @Preview
 @Composable
 fun RecommendListPreview() {
-    RecommendList("", listOf())
+    RecommendList(
+        title = "",
+        listOf(
+            R.drawable.recommend_1,
+            R.drawable.recommend_2,
+            R.drawable.recommend_3,
+            R.drawable.recommend_4,
+            R.drawable.recommend_5,
+            R.drawable.recommend_6,
+        )
+    )
 }

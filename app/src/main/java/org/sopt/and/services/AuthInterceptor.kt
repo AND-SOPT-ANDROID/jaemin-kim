@@ -19,10 +19,14 @@ class AuthInterceptor(context: Context) : Interceptor {
         val request = chain.request().newBuilder()
             .apply {
                 if (token != null) {
-                    addHeader("token", token!!)
+                    addHeader(HEADER_NAME, token!!)
                 }
             }
             .build()
         return chain.proceed(request)
+    }
+
+    companion object {
+        const val HEADER_NAME = "token"
     }
 }

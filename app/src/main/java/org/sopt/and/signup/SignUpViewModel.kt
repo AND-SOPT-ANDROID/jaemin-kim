@@ -1,5 +1,6 @@
 package org.sopt.and.signup
 
+import android.content.Context
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
@@ -9,7 +10,12 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.serialization.json.Json
+import org.sopt.and.R
+import org.sopt.and.WavveUtils.showToast
 import org.sopt.and.services.ServicePool
+import org.sopt.and.signup.SignUpResult.FailureDuplicateUsername
+import org.sopt.and.signup.SignUpResult.FailureInformationLength
+import org.sopt.and.signup.SignUpResult.Success
 import org.sopt.and.signup.dto.SignUpRequestDto
 import org.sopt.and.signup.dto.SignUpResponseDto
 import retrofit2.Call
@@ -95,6 +101,31 @@ class SignUpViewModel : ViewModel() {
                 override fun onFailure(call: Call<SignUpResponseDto>, t: Throwable) {}
             }
         )
+    }
+
+    fun confirmSignUp(
+        context: Context,
+        onSignUpComplete: () -> Unit
+    ) {
+        when (signUpResult.value) {
+            is Success -> {
+                context.showToast(message = R.string.sign_up_success)
+                initSignUpResult()
+                onSignUpComplete()
+            }
+
+            is FailureDuplicateUsername -> {
+                context.showToast(message = R.string.sign_up_failed_duplicate_username)
+                initSignUpResult()
+            }
+
+            is FailureInformationLength -> {
+                context.showToast(message = R.string.sign_up_failed_information_length)
+                initSignUpResult()
+            }
+
+            else -> {}
+        }
     }
 }
 

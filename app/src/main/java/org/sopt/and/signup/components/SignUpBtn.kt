@@ -17,10 +17,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.sopt.and.R
-import org.sopt.and.WavveUtils.showToast
-import org.sopt.and.signup.SignUpResult.FailureDuplicateUsername
-import org.sopt.and.signup.SignUpResult.FailureInformationLength
-import org.sopt.and.signup.SignUpResult.Success
 import org.sopt.and.signup.SignUpViewModel
 import org.sopt.and.ui.theme.Grey200
 import org.sopt.and.ui.theme.White100
@@ -37,25 +33,10 @@ fun SignUpBtn(
     val context = LocalContext.current
 
     LaunchedEffect(signUpResult) {
-        when (signUpResult) {
-            is Success -> {
-                onSignUpComplete()
-                context.showToast(message = R.string.sign_up_success)
-                signUpViewModel.initSignUpResult()
-            }
-
-            is FailureDuplicateUsername -> {
-                context.showToast(message = R.string.sign_up_failed_duplicate_username)
-                signUpViewModel.initSignUpResult()
-            }
-
-            is FailureInformationLength -> {
-                context.showToast(message = R.string.sign_up_failed_information_length)
-                signUpViewModel.initSignUpResult()
-            }
-
-            else -> {}
-        }
+        signUpViewModel.confirmSignUp(
+            context = context,
+            onSignUpComplete = onSignUpComplete
+        )
     }
 
     Button(

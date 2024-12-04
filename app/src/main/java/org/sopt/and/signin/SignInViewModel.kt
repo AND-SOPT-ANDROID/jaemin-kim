@@ -27,11 +27,11 @@ class SignInViewModel(application: Application) : AndroidViewModel(application) 
     private val _uiState = MutableStateFlow(SignInUiState())
     val uiState: StateFlow<SignInUiState> = _uiState.asStateFlow()
 
-    private val _signInResult = MutableLiveData<SignInResult>()
-    val signInResult: LiveData<SignInResult> = _signInResult
+    private val _signInResult = MutableStateFlow<SignInResult>(SignInResult.Initial)
+    val signInResult: StateFlow<SignInResult> = _signInResult.asStateFlow()
 
-    private val _signInResultState = mutableStateOf<SignInResponseDto?>(null)
-    val signInResultState: State<SignInResponseDto?> get() = _signInResultState
+    private val _signInResultState = MutableStateFlow(SignInResponseDto())
+    val signInResultState: StateFlow<SignInResponseDto?> = _signInResultState.asStateFlow()
 
     fun initSignInResult() {
         _signInResult.value = SignInResult.Initial
@@ -71,7 +71,7 @@ class SignInViewModel(application: Application) : AndroidViewModel(application) 
                     response: Response<SignInResponseDto>
                 ) {
                     if (response.isSuccessful) {
-                        _signInResultState.value = response.body()
+                        _signInResultState.value = response.body()!!
                         _signInResult.value = SignInResult.Success
 
                         response.body()?.result?.token?.let { token ->
@@ -81,7 +81,7 @@ class SignInViewModel(application: Application) : AndroidViewModel(application) 
                         }
                     } else {
                         _signInResultState.value = response.errorBody()?.string()
-                            ?.let { Json.decodeFromString<SignInResponseDto>(it) }
+                            ?.let { Json.decodeFromString<SignInResponseDto>(it) }!!
 
                         if (signInResultState.value?.code == SignInFailureCase.FAILURE_LENGTH.errorCode
                             && response.code() == SignInFailureCase.FAILURE_LENGTH.statusCode

@@ -17,7 +17,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.sopt.and.R
-import org.sopt.and.WavveUtils
+import org.sopt.and.WavveUtils.showToast
 import org.sopt.and.signup.SignUpResult.FailureDuplicateUsername
 import org.sopt.and.signup.SignUpResult.FailureInformationLength
 import org.sopt.and.signup.SignUpResult.Success
@@ -40,26 +40,17 @@ fun SignUpBtn(
         when (signUpResult) {
             is Success -> {
                 onSignUpComplete()
-                WavveUtils.showToast(
-                    context = context,
-                    message = R.string.sign_up_success
-                )
+                context.showToast(message = R.string.sign_up_success)
                 signUpViewModel.initSignUpResult()
             }
 
             is FailureDuplicateUsername -> {
-                WavveUtils.showToast(
-                    context = context,
-                    message = R.string.sign_up_failed_duplicate_username
-                )
+                context.showToast(message = R.string.sign_up_failed_duplicate_username)
                 signUpViewModel.initSignUpResult()
             }
 
             is FailureInformationLength -> {
-                WavveUtils.showToast(
-                    context = context,
-                    message = R.string.sign_up_failed_information_length
-                )
+                context.showToast(message = R.string.sign_up_failed_information_length)
                 signUpViewModel.initSignUpResult()
             }
 

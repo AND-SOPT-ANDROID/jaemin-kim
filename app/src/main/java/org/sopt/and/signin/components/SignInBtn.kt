@@ -17,7 +17,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import org.sopt.and.R
-import org.sopt.and.WavveUtils
+import org.sopt.and.WavveUtils.showSnackbar
 import org.sopt.and.signin.SignInResult
 import org.sopt.and.signin.SignInViewModel
 import org.sopt.and.ui.theme.Blue100
@@ -37,9 +37,8 @@ fun SignInBtn(
     LaunchedEffect(signInResult) {
         when (signInResult) {
             is SignInResult.Success -> {
-                WavveUtils.showSnackbar(
+                context.showSnackbar(
                     scope = scope,
-                    context = context,
                     snackbarHostState = snackbarHostState,
                     message = R.string.sign_in_success_message,
                 )
@@ -48,9 +47,8 @@ fun SignInBtn(
             }
 
             is SignInResult.FailurePasswordLength -> {
-                WavveUtils.showSnackbar(
+                context.showSnackbar(
                     scope = scope,
-                    context = context,
                     snackbarHostState = snackbarHostState,
                     message = R.string.sign_in_failed_password_length,
                 )
@@ -58,9 +56,8 @@ fun SignInBtn(
             }
 
             is SignInResult.FailureWrongPassword -> {
-                WavveUtils.showSnackbar(
+                context.showSnackbar(
                     scope = scope,
-                    context = context,
                     snackbarHostState = snackbarHostState,
                     message = R.string.sign_in_failed_wrong_password,
                 )

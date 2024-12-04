@@ -12,7 +12,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class MyInfoViewModel(application: Application) : AndroidViewModel(application) {
-    private val userService by lazy { ServicePool.userService(application) }
+    private val userService by lazy { ServicePool.userService }
 
     private val _uiState = MutableStateFlow(MyInfoUiState())
     val uiState: StateFlow<MyInfoUiState> = _uiState.asStateFlow()

@@ -22,7 +22,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class SignInViewModel(application: Application) : AndroidViewModel(application) {
-    private val userService by lazy { ServicePool.userService(application) }
+    private val userService by lazy { ServicePool.userService }
     private val tokenManager = TokenManager(application)
 
     private val _uiState = MutableStateFlow(SignInUiState())

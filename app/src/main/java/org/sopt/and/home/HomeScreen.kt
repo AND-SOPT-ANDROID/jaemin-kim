@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -43,8 +42,7 @@ fun HomeScreen(
         HomeTopBar(genres = homeUiState.genres)
 
         LazyColumn(
-            modifier = Modifier.fillMaxWidth(),
-            state = rememberLazyListState()
+            modifier = Modifier.fillMaxWidth()
         ) {
             item {
                 HomeBannerPager(homeUiState.banners)

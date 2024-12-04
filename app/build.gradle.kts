@@ -61,6 +61,7 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.androidx.compose.navigation)
     implementation(libs.androidx.runtime.livedata)
+
     // network
     implementation(platform(libs.okhttp.bom))
     implementation(libs.okhttp)

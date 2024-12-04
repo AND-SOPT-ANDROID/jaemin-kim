@@ -81,9 +81,13 @@ class SignUpViewModel(application: Application) : AndroidViewModel(application) 
                     } else {
                         _signUpResultState.value = response.errorBody()?.string()
                             ?.let { Json.decodeFromString<SignUpResponseDto>(it) }
-                        if (signUpResultState.value?.code == "01" && response.code() == 400) {
+                        if (signUpResultState.value?.code == SignUpFailureCase.FAILURE_LENGTH.errorCode
+                            && response.code() == SignUpFailureCase.FAILURE_LENGTH.statusCode
+                        ) {
                             _signUpResult.value = SignUpResult.FailureInformationLength
-                        } else if (signUpResultState.value?.code == "00" && response.code() == 409) {
+                        } else if (signUpResultState.value?.code == SignUpFailureCase.FAILURE_DUPLICATE_USERNAME.errorCode
+                            && response.code() == SignUpFailureCase.FAILURE_DUPLICATE_USERNAME.statusCode
+                        ) {
                             _signUpResult.value = SignUpResult.FailureDuplicateUsername
                         }
                     }
@@ -92,5 +96,15 @@ class SignUpViewModel(application: Application) : AndroidViewModel(application) 
                 override fun onFailure(call: Call<SignUpResponseDto>, t: Throwable) {}
             }
         )
+    }
+}
+
+data class SignUpFailureCase(
+    val statusCode: Int,
+    val errorCode: String
+) {
+    companion object {
+        val FAILURE_LENGTH = SignUpFailureCase(statusCode = 400, errorCode = "01")
+        val FAILURE_DUPLICATE_USERNAME = SignUpFailureCase(statusCode = 409, errorCode = "00")
     }
 }

@@ -83,9 +83,13 @@ class SignInViewModel(application: Application) : AndroidViewModel(application) 
                         _signInResultState.value = response.errorBody()?.string()
                             ?.let { Json.decodeFromString<SignInResponseDto>(it) }
 
-                        if (signInResultState.value?.code == "01" && response.code() == 400) {
+                        if (signInResultState.value?.code == SignInFailureCase.FAILURE_LENGTH.errorCode
+                            && response.code() == SignInFailureCase.FAILURE_LENGTH.statusCode
+                        ) {
                             _signInResult.value = SignInResult.FailurePasswordLength
-                        } else if (signInResultState.value?.code == "01" && response.code() == 403) {
+                        } else if (signInResultState.value?.code == SignInFailureCase.FAILURE_WRONG_PASSWORD.errorCode
+                            && response.code() == SignInFailureCase.FAILURE_WRONG_PASSWORD.statusCode
+                        ) {
                             _signInResult.value = SignInResult.FailureWrongPassword
                         }
                     }
@@ -94,5 +98,15 @@ class SignInViewModel(application: Application) : AndroidViewModel(application) 
                 override fun onFailure(call: Call<SignInResponseDto>, t: Throwable) {}
             }
         )
+    }
+}
+
+data class SignInFailureCase(
+    val statusCode: Int,
+    val errorCode: String
+) {
+    companion object {
+        val FAILURE_LENGTH = SignInFailureCase(statusCode = 400, errorCode = "01")
+        val FAILURE_WRONG_PASSWORD = SignInFailureCase(statusCode = 403, errorCode = "01")
     }
 }

@@ -9,18 +9,17 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import kotlinx.serialization.json.Json
 import org.sopt.and.R
-import org.sopt.and.data.model.request.SignInRequestDto
-import org.sopt.and.data.model.response.SignInResponseDto
 import org.sopt.and.data.service.AppContext
-import org.sopt.and.data.service.ServicePool
 import org.sopt.and.data.service.TokenManager
+import org.sopt.and.domain.model.MyTokenEntity
+import org.sopt.and.domain.model.SignInInformationEntity
+import org.sopt.and.domain.usecase.SignInUseCase
 import org.sopt.and.presentation.util.WavveUtils.showSnackbar
-import retrofit2.Response
 
-class SignInViewModel : ViewModel() {
-    private val userService by lazy { ServicePool.userService }
+class SignInViewModel(
+    private val signInUseCase: SignInUseCase
+) : ViewModel() {
     private val tokenManager = TokenManager(AppContext.get())
 
     private val _uiState = MutableStateFlow(SignInUiState())
@@ -28,9 +27,6 @@ class SignInViewModel : ViewModel() {
 
     private val _signInResult = MutableStateFlow<SignInResult>(SignInResult.Initial)
     val signInResult: StateFlow<SignInResult> = _signInResult.asStateFlow()
-
-    private val _signInResultState = MutableStateFlow(SignInResponseDto())
-    private val signInResultState: StateFlow<SignInResponseDto> = _signInResultState.asStateFlow()
 
     private fun initSignInResult() {
         _signInResult.value = SignInResult.Initial
@@ -59,33 +55,25 @@ class SignInViewModel : ViewModel() {
         signInPassword: String
     ) {
         viewModelScope.launch {
-            runCatching {
-                userService.signIn(
-                    request = SignInRequestDto(
-                        username = signInUsername,
-                        password = signInPassword
-                    )
+            signInUseCase(
+                request = SignInInformationEntity(
+                    username = signInUsername,
+                    password = signInPassword
                 )
-            }.onSuccess { response: Response<SignInResponseDto> ->
-                if (response.isSuccessful) {
-                    _signInResultState.value = response.body()!!
+            ).onSuccess { myTokenEntity: MyTokenEntity ->
+                if (myTokenEntity.status == 200) {
                     _signInResult.value = SignInResult.Success
-                    response.body()?.result?.token?.let { token ->
+                    myTokenEntity.token?.let { token ->
                         tokenManager.saveToken(token)
                     }
-                } else {
-                    _signInResultState.value = response.errorBody()?.string()
-                        ?.let { Json.decodeFromString<SignInResponseDto>(it) }!!
-
-                    if (signInResultState.value.code == SignInFailureCase.FAILURE_LENGTH.errorCode
-                        && response.code() == SignInFailureCase.FAILURE_LENGTH.statusCode
-                    ) {
-                        _signInResult.value = SignInResult.FailurePasswordLength
-                    } else if (signInResultState.value.code == SignInFailureCase.FAILURE_WRONG_PASSWORD.errorCode
-                        && response.code() == SignInFailureCase.FAILURE_WRONG_PASSWORD.statusCode
-                    ) {
-                        _signInResult.value = SignInResult.FailureWrongPassword
-                    }
+                } else if (myTokenEntity.code == SignInFailureCase.FAILURE_LENGTH.errorCode
+                    && myTokenEntity.status == SignInFailureCase.FAILURE_LENGTH.statusCode
+                ) {
+                    _signInResult.value = SignInResult.FailurePasswordLength
+                } else if (myTokenEntity.code == SignInFailureCase.FAILURE_WRONG_PASSWORD.errorCode
+                    && myTokenEntity.status == SignInFailureCase.FAILURE_WRONG_PASSWORD.statusCode
+                ) {
+                    _signInResult.value = SignInResult.FailureWrongPassword
                 }
             }
         }

@@ -1,5 +1,5 @@
 package org.sopt.and.myinfo
 
 data class MyInfoUiState(
-    val myEmail: String = ""
+    val myHobby: String = "오류"
 )

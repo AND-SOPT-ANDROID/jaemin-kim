@@ -1,7 +1,5 @@
 package org.sopt.and.signup.components
 
-import android.content.Context
-import android.widget.Toast
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -9,11 +7,15 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.sopt.and.R
 import org.sopt.and.signup.SignUpViewModel
 import org.sopt.and.ui.theme.Grey200
@@ -21,37 +23,29 @@ import org.sopt.and.ui.theme.White100
 
 @Composable
 fun SignUpBtn(
-    signUpEmail: String,
+    signUpUsername: String,
     signUpPassword: String,
-    context: Context,
-    onSignUpComplete: (String, String) -> Unit,
+    signUpHobby: String,
+    onSignUpComplete: () -> Unit,
     signUpViewModel: SignUpViewModel
 ) {
+    val signUpResult by signUpViewModel.signUpResult.collectAsStateWithLifecycle()
+    val context = LocalContext.current
+
+    LaunchedEffect(signUpResult) {
+        signUpViewModel.confirmSignUp(
+            context = context,
+            onSignUpComplete = onSignUpComplete
+        )
+    }
+
     Button(
         onClick = {
-            val isEmailValid = signUpViewModel.validateSignUpEmail(signUpEmail)
-            val isPasswordValid = signUpViewModel.validateSignUpPassword(signUpPassword)
-
-            if (isEmailValid && isPasswordValid) {
-                onSignUpComplete(signUpEmail, signUpPassword)
-                Toast.makeText(
-                    context,
-                    context.getString(R.string.sign_up_success),
-                    Toast.LENGTH_SHORT
-                ).show()
-            } else if (!isEmailValid) {
-                Toast.makeText(
-                    context,
-                    context.getString(R.string.sign_up_failed_email),
-                    Toast.LENGTH_SHORT
-                ).show()
-            } else {
-                Toast.makeText(
-                    context,
-                    context.getString(R.string.sign_up_failed_password),
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
+            signUpViewModel.signUp(
+                signUpUsername = signUpUsername,
+                signUpPassword = signUpPassword,
+                signUpHobby = signUpHobby
+            )
         },
         modifier = Modifier
             .fillMaxWidth()

@@ -16,20 +16,20 @@ import org.sopt.and.ui.theme.Grey200
 
 @Composable
 fun SignInOrSignUpTextField(
-    emailOrPassword: String,
+    information: String,
     onValueChange: (String) -> Unit,
     placeholder: Int,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     trailingIcon: @Composable (() -> Unit)? = null
 ) {
     TextField(
-        value = emailOrPassword,
+        value = information,
         onValueChange = onValueChange,
         modifier = Modifier.fillMaxWidth(),
         colors = TextFieldDefaults.colors(
             unfocusedContainerColor = Grey100,
             focusedContainerColor = Grey100,
-            focusedIndicatorColor = Color.Transparent,  // 요놈들로 textfield의 밑줄없앰
+            focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent
         ),
         shape = RoundedCornerShape(10.dp),

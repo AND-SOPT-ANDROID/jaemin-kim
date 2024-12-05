@@ -11,45 +11,43 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import org.sopt.and.R
 import org.sopt.and.components.LinkWithSNSBox
-import org.sopt.and.signin.components.*
-import org.sopt.and.ui.theme.*
+import org.sopt.and.signin.components.SignInBtn
+import org.sopt.and.signin.components.SignInPasswordField
+import org.sopt.and.signin.components.SignInToAdditionalFeatures
+import org.sopt.and.signin.components.SignInTopBar
+import org.sopt.and.signin.components.SignInUsernameField
 import org.sopt.and.ui.theme.ANDANDROIDTheme
+import org.sopt.and.ui.theme.Black100
 
 @Composable
 fun SignInScreen(
     navigateToSignUp: () -> Unit,
-    navigateToMyInfo: (String) -> Unit,
+    navigateToMyInfo: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
-    val scope = rememberCoroutineScope()
-    val context = LocalContext.current
 
     val signInViewModel = viewModel<SignInViewModel>()
-    val signInUiState by signInViewModel.uiState.collectAsState()
+    val signInUiState by signInViewModel.uiState.collectAsStateWithLifecycle()
 
-    val signInEmail = signInUiState.signInEmail
+    val signInUsername = signInUiState.signInUsername
     val signInPassword = signInUiState.signInPassword
     val isSignInPasswordVisible = signInUiState.isSignInPasswordVisible
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        snackbarHost = {
-            SnackbarHost(hostState = snackbarHostState)
-        }
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
     ) { innerPadding ->
         Column(
             modifier = modifier
@@ -67,9 +65,9 @@ fun SignInScreen(
 
                 Spacer(modifier = Modifier.height(60.dp))
 
-                SignInEmailField(
-                    signInEmail = signInEmail,
-                    onSignInEmailChange = signInViewModel::setSignInEmail
+                SignInUsernameField(
+                    signInUsername = signInUsername,
+                    onSignInUsernameChange = signInViewModel::setSignInUsername
                 )
 
                 Spacer(modifier = Modifier.height(5.dp))
@@ -84,12 +82,9 @@ fun SignInScreen(
                 Spacer(modifier = Modifier.height(30.dp))
 
                 SignInBtn(
-                    isLoginSuccess = signInViewModel::isLoginSuccess,
-                    scope = scope,
-                    context = context,
                     snackbarHostState = snackbarHostState,
                     navigateToMyInfo = navigateToMyInfo,
-                    signInEmail = signInUiState.signInEmail
+                    signInViewModel = signInViewModel
                 )
 
                 Spacer(modifier = Modifier.height(20.dp))
@@ -115,7 +110,7 @@ fun SignInScreenPreview() {
             innerPadding
             SignInScreen(
                 navigateToSignUp = {},
-                navigateToMyInfo = { a -> }
+                navigateToMyInfo = { -> }
             )
         }
     }

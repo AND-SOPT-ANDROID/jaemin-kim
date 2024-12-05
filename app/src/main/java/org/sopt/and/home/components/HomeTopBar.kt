@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -63,13 +65,16 @@ fun HomeTopBar(
             )
         }
 
-        Row(
+        LazyRow(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 10.dp),
             horizontalArrangement = Arrangement.spacedBy(14.dp)
         ) {
-            genres.forEach { genre ->
+            items(
+                items = genres,
+                key = {it}
+            ) { genre ->
                 Text(
                     text = stringResource(genre),
                     color = Grey200,

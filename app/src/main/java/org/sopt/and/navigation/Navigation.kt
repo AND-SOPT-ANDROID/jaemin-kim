@@ -3,15 +3,14 @@ package org.sopt.and.navigation
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.toRoute
-import org.sopt.and.WavveUtils
+import androidx.navigation.navOptions
 import org.sopt.and.home.HomeScreen
 import org.sopt.and.myinfo.MyInfoScreen
 import org.sopt.and.myinfo.MyInfoViewModel
@@ -23,58 +22,59 @@ import org.sopt.and.signup.SignUpScreen
 fun Navigation(
 ) {
     val navigationViewModel = viewModel<NavigationViewModel>()
-    val navigationUiState by navigationViewModel.uiState.collectAsState()
+    val navigationUiState by navigationViewModel.uiState.collectAsStateWithLifecycle()
     val navController = rememberNavController()
 
     val myInfoViewModel = viewModel<MyInfoViewModel>()
-    val myInfoUiState by myInfoViewModel.uiState.collectAsState()
+    val myInfoUiState by myInfoViewModel.uiState.collectAsStateWithLifecycle()
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         bottomBar = {
             if (navigationUiState.isBottomNavigationVisible) {
                 WavveBottomNavigation(
-                    items = WavveUtils.wavveBottomNavigationItems,
-                    navController,
-                    navigationViewModel::setNavigationSelectedIndex,
-                    navigationUiState.navigationSelectedIndex
+                    items = navigationUiState.wavveBottomNavigationItems,
+                    navController = navController,
+                    setNavigationSelectedScreenIndex = navigationViewModel::setNavigationSelectedIndex,
+                    navigationSelectedScreenIndex = navigationUiState.navigationSelectedIndex
                 )
             }
         }
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = Routes.SignIn("", "") // 이녀석 생성자 안써서 3시간 날림
+            startDestination = Routes.SignIn
         ) {
             composable<Routes.SignIn> {
                 SignInScreen(
-                    navigateToSignUp = {
-                        navController.navigate(Routes.SignUp)
-                    },
-                    navigateToMyInfo = { myEmail ->
+                    navigateToSignUp = { navController.navigate(route = Routes.SignUp) },
+                    navigateToMyInfo = {
                         navigationViewModel.changeBottomNavigationVisibility()
-                        navController.navigate(
-                            Routes.MyInfo(myEmail)
-                        )
+                        navController.navigate(Routes.MyInfo)
                     }
                 )
             }
 
             composable<Routes.SignUp> {
                 SignUpScreen(
-                    navigateToSignIn = { signUpEmail, signUpPassword ->
-                        navController.navigate(Routes.SignIn(signUpEmail, signUpPassword))
+                    navigateToSignIn = {
+                        navController.navigate(
+                            route = Routes.SignIn,
+                            navOptions = navOptions {
+                                popUpTo<Routes.SignIn> {
+                                    inclusive = true
+                                }
+                            }
+                        )
                     }
                 )
             }
 
-            composable<Routes.MyInfo> { backStackEntry ->
-                val item = backStackEntry.toRoute<Routes.MyInfo>()
-                myInfoViewModel.setMyEmail(item.myEmail)
-
+            composable<Routes.MyInfo> {
                 MyInfoScreen(
                     paddingValues = innerPadding,
-                    myInfoUiState.myEmail
+                    myHobby = myInfoUiState.myHobby,
+                    getMyHobby = myInfoViewModel::getMyHobby
                 )
             }
 

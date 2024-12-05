@@ -14,7 +14,7 @@ fun SignInPasswordField(
     onVisibilityChange: () -> Unit
 ) {
     SignInOrSignUpTextField(
-        emailOrPassword = signInPassword,
+        information = signInPassword,
         onValueChange = onSignInPasswordChange,
         placeholder = R.string.sign_in_password_placeholder,
         visualTransformation = transformationPasswordVisual(isSignInPasswordVisible),

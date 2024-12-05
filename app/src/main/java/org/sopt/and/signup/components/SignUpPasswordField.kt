@@ -21,7 +21,7 @@ fun SignUpPasswordField(
 ) {
     Column {
         SignInOrSignUpTextField(
-            emailOrPassword = signUpPassword,
+            information = signUpPassword,
             onValueChange = onSignUpPasswordChange,
             placeholder = R.string.sign_up_password_placeholder,
             visualTransformation = transformationPasswordVisual(isSignUpPasswordVisible),

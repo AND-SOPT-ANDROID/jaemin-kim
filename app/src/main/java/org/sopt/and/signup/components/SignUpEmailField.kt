@@ -11,22 +11,22 @@ import org.sopt.and.components.CautionBox
 import org.sopt.and.components.SignInOrSignUpTextField
 
 @Composable
-fun SignUpEmailField(
-    email: String,
-    onSignUpEmailChange: (String) -> Unit
+fun SignUpUsernameField(
+    signUpUsername: String,
+    onSignUpUsernameChange: (String) -> Unit
 ) {
     Column {
         SignInOrSignUpTextField(
-            emailOrPassword = email,
-            onValueChange = onSignUpEmailChange,
-            placeholder = R.string.sign_up_email_placeholder
+            information = signUpUsername,
+            onValueChange = onSignUpUsernameChange,
+            placeholder = R.string.sign_up_username_placeholder
         )
 
         Spacer(modifier = Modifier.height(10.dp))
 
         CautionBox(
-            contentDescription = R.string.sign_up_email_description,
-            caution = R.string.sign_up_email_caution
+            contentDescription = R.string.sign_up_username_description,
+            caution = R.string.sign_up_username_caution
         )
     }
 }

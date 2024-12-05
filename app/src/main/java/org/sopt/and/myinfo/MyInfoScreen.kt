@@ -23,7 +23,8 @@ import org.sopt.and.ui.theme.Black100
 @Composable
 fun MyInfoScreen(
     paddingValues: PaddingValues,
-    myEmail: String,
+    myHobby: String,
+    getMyHobby: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -33,7 +34,8 @@ fun MyInfoScreen(
             .padding(paddingValues)
     ) {
         MyInfoProfile(
-            myEmail = myEmail,
+            myHobby = myHobby,
+            getMyHobby = getMyHobby,
             modifier = Modifier.weight(0.16f)
         )
 
@@ -64,8 +66,7 @@ fun MyInfoScreen(
 }
 
 @Preview(
-    showBackground = true,
-    showSystemUi = true
+    showBackground = true
 )
 @Composable
 fun MyScreenPreview() {
@@ -73,7 +74,8 @@ fun MyScreenPreview() {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             MyInfoScreen(
                 paddingValues = innerPadding,
-                myEmail = ""
+                myHobby = "...Loading",
+                getMyHobby = {}
             )
         }
     }

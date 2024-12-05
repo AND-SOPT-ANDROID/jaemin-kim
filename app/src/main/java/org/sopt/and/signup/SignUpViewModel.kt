@@ -2,25 +2,24 @@ package org.sopt.and.signup
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 import org.sopt.and.R
 import org.sopt.and.WavveUtils.showToast
 import org.sopt.and.services.ServicePool
 import org.sopt.and.signup.dto.SignUpRequestDto
 import org.sopt.and.signup.dto.SignUpResponseDto
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 
 class SignUpViewModel : ViewModel() {
     private val userService by lazy { ServicePool.userService }
 
     private val _signUpResultState = MutableStateFlow(SignUpResponseDto())
-    val signUpResultState: StateFlow<SignUpResponseDto> = _signUpResultState.asStateFlow()
+    private val signUpResultState: StateFlow<SignUpResponseDto> = _signUpResultState.asStateFlow()
 
     private val _uiState = MutableStateFlow(SignUpUiState())
     val uiState: StateFlow<SignUpUiState> = _uiState.asStateFlow()
@@ -61,39 +60,34 @@ class SignUpViewModel : ViewModel() {
         signUpPassword: String,
         signUpHobby: String
     ) {
-        userService.signUp(
-            request = SignUpRequestDto(
-                username = signUpUsername,
-                password = signUpPassword,
-                hobby = signUpHobby
-            )
-        ).enqueue(
-            object : Callback<SignUpResponseDto> {
-                override fun onResponse(
-                    call: Call<SignUpResponseDto>,
-                    response: Response<SignUpResponseDto>
-                ) {
-                    if (response.isSuccessful) {
-                        _signUpResultState.value = response.body()!!
-                        _signUpResult.value = SignUpResult.Success
-                    } else {
-                        _signUpResultState.value = response.errorBody()?.string()
-                            ?.let { Json.decodeFromString<SignUpResponseDto>(it) }!!
-                        if (signUpResultState.value.code == SignUpFailureCase.FAILURE_LENGTH.errorCode
-                            && response.code() == SignUpFailureCase.FAILURE_LENGTH.statusCode
-                        ) {
-                            _signUpResult.value = SignUpResult.FailureInformationLength
-                        } else if (signUpResultState.value.code == SignUpFailureCase.FAILURE_DUPLICATE_USERNAME.errorCode
-                            && response.code() == SignUpFailureCase.FAILURE_DUPLICATE_USERNAME.statusCode
-                        ) {
-                            _signUpResult.value = SignUpResult.FailureDuplicateUsername
-                        }
+        viewModelScope.launch {
+            runCatching {
+                userService.signUp(
+                    request = SignUpRequestDto(
+                        username = signUpUsername,
+                        password = signUpPassword,
+                        hobby = signUpHobby
+                    )
+                )
+            }.onSuccess { response ->
+                if (response.isSuccessful) {
+                    _signUpResultState.value = response.body()!!
+                    _signUpResult.value = SignUpResult.Success
+                } else {
+                    _signUpResultState.value = response.errorBody()?.string()
+                        ?.let { Json.decodeFromString<SignUpResponseDto>(it) }!!
+                    if (signUpResultState.value.code == SignUpFailureCase.FAILURE_LENGTH.errorCode
+                        && response.code() == SignUpFailureCase.FAILURE_LENGTH.statusCode
+                    ) {
+                        _signUpResult.value = SignUpResult.FailureInformationLength
+                    } else if (signUpResultState.value.code == SignUpFailureCase.FAILURE_DUPLICATE_USERNAME.errorCode
+                        && response.code() == SignUpFailureCase.FAILURE_DUPLICATE_USERNAME.statusCode
+                    ) {
+                        _signUpResult.value = SignUpResult.FailureDuplicateUsername
                     }
                 }
-
-                override fun onFailure(call: Call<SignUpResponseDto>, t: Throwable) {}
             }
-        )
+        }
     }
 
     fun confirmSignUp(

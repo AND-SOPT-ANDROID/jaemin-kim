@@ -17,8 +17,6 @@ import org.sopt.and.services.ServicePool
 import org.sopt.and.services.TokenManager
 import org.sopt.and.signin.dto.SignInRequestDto
 import org.sopt.and.signin.dto.SignInResponseDto
-import retrofit2.Call
-import retrofit2.Callback
 import retrofit2.Response
 
 class SignInViewModel : ViewModel() {
@@ -32,7 +30,7 @@ class SignInViewModel : ViewModel() {
     val signInResult: StateFlow<SignInResult> = _signInResult.asStateFlow()
 
     private val _signInResultState = MutableStateFlow(SignInResponseDto())
-    val signInResultState: StateFlow<SignInResponseDto> = _signInResultState.asStateFlow()
+    private val signInResultState: StateFlow<SignInResponseDto> = _signInResultState.asStateFlow()
 
     private fun initSignInResult() {
         _signInResult.value = SignInResult.Initial
@@ -60,45 +58,37 @@ class SignInViewModel : ViewModel() {
         signInUsername: String,
         signInPassword: String
     ) {
-        userService.signIn(
-            request = SignInRequestDto(
-                username = signInUsername,
-                password = signInPassword
-            )
-        ).enqueue(
-            object : Callback<SignInResponseDto> {
-                override fun onResponse(
-                    call: Call<SignInResponseDto>,
-                    response: Response<SignInResponseDto>
-                ) {
-                    if (response.isSuccessful) {
-                        _signInResultState.value = response.body()!!
-                        _signInResult.value = SignInResult.Success
+        viewModelScope.launch {
+            runCatching {
+                userService.signIn(
+                    request = SignInRequestDto(
+                        username = signInUsername,
+                        password = signInPassword
+                    )
+                )
+            }.onSuccess { response: Response<SignInResponseDto> ->
+                if (response.isSuccessful) {
+                    _signInResultState.value = response.body()!!
+                    _signInResult.value = SignInResult.Success
+                    response.body()?.result?.token?.let { token ->
+                        tokenManager.saveToken(token)
+                    }
+                } else {
+                    _signInResultState.value = response.errorBody()?.string()
+                        ?.let { Json.decodeFromString<SignInResponseDto>(it) }!!
 
-                        response.body()?.result?.token?.let { token ->
-                            viewModelScope.launch {
-                                tokenManager.saveToken(token)
-                            }
-                        }
-                    } else {
-                        _signInResultState.value = response.errorBody()?.string()
-                            ?.let { Json.decodeFromString<SignInResponseDto>(it) }!!
-
-                        if (signInResultState.value.code == SignInFailureCase.FAILURE_LENGTH.errorCode
-                            && response.code() == SignInFailureCase.FAILURE_LENGTH.statusCode
-                        ) {
-                            _signInResult.value = SignInResult.FailurePasswordLength
-                        } else if (signInResultState.value.code == SignInFailureCase.FAILURE_WRONG_PASSWORD.errorCode
-                            && response.code() == SignInFailureCase.FAILURE_WRONG_PASSWORD.statusCode
-                        ) {
-                            _signInResult.value = SignInResult.FailureWrongPassword
-                        }
+                    if (signInResultState.value.code == SignInFailureCase.FAILURE_LENGTH.errorCode
+                        && response.code() == SignInFailureCase.FAILURE_LENGTH.statusCode
+                    ) {
+                        _signInResult.value = SignInResult.FailurePasswordLength
+                    } else if (signInResultState.value.code == SignInFailureCase.FAILURE_WRONG_PASSWORD.errorCode
+                        && response.code() == SignInFailureCase.FAILURE_WRONG_PASSWORD.statusCode
+                    ) {
+                        _signInResult.value = SignInResult.FailureWrongPassword
                     }
                 }
-
-                override fun onFailure(call: Call<SignInResponseDto>, t: Throwable) {}
             }
-        )
+        }
     }
 
     fun confirmLogin(

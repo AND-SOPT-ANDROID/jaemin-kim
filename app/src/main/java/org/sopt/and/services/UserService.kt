@@ -1,10 +1,10 @@
 package org.sopt.and.services
 
-import org.sopt.and.myinfo.dto.GetHobbyResponseDto
-import org.sopt.and.signin.dto.SignInRequestDto
-import org.sopt.and.signin.dto.SignInResponseDto
-import org.sopt.and.signup.dto.SignUpRequestDto
-import org.sopt.and.signup.dto.SignUpResponseDto
+import org.sopt.and.presentation.myinfo.dto.GetHobbyResponseDto
+import org.sopt.and.presentation.signin.dto.SignInRequestDto
+import org.sopt.and.presentation.signin.dto.SignInResponseDto
+import org.sopt.and.presentation.signup.dto.SignUpRequestDto
+import org.sopt.and.presentation.signup.dto.SignUpResponseDto
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET

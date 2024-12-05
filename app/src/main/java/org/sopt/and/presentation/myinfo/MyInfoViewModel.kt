@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import org.sopt.and.presentation.myinfo.dto.GetHobbyResponseDto
+import org.sopt.and.data.model.response.GetHobbyResponseDto
 import org.sopt.and.services.ServicePool
 
 class MyInfoViewModel : ViewModel() {

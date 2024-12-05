@@ -1,4 +1,4 @@
-package org.sopt.and.presentation.signin.dto
+package org.sopt.and.data.model.response
 
 import kotlinx.serialization.Serializable
 

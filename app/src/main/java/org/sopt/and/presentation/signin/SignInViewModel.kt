@@ -12,8 +12,8 @@ import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 import org.sopt.and.R
 import org.sopt.and.WavveUtils.showSnackbar
-import org.sopt.and.presentation.signin.dto.SignInRequestDto
-import org.sopt.and.presentation.signin.dto.SignInResponseDto
+import org.sopt.and.data.model.request.SignInRequestDto
+import org.sopt.and.data.model.response.SignInResponseDto
 import org.sopt.and.services.AppContext
 import org.sopt.and.services.ServicePool
 import org.sopt.and.services.TokenManager

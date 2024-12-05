@@ -1,4 +1,4 @@
-package org.sopt.and.services
+package org.sopt.and.data.service
 
 import android.content.Context
 import kotlinx.coroutines.flow.first

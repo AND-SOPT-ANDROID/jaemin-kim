@@ -5,7 +5,7 @@ import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Search
 import org.sopt.and.R
-import org.sopt.and.WavveUtils
+import org.sopt.and.presentation.util.WavveUtils
 
 data class NavigationUiState(
     val isBottomNavigationVisible: Boolean = false,

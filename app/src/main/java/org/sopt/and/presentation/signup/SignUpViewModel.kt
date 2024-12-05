@@ -9,10 +9,10 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 import org.sopt.and.R
-import org.sopt.and.WavveUtils.showToast
 import org.sopt.and.data.model.request.SignUpRequestDto
 import org.sopt.and.data.model.response.SignUpResponseDto
-import org.sopt.and.services.ServicePool
+import org.sopt.and.data.service.ServicePool
+import org.sopt.and.presentation.util.WavveUtils.showToast
 
 
 class SignUpViewModel : ViewModel() {

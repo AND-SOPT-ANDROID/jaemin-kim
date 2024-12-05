@@ -17,6 +17,7 @@ import org.sopt.and.presentation.myinfo.MyInfoViewModel
 import org.sopt.and.presentation.search.SearchScreen
 import org.sopt.and.presentation.signin.SignInScreen
 import org.sopt.and.presentation.signup.SignUpScreen
+import org.sopt.and.presentation.viewmodelfactory.MyInfoViewModelFactory
 
 @Composable
 fun Navigation(
@@ -25,7 +26,9 @@ fun Navigation(
     val navigationUiState by navigationViewModel.uiState.collectAsStateWithLifecycle()
     val navController = rememberNavController()
 
-    val myInfoViewModel = viewModel<MyInfoViewModel>()
+    val myInfoViewModel: MyInfoViewModel = viewModel(
+        factory = MyInfoViewModelFactory()
+    )
     val myInfoUiState by myInfoViewModel.uiState.collectAsStateWithLifecycle()
 
     Scaffold(

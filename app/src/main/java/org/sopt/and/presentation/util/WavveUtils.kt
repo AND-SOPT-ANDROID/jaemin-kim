@@ -1,4 +1,4 @@
-package org.sopt.and
+package org.sopt.and.presentation.util
 
 import android.content.Context
 import android.widget.Toast
@@ -8,6 +8,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import org.sopt.and.R
 
 object WavveUtils {
     const val MIN_PASSWORD_LENGTH = 8

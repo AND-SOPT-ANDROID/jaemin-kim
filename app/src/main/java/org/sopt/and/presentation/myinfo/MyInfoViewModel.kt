@@ -6,12 +6,13 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import org.sopt.and.data.model.response.GetHobbyResponseDto
-import org.sopt.and.services.ServicePool
+import org.sopt.and.domain.model.MyHobbyEntity
+import org.sopt.and.domain.usecase.GetMyHobbyUseCase
 
-class MyInfoViewModel : ViewModel() {
-    private val userService by lazy { ServicePool.userService }
-
+class MyInfoViewModel(
+    private val getMyHobbyUseCase: GetMyHobbyUseCase
+) : ViewModel() {
+    
     private val _uiState = MutableStateFlow(MyInfoUiState())
     val uiState: StateFlow<MyInfoUiState> = _uiState.asStateFlow()
 
@@ -21,10 +22,8 @@ class MyInfoViewModel : ViewModel() {
 
     fun getMyHobby() {
         viewModelScope.launch {
-            runCatching {
-                userService.getMyHobby()
-            }.onSuccess { response: GetHobbyResponseDto ->
-                response.result?.let { setMyHobby(it.hobby) }
+            getMyHobbyUseCase().onSuccess { myHobbyEntity: MyHobbyEntity ->
+                setMyHobby(myHobbyEntity.myHobby)
             }.onFailure { }
         }
     }

@@ -1,8 +1,8 @@
-package org.sopt.and.services
+package org.sopt.and.data.service
 
 import org.sopt.and.data.model.request.SignInRequestDto
 import org.sopt.and.data.model.request.SignUpRequestDto
-import org.sopt.and.data.model.response.GetHobbyResponseDto
+import org.sopt.and.data.model.response.GetMyHobbyResponseDto
 import org.sopt.and.data.model.response.SignInResponseDto
 import org.sopt.and.data.model.response.SignUpResponseDto
 import retrofit2.Response
@@ -18,5 +18,5 @@ interface UserService {
     suspend fun signIn(@Body request: SignInRequestDto): Response<SignInResponseDto>
 
     @GET("/user/my-hobby")
-    suspend fun getMyHobby(): GetHobbyResponseDto
+    suspend fun getMyHobby(): GetMyHobbyResponseDto
 }

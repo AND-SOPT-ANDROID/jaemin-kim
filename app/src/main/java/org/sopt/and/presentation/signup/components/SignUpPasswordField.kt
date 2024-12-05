@@ -7,10 +7,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import org.sopt.and.R
-import org.sopt.and.WavveUtils.transformationPasswordVisual
 import org.sopt.and.presentation.components.CautionBox
 import org.sopt.and.presentation.components.ShowOrHideToggle
 import org.sopt.and.presentation.components.SignInOrSignUpTextField
+import org.sopt.and.presentation.util.WavveUtils.transformationPasswordVisual
 
 @Composable
 fun SignUpPasswordField(

@@ -2,9 +2,9 @@ package org.sopt.and.presentation.signin.components
 
 import androidx.compose.runtime.Composable
 import org.sopt.and.R
-import org.sopt.and.WavveUtils.transformationPasswordVisual
 import org.sopt.and.presentation.components.ShowOrHideToggle
 import org.sopt.and.presentation.components.SignInOrSignUpTextField
+import org.sopt.and.presentation.util.WavveUtils.transformationPasswordVisual
 
 @Composable
 fun SignInPasswordField(

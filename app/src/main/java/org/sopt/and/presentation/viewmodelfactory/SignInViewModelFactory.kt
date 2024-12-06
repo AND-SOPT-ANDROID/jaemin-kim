@@ -6,7 +6,7 @@ import org.sopt.and.domain.repository.SignInRepository
 import org.sopt.and.domain.usecase.SignInUseCase
 import org.sopt.and.presentation.signin.SignInViewModel
 
-class SignInViewModelFactory() : ViewModelProvider.Factory {
+class SignInViewModelFactory : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when (modelClass) {
 

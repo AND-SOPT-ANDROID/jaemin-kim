@@ -6,7 +6,7 @@ import org.sopt.and.domain.repository.GetMyHobbyRepository
 import org.sopt.and.domain.usecase.GetMyHobbyUseCase
 import org.sopt.and.presentation.myinfo.MyInfoViewModel
 
-class MyInfoViewModelFactory() : ViewModelProvider.Factory {
+class MyInfoViewModelFactory : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when (modelClass) {
 

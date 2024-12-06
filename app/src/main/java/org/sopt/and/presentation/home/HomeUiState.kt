@@ -6,7 +6,7 @@ import org.sopt.and.R
 
 data class HomeUiState(
     @StringRes
-    val genres: List<Int> = listOf<Int>(
+    val genres: List<Int> = listOf(
         R.string.genre_new_classic,
         R.string.genre_drama,
         R.string.genre_entertainment,
@@ -15,14 +15,14 @@ data class HomeUiState(
         R.string.genre_foreign_country_series
     ),
     @DrawableRes
-    val banners: List<Int> = listOf<Int>(
+    val banners: List<Int> = listOf(
         R.drawable.banner_1,
         R.drawable.banner_2,
         R.drawable.banner_3,
         R.drawable.banner_4
     ),
     @DrawableRes
-    val recommends: List<Int> = listOf<Int>(
+    val recommends: List<Int> = listOf(
         R.drawable.recommend_1,
         R.drawable.recommend_2,
         R.drawable.recommend_3,
@@ -31,7 +31,7 @@ data class HomeUiState(
         R.drawable.recommend_6,
     ),
     @DrawableRes
-    val rankers: List<Int> = listOf<Int>(
+    val rankers: List<Int> = listOf(
         R.drawable.top_1,
         R.drawable.top_2,
         R.drawable.top_3,

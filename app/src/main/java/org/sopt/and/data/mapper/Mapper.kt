@@ -34,18 +34,6 @@ object Mapper {
             )
         }
 
-    fun toSignInInformationEntity(signInRequestDto: SignInRequestDto) =
-        SignInInformationEntity(
-            username = signInRequestDto.username,
-            password = signInRequestDto.password
-        )
-
-    fun toSignUpInformationEntity(signUpRequestDto: SignUpRequestDto) = SignUpInformationEntity(
-        username = signUpRequestDto.username,
-        password = signUpRequestDto.password,
-        hobby = signUpRequestDto.hobby
-    )
-
     fun toSignInRequestDto(signInInformationEntity: SignInInformationEntity) = SignInRequestDto(
         username = signInInformationEntity.username,
         password = signInInformationEntity.password

@@ -1,5 +1,5 @@
 package org.sopt.and.domain.model
 
-data class MyNumberEntity(
+data class SignUpResponseEntity(
     val no: Int
 )

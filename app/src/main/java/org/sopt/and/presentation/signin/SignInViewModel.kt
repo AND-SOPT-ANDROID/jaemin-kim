@@ -12,8 +12,8 @@ import kotlinx.coroutines.launch
 import org.sopt.and.R
 import org.sopt.and.data.service.AppContext
 import org.sopt.and.data.service.TokenManager
-import org.sopt.and.domain.model.MyTokenEntity
 import org.sopt.and.domain.model.SignInInformationEntity
+import org.sopt.and.domain.model.SignInResponseEntity
 import org.sopt.and.domain.usecase.SignInUseCase
 import org.sopt.and.presentation.util.WavveUtils.showSnackbar
 
@@ -60,18 +60,18 @@ class SignInViewModel(
                     username = signInUsername,
                     password = signInPassword
                 )
-            ).onSuccess { myTokenEntity: MyTokenEntity ->
-                if (myTokenEntity.status == 200) {
+            ).onSuccess { signInResponseEntity: SignInResponseEntity ->
+                if (signInResponseEntity.status == 200) {
                     _signInResult.value = SignInResult.Success
-                    myTokenEntity.token?.let { token ->
+                    signInResponseEntity.token?.let { token ->
                         tokenManager.saveToken(token)
                     }
-                } else if (myTokenEntity.code == SignInFailureCase.FAILURE_LENGTH.errorCode
-                    && myTokenEntity.status == SignInFailureCase.FAILURE_LENGTH.statusCode
+                } else if (signInResponseEntity.code == SignInFailureCase.FAILURE_LENGTH.errorCode
+                    && signInResponseEntity.status == SignInFailureCase.FAILURE_LENGTH.statusCode
                 ) {
                     _signInResult.value = SignInResult.FailurePasswordLength
-                } else if (myTokenEntity.code == SignInFailureCase.FAILURE_WRONG_PASSWORD.errorCode
-                    && myTokenEntity.status == SignInFailureCase.FAILURE_WRONG_PASSWORD.statusCode
+                } else if (signInResponseEntity.code == SignInFailureCase.FAILURE_WRONG_PASSWORD.errorCode
+                    && signInResponseEntity.status == SignInFailureCase.FAILURE_WRONG_PASSWORD.statusCode
                 ) {
                     _signInResult.value = SignInResult.FailureWrongPassword
                 }

@@ -6,10 +6,10 @@ import org.sopt.and.data.model.response.GetMyHobbyResponseResultDto
 import org.sopt.and.data.model.response.SignInResponseDto
 import org.sopt.and.data.model.response.SignUpResponseDto
 import org.sopt.and.domain.model.MyHobbyEntity
-import org.sopt.and.domain.model.MyNumberEntity
-import org.sopt.and.domain.model.MyTokenEntity
 import org.sopt.and.domain.model.SignInInformationEntity
+import org.sopt.and.domain.model.SignInResponseEntity
 import org.sopt.and.domain.model.SignUpInformationEntity
+import org.sopt.and.domain.model.SignUpResponseEntity
 import retrofit2.Response
 
 object Mapper {
@@ -17,11 +17,11 @@ object Mapper {
         MyHobbyEntity(myHobby = getHobbyResponseResultDto.myHobby)
 
     fun toMyNumberEntity(signUpResponseDto: SignUpResponseDto) =
-        signUpResponseDto.result?.let { MyNumberEntity(no = it.no) }
+        signUpResponseDto.result?.let { SignUpResponseEntity(no = it.no) }
 
     fun toMyTokenEntity(signInResponseDto: Response<SignInResponseDto>) =
         signInResponseDto.body()?.result?.let {
-            MyTokenEntity(
+            SignInResponseEntity(
                 token = it.token,
                 status = signInResponseDto.code(),
                 code = signInResponseDto.body()!!.code

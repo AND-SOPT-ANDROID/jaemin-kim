@@ -11,7 +11,7 @@ class SignInRepositoryImpl(
 ) : SignInRepository {
     override suspend fun signIn(request: SignInInformationEntity): Result<SignInResponseEntity> =
         runCatching {
-            Mapper.toMyTokenEntity(
+            Mapper.toSignInResponseEntity(
                 signInDataSource.signIn(
                     Mapper.toSignInRequestDto(
                         request

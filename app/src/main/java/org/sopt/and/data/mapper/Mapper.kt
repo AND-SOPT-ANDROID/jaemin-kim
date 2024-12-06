@@ -16,10 +16,16 @@ object Mapper {
     fun toMyHobbyEntity(getHobbyResponseResultDto: GetMyHobbyResponseResultDto) =
         MyHobbyEntity(myHobby = getHobbyResponseResultDto.myHobby)
 
-    fun toMyNumberEntity(signUpResponseDto: SignUpResponseDto) =
-        signUpResponseDto.result?.let { SignUpResponseEntity(no = it.no) }
+    fun toSignUpResponseEntity(signUpResponseDto: Response<SignUpResponseDto>) =
+        signUpResponseDto.body()?.result?.let {
+            SignUpResponseEntity(
+                no = it.no,
+                status = signUpResponseDto.code(),
+                code = signUpResponseDto.body()!!.code
+            )
+        }
 
-    fun toMyTokenEntity(signInResponseDto: Response<SignInResponseDto>) =
+    fun toSignInResponseEntity(signInResponseDto: Response<SignInResponseDto>) =
         signInResponseDto.body()?.result?.let {
             SignInResponseEntity(
                 token = it.token,

@@ -24,6 +24,7 @@ import org.sopt.and.presentation.signup.components.SignUpHobbyField
 import org.sopt.and.presentation.signup.components.SignUpPasswordField
 import org.sopt.and.presentation.signup.components.SignUpTopBar
 import org.sopt.and.presentation.signup.components.SignUpUsernameField
+import org.sopt.and.presentation.viewmodelfactory.SignUpViewModelFactory
 import org.sopt.and.ui.theme.ANDANDROIDTheme
 import org.sopt.and.ui.theme.Black100
 
@@ -32,7 +33,9 @@ fun SignUpScreen(
     modifier: Modifier = Modifier,
     navigateToSignIn: () -> Unit,
 ) {
-    val signUpViewModel = viewModel<SignUpViewModel>()
+    val signUpViewModel: SignUpViewModel = viewModel(
+        factory = SignUpViewModelFactory()
+    )
     val signUpUiState by signUpViewModel.uiState.collectAsStateWithLifecycle()
 
     Column(

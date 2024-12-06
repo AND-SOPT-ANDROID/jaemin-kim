@@ -7,19 +7,15 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import kotlinx.serialization.json.Json
 import org.sopt.and.R
-import org.sopt.and.data.model.request.SignUpRequestDto
-import org.sopt.and.data.model.response.SignUpResponseDto
-import org.sopt.and.data.service.ServicePool
+import org.sopt.and.domain.model.SignUpInformationEntity
+import org.sopt.and.domain.usecase.SignUpUseCase
 import org.sopt.and.presentation.util.WavveUtils.showToast
 
 
-class SignUpViewModel : ViewModel() {
-    private val userService by lazy { ServicePool.userService }
-
-    private val _signUpResultState = MutableStateFlow(SignUpResponseDto())
-    private val signUpResultState: StateFlow<SignUpResponseDto> = _signUpResultState.asStateFlow()
+class SignUpViewModel(
+    private val signUpUseCase: SignUpUseCase
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow(SignUpUiState())
     val uiState: StateFlow<SignUpUiState> = _uiState.asStateFlow()
@@ -61,30 +57,23 @@ class SignUpViewModel : ViewModel() {
         signUpHobby: String
     ) {
         viewModelScope.launch {
-            runCatching {
-                userService.signUp(
-                    request = SignUpRequestDto(
-                        username = signUpUsername,
-                        password = signUpPassword,
-                        hobby = signUpHobby
-                    )
+            signUpUseCase(
+                request = SignUpInformationEntity(
+                    username = signUpUsername,
+                    password = signUpPassword,
+                    hobby = signUpHobby
                 )
-            }.onSuccess { response ->
-                if (response.isSuccessful) {
-                    _signUpResultState.value = response.body()!!
+            ).onSuccess { signUpResponseEntity ->
+                if (signUpResponseEntity.status == 200) {
                     _signUpResult.value = SignUpResult.Success
-                } else {
-                    _signUpResultState.value = response.errorBody()?.string()
-                        ?.let { Json.decodeFromString<SignUpResponseDto>(it) }!!
-                    if (signUpResultState.value.code == SignUpFailureCase.FAILURE_LENGTH.errorCode
-                        && response.code() == SignUpFailureCase.FAILURE_LENGTH.statusCode
-                    ) {
-                        _signUpResult.value = SignUpResult.FailureInformationLength
-                    } else if (signUpResultState.value.code == SignUpFailureCase.FAILURE_DUPLICATE_USERNAME.errorCode
-                        && response.code() == SignUpFailureCase.FAILURE_DUPLICATE_USERNAME.statusCode
-                    ) {
-                        _signUpResult.value = SignUpResult.FailureDuplicateUsername
-                    }
+                } else if (signUpResponseEntity.code == SignUpFailureCase.FAILURE_LENGTH.errorCode
+                    && signUpResponseEntity.status == SignUpFailureCase.FAILURE_LENGTH.statusCode
+                ) {
+                    _signUpResult.value = SignUpResult.FailureInformationLength
+                } else if (signUpResponseEntity.code == SignUpFailureCase.FAILURE_DUPLICATE_USERNAME.errorCode
+                    && signUpResponseEntity.status == SignUpFailureCase.FAILURE_DUPLICATE_USERNAME.statusCode
+                ) {
+                    _signUpResult.value = SignUpResult.FailureDuplicateUsername
                 }
             }
         }
